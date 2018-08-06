@@ -22,9 +22,67 @@ The device software update process (OTAU) is defined in reference to the Murano 
 
 < Block Diagram Here > 
 
+# Terminology
+Term|description
+--|--
+OTAU|Over-The-Air Update (new firmware, package, software etc) 
+  
+
+# Uploading / Listing OTAU Packages 
+
+## Using Murano Product Content for listing OTAU Packages
+To post new OTAU software packages for devices, one must create a new content file in the Murano Product content area that contains the package informaiton.
+
+Murano product content has an ID, the content which in this case will be zero bytes, and a TAG (key/value pair) that contains all the details about the package.
+
+### Content ID format
+The ID must use a prefix of 'package_', the rest is up to the OEM but recommend using a format that devices the type of package, version information, etc.  
+ExoSense will list all content with `package_` prefix.  
+
+Example: `package_oemname_prodname_prod_1-2-0`.
+
+### Content tag format
+The tag is important as it is what ExoSense and any other Application UI's will use to list information about the package in addition to what to apply to the config command back down to the device.  Tags in Murano Product Content files are key/value pairs.  
+
+**Key:**
+ 
+`otau_info`
+
+**Value:**
+The value is a JSON blob that contains information that ExoSense will use to display available packages with and the appropriate information that will be inserted into config_otau as defined above.
+The JSON blob must be UTF-8 encoded before setting as value.  
+
+Before UTF-8 Encoding
+```json
+{
+  "author":"<string>",
+  "vendor":"<vendor_name>",
+  "product":"<product_name",
+  "config_otau": {
+      "version": "<oem version>",
+      "name": "<package name>",
+      "description": "<Friendly description information>",
+      "type": "FILE",
+      "payload": "https://www.example.com/outau.txt"
+  }
+}
 
 
-# Murano Product Resource Configuration Requirements
+```
+
+### Example using Murano CLI to upload a new package to list.
+The following is an example of how an OEM would make a new package available.
+
+```curl
+> murano content upload package_acme_iotgw1_prod_1-0-1.json --tags otau_info=%7B%22author%22%3A%22Rob%20Updater%22%2C%22vendor%22%3A%22Acme%22%2C%22product%22%3A%22IoT%20Gateway1%22%2C%22config_otau%22%3A%7B%22version%22%3A%221.0.1%22%2C%22name%22%3A%22Production%201.0.1%20Package%22%2C%22description%22%3A%22Updated%20production%20units%20with%20bug%20fixes%22%2C%22type%22%3A%22FILE%22%2C%22payload%22%3A%22https%3A%2F%2Fwww.example.com%2Fotau.txt%22%7D%7D
+
+```
+
+
+
+# Applying a OTAU State Change
+
+## Murano Product Resource Configuration Requirements
 To support OTAU functionality, ExoSense expects that Murano products are configured with two specific resources regardless of the connection type: config_otau and otau_in.
 
 Resource Name|Cloud Writable|Description
@@ -32,7 +90,7 @@ Resource Name|Cloud Writable|Description
 config_otau  | yes  |  Issues a new OTAU, as defined in Section 4  | no
 otau_in  | no  | Communicates the status of an OTAU installation, as defined in Section 5.
 
-## OTAU Package State Schema - config_otau
+### OTAU Package State Schema - config_otau
 This section defines the JSON schema for the `config_otau` resource in a Murano device, which is used to issue a new Package OTAU. 
 
 -   **version** (required) - used to distinguish this OTAU from others (eg. version number).
@@ -41,10 +99,10 @@ This section defines the JSON schema for the `config_otau` resource in a Murano 
 -   **type** (required) - Defines the package type used by the gateway to determine how to handle the OTAU. These will be enumerations based on industry-accepted upgrade payloads. Types are listed here: [OTAU Package Type Definitions](#otau-package-type-definitions) 
 -   **payload** (required) - Depends on the otau package type. See Section [OTAU Package Type Definitions](#otau-package-type-definitions) for the expected value(s).
 
-### OTAU Package Type Definitions
+#### OTAU Package Type Definitions
 These are the currently defined enumerations to represent OTAU types. More types will be added later as they become standardized in the OTAU workflow.
 
-#### FILE 
+##### FILE 
 A flat file.
 
 Example:
@@ -53,7 +111,7 @@ Example:
 https://www.example.com/otau.exe
 ```
 
-#### JSON
+##### JSON
 An inline JSON object. Does not require separate download.
 
 Example: 
@@ -64,7 +122,7 @@ Example:
     ...
 }
 ```
-#### URL_LIST 
+##### URL_LIST 
 JSON-formatted list of URLs.
 
 Example:
@@ -138,53 +196,4 @@ THe following are examples of messages from the device.  Reminder, must be sent 
 ## Status Sequence Diagram
 ![state_sequence](media/otau_sequence.png)
 
-
-# Murano Product Content Schema for listing OTAU Packages
-To post new OTAU software packages for devices, one must create a new content file in the Murano Product content area that contains the package informaiton.
-
-Murano product content has an ID, the content which in this case will be zero bytes, and a TAG (key/value pair) that contains all the details about the package.
-
-## Content ID format
-The ID must use a prefix of 'package_', the rest is up to the OEM but recommend using a format that devices the type of package, version information, etc.  
-ExoSense will list all content with `package_` prefix.  
-
-Example: `package_oemname_prodname_prod_1-2-0`.
-
-## Content tag format
-The tag is important as it is what ExoSense and any other Application UI's will use to list information about the package in addition to what to apply to the config command back down to the device.  Tags in Murano Product Content files are key/value pairs.  
-
-**Key:**
  
-`otau_info`
-
-**Value:**
-The value is a JSON blob that contains information that ExoSense will use to display available packages with and the appropriate information that will be inserted into config_otau as defined above.
-The JSON blob must be UTF-8 encoded before setting as value.  
-
-Before UTF-8 Encoding
-```json
-{
-  "author":"<string>",
-  "vendor":"<vendor_name>",
-  "product":"<product_name",
-  "config_otau": {
-      "version": "<oem version>",
-      "name": "<package name>",
-      "description": "<Friendly description information>",
-      "type": "FILE",
-      "payload": "https://www.example.com/outau.txt"
-  }
-}
-
-
-```
-
-## Example using Murano CLI to upload a new package to list.
-The following is an example of how an OEM would make a new package available.
-
-```curl
-> murano content upload package_acme_iotgw1_prod_1-0-1.json --tags otau_info=%7B%22author%22%3A%22Rob%20Updater%22%2C%22vendor%22%3A%22Acme%22%2C%22product%22%3A%22IoT%20Gateway1%22%2C%22config_otau%22%3A%7B%22version%22%3A%221.0.1%22%2C%22name%22%3A%22Production%201.0.1%20Package%22%2C%22description%22%3A%22Updated%20production%20units%20with%20bug%20fixes%22%2C%22type%22%3A%22FILE%22%2C%22payload%22%3A%22https%3A%2F%2Fwww.example.com%2Fotau.txt%22%7D%7D
-
-```
-
-# 
