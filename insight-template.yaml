@@ -135,7 +135,24 @@ definitions:
         description: Offset into the returned insights
     required: [group_id]
 
-  SignalTypeInfo:
+  SignalTypeInputInfo:
+    type: object
+    description: What data type the incoming Signal must have. If omitted, than allows any type.
+    required: [data_type]
+    properties:
+      data_type:
+        type: string
+        description: The type that the connecting signal must have
+      data_unit:
+        type: string
+        description: The unit that the connecting signal must have
+      required:
+        type: number
+        description: If present, the required number of Signals matching this type that must be connected
+        minimum: 1
+        maximum: 5
+
+  SignalTypeOutputInfo:
     type: object
     description: What data type the incoming Signal must have. If omitted, than allows any type.
     properties:
@@ -182,9 +199,12 @@ definitions:
         items:
           $ref: '#/definitions/ConstantInfo'
       inlets:
-        $ref: '#/definitions/SignalTypeInfo'
+        type: array
+        description: The kinds of data that can be connected.
+        items:
+          $ref: '#/definitions/SignalTypeInputInfo'
       outlets:
-        $ref: '#/definitions/SignalTypeInfo'
+        $ref: '#/definitions/SignalTypeOutputInfo'
     required:
       - id
       - name
