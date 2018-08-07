@@ -1,0 +1,318 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: My Nifty Insight
+  description: |
+    This describes an Insight Module that can be added to Murano Exchange.  An Insight Module can
+    implement one or more Insight Functions.  These Insight Functions can then be added to Assets
+    as a Transformation.
+  contact:
+    name: Your Name Here
+    email: YOU@BIZ.com
+
+host: a.real.host # Set this to the host your function is on
+basePath: / # Set this or the path according to your function
+schemes:
+  - https  # Only https is supported.
+consumes:
+  - application/json # Only JSON is supported.
+produces:
+  - application/json # Only JSON is supported.
+
+################################################################################
+#                                Operations                                    #
+################################################################################
+paths:
+  /info:
+    get:
+      operationId: info
+      description: Get some info about this Insight
+      responses:
+        "200":
+          description: Insight Functions successfully listed
+          schema:
+            $ref: "#/definitions/InsightInfoResults"
+        default:
+          description: Errors
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /insights:
+    post:
+      operationId: listInsights
+      description: Get a list of availible Insight Functions and info about them
+      parameters:
+      - name: body
+        in: body
+        description: Get a list of availible insight functions
+        required: true
+        schema:
+          $ref: '#/definitions/InsightsFilterParams'
+      responses:
+        "200":
+          description: Insight Functions successfully listed
+          schema:
+            $ref: "#/definitions/InsightListResults"
+        default:
+          description: Errors
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /insight/{function_id}:
+    get:
+      operationId: infoInsight
+      description: Get info about one Insight Function
+      responses:
+        "200":
+          description: Insight Functions successfully listed
+          schema:
+            $ref: "#/definitions/InsightInfo"
+        default:
+          description: Errors
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /process: # The acutal path can be anything.
+    post:
+      operationId: process
+      description: |
+        Your function to process a bunch of Signal Data.
+
+        It is good form to copy all the fields of a source SignalData into the new SignalData,
+        then update the properties according to your function.
+      parameters:
+        - name: body
+          in: body
+          description: Data to process and arguments on how to process it
+          required: true
+          schema:
+            $ref: "#/definitions/SignalDataObjectArray"
+      responses:
+        "200":
+          description: Data successfully
+          schema:
+            $ref: "#/definitions/SignalDataArrayArray"
+        default:
+          description: Error that stops the pipeline.
+            Non-fatal errors should produce new signals on a seperate outlet.
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+################################################################################
+#                                 Definitions                                  #
+################################################################################
+definitions:
+  InsightInfoResults:
+    type: object
+    description: Info about this Insight Module
+    properties:
+      group_id_required:
+        type: boolean
+        description: True if the listInsights requires group_id to be something to list functions.
+      name:
+        type: string
+        description: Presented name
+      description:
+        type: string
+        description: Additional text about this insight
+    required: [group_id_required]
+
+  InsightsFilterParams:
+    type: object
+    description: Filter options for insight functions
+    properties:
+      group_id:
+        type: string
+        description: |
+          Which group of insight functions to get.  The meaning of the contents is up to the Insight Module.
+          Including ignoring it and always returning all.
+      limit:
+        type: integer
+        description: Limit how many insights to fetch
+      offset:
+        type: integer
+        description: Offset into the returned insights
+    required: [group_id]
+
+  SignalTypeInfo:
+    type: object
+    description: What data type the incoming Signal must have. If omitted, than allows any type.
+    properties:
+      data_type:
+        type: string
+        description: The type that the connecting signal must have
+      data_unit:
+        type: string
+        description: The unit that the connecting signal must have
+    required: [data_type]
+
+  ConstantInfo:
+    type: object
+    description: A constant that needs to be provided by the user
+    properties:
+      name:
+        type: string
+        description: The name of this constant 
+      type:
+        type: string
+        enum: [string, number]
+        description: What kind of value this constant accepts
+      description:
+        type: string
+        description: Some words for the user about this constant
+    required: [name, type]
+
+  InsightInfo:
+    type: object
+    description: One insight function
+    properties:
+      id:
+        type: string
+        description: The unique id for this insight function
+      name:
+        type: string
+        description: A human friendly name for this insight function
+      description:
+        type: string
+        description: A description of this insight function to display to users.
+      constants:
+        type: array
+        description: Additional user specified values to pass to this insight function
+        items:
+          $ref: '#/definitions/ConstantInfo'
+      inlets:
+        $ref: '#/definitions/SignalTypeInfo'
+      outlets:
+        $ref: '#/definitions/SignalTypeInfo'
+    required:
+      - id
+      - name
+      - description
+  
+  InsightListResults:
+    type: object
+    description: The found insight functions with count info
+    properties:
+      total:
+        type: integer
+        description: The total number of insight functions in this group
+      count:
+        type: integer
+        description: Number of insight functions returned
+      insights:
+        type: array
+        description: The insight functions
+        items:
+          $ref: '#/definitions/InsightInfo'
+    required:
+      - insights
+      - total
+      - count
+
+  SignalData:
+    type: object
+    description: A single instance of a piece of data inside a signal.
+    properties:
+      tags:
+        type: object
+        description: |
+          Tag-Value pairs to help ID the data. Used to tie the data back to an
+          Asset or Device or other things.
+        additionalProperties:
+          type: string
+          description: Value for a tag
+          minLength: 1
+      ts:
+        type: integer
+        description: Unix timestamp in microseconds of when the data originated
+      gts:
+        type: integer
+        description: Unix timestamp in microseconds of when this SignalData was generated
+      value:
+        type: [string, integer, object]
+        description: The value for this instance of data
+      origin:
+        type: string
+        description: The original Publishing ID
+        minLength: 1
+      generated:
+        type: string
+        description: The Publishing ID that created this SignalData.
+        minLength: 1
+      ttl:
+        type: integer
+        description: Value used to help prevent data from infinitely cycling
+    required:
+      - ts
+      - value
+      - origin
+      - generated
+
+  HistoricalData:
+    type: object
+    description: The history of signals.  Each signal id is the key, with an array of timestamp, value pairs.
+    additionalProperties:
+      type: array
+      description: The history of signals.  Each signal id is the key, with an array of timestamp, value pairs.
+      items:
+        type: object
+        description: One point in history
+        properties:
+          ts:
+            type: integer
+            description: Unix timestamp in microseconds of when the data was stored
+          value:
+            type: [string, integer, object]
+            description: The value for this instance of data
+        required: [ts, value]
+
+  SignalDataArray:
+    type: array
+    description: Array of Signal Data
+    items:
+      $ref: '#/definitions/SignalData'
+
+  SignalDataArrayArray:
+    type: array
+    description: Array of Array of Signal Data.  An array for each outlet, each outlet can have many signals.
+    items:
+      $ref: '#/definitions/SignalDataArray'
+
+  SignalDataObjectArray:
+    type: object
+    description: The data and arguments to be processed.
+    properties:
+      data:
+        $ref: '#/definitions/SignalDataArray'
+      history:
+        $ref: '#/definitions/HistoricalData'
+      args:
+        type: object
+        description: Object of instance arguments.
+        properties:
+          insight_id:
+            type: string
+            description: Which insight to run
+          group_id:
+            type: string
+            description: Which group_id this is under
+          constants:
+            type: object
+            description: Additional conatant parameters for the selected function
+
+
+  ErrorResponse:
+    type: object
+    description: Error response that stops the pipeline.
+    properties:
+      message:
+        type: string
+        description: Error message
+      status:
+        type: number
+        description: A numerical code for the error
+      name:
+        description: Error type
+        type: string
+
