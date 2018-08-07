@@ -88,8 +88,8 @@ To support OTAU functionality, ExoSense expects that Murano products are configu
 
 Resource Name|Cloud Writable|Description
 --|---|---
-config_otau|Yes|[Issues a new OTAU state](#otau-package-state-schema-config_otau)
-otau_in|No|[Communicates the status of an OTAU installation](#otau-status-reporting-schema-otau_in)
+config_otau|Yes|[Issues a new OTAU state](#otau-package-state-schema---config_otau)
+otau_in|No|[Communicates the status of an OTAU installation](#otau-status-reporting-schema---otau_in)
 
 
 ### OTAU Package State Schema - config_otau
