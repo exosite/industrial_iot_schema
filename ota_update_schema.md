@@ -190,7 +190,7 @@ THe following are examples of messages from the device.  Reminder, must be sent 
 ```json
 {
     "version": "2.0.5-stable",
-    "status":  "INTSALLED_VERSION",
+    "status":  "INSTALLED_VERSION",
     "message": ""
 }
 ```
