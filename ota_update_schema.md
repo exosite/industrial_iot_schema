@@ -1,7 +1,7 @@
 # Over-The-Air (OTA) Update Process Schema
 
-This document defines the information required to issue (send) and communicate the status of an **Over The Air Update** or OTAU of device software packages. This is from the “first mile” perspective of the gateway or smart sensors.
-**OTA** and **OTAU** has become a way of describing a device software update using a network connection.
+This document defines the information required to list, issue (send), and communicate the status of an **Over The Air Update** or OTAU of device software packages. This is from the “first mile” perspective of the gateway or smart sensors.
+**OTA** and **OTAU** is a way of describing a remote device software update using a network connection.
 
 ### Document Status
 
@@ -10,11 +10,11 @@ Working Draft
 
 
 # Device Software Package Update Process
-The device software update process (OTAU) is defined in reference to the Murano IoT Platform and ExoSense application.
+The device software update process or "Over-The-Aiar Update" (OTAU) is defined in reference to the Murano IoT Platform and ExoSense application.
 
-**Basic Flow**
-1. OEM specifies a OTAU software package manifest file as content in a Murano product
-2. The user applications will display this and any previous OTAU software package manifest files as available for a device (or set of devices) of that Murano Product type.
+**Basic Flow Summary**
+1. The OEM specifies a OTAU software package manifest file as content in a Murano product
+2. A user application (such as ExoSense) will display this and any previous OTAU software package manifest files as available for a device (or set of devices) of that Murano Product type.
 3. A user chooses a the OTAU software package and applies it in the application user interface.
 4. The application will write to `config_otau` resource with the new otau state information (aka tell the device what state it should be in and instructions on how to do that)
 5. The device sends updates to `otau_in` resource so the application can keep track of status for the device in regards to the requested OTAU software package state.
@@ -22,10 +22,10 @@ The device software update process (OTAU) is defined in reference to the Murano 
 
 < Block Diagram Here > 
 
-# Terminology
-Term|description
+## Terminology
+Term|Description
 --|--
-OTAU|Over-The-Air Update (new firmware, package, software etc) 
+OTAU|Over-The-Air Update (remote firmware, package, software update) 
   
 
 # Uploading / Listing OTAU Packages 
@@ -80,15 +80,17 @@ The following is an example of how an OEM would make a new package available.
 
 
 
-# Applying a OTAU State Change
+# Applying a OTAU Package State Change to Devices
+The following information details the process in which a OTAU package is applied to one or more devices by specifying a new `state` for the device to be in.  
 
 ## Murano Product Resource Configuration Requirements
 To support OTAU functionality, ExoSense expects that Murano products are configured with two specific resources regardless of the connection type: config_otau and otau_in.
 
 Resource Name|Cloud Writable|Description
 --|---|---
-config_otau  | yes  |  Issues a new OTAU, as defined in Section 4  | no
-otau_in  | no  | Communicates the status of an OTAU installation, as defined in Section 5.
+config_otau|Yes|[Issues a new OTAU state](#otau-package-state-schema-config_otau)
+otau_in|No|[Communicates the status of an OTAU installation](#otau-status-reporting-schema-otau_in)
+
 
 ### OTAU Package State Schema - config_otau
 This section defines the JSON schema for the `config_otau` resource in a Murano device, which is used to issue a new Package OTAU. 
