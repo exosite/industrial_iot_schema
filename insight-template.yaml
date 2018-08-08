@@ -149,6 +149,9 @@ definitions:
       tag:
         type: string
         description: Optional tag to add to the SingalData for inlet matching
+      description:
+        type: string
+        description: Optional text to help users.
 
   SignalTypeOutputInfo:
     type: object
