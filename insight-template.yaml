@@ -146,11 +146,12 @@ definitions:
       data_unit:
         type: string
         description: The unit that the connecting signal must have
-      required:
-        type: number
-        description: If present, the required number of Signals matching this type that must be connected
-        minimum: 1
-        maximum: 5
+      tag:
+        type: string
+        description: Optional tag to add to the SingalData for inlet matching
+      description:
+        type: string
+        description: Optional text to help users.
 
   SignalTypeOutputInfo:
     type: object
@@ -200,7 +201,8 @@ definitions:
           $ref: '#/definitions/ConstantInfo'
       inlets:
         type: array
-        description: The kinds of data that can be connected.
+        description: The kinds of data that can be connected. (This is an unordered set)
+        maxItems: 5
         items:
           $ref: '#/definitions/SignalTypeInputInfo'
       outlets:
