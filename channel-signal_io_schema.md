@@ -14,20 +14,23 @@ This document will not cover how to interact with Murano’s product/device inte
 In Murano RCM will have an expectation that products are configured with specific resources regardless of the connection type.
 Those are:
 
-Resource Name|Cloud Writable|Description
---|--|---
-data_in|yes|Used to send the live data in the format defined in Section 4
-raw_data *deprecated*|-|Replaced by data_in
-config_io|yes|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
-data_out *future*|yes|To be defined in the future - used for writing commands to devices
-Config_oem *future*|yes|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
-config_applications|yes|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)
-config_rules *future - maybe*|yes|Possibly to be defined in the future
-config_network *future*|no|Initial Concepts in Appendix, but not implemented
+Resource Name|Status|Cloud Writable|Description
+--|--|--|---
+data_in|supported|yes|Used to send the live data in the format defined in Section 4
+config_io|supported|yes|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
+data_out|*planned*|yes|To be defined in the future - used for writing commands to devices
+config_oem|*reserved*|tbd|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
+config_applications|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)
+config_interfaces|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)  |   |   |  
+config_rules |*reserved*|tbd|Possibly to be defined in the future
+config_network|*reserved*|tbd|Initial Concepts in Appendix, but not implemented
+raw_data|*deprecated*|-|Replaced by data_in
 
 
-## 3. Gateway Channel Configuration Schema
+
+## 3. Device/Gateway Channel Configuration Schema
 This section defines the Channel configuration object (sometimes called a device or gateway template).
+
 A gateway or device will require some level of configuration in order to do several things:
 
 1.  Know what information to read off of a fieldbus
@@ -159,7 +162,7 @@ channels: # "device channel" as opposed to an "asset signal"
 
 More Examples can be found below
 
-### Configuration To-Do
+### Configuration Schema To-Do
 > _1. Support for controlling 'who' can edit a channel to lock specific channels down to not be able to be modified via the application_
 > 
 >
