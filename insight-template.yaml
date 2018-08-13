@@ -305,6 +305,9 @@ definitions:
     type: object
     description: The data and arguments to be processed.
     properties:
+      id:
+        type: string
+        description: A unique ID for this instance of this function in an asset pipeline.
       data:
         $ref: '#/definitions/SignalDataArray'
       history:
