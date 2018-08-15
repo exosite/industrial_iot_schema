@@ -179,6 +179,15 @@ definitions:
       description:
         type: string
         description: Some words for the user about this constant
+      enum:
+        type: array
+        description: An array of allowed values.
+      maximum:
+        type: number
+        description: For number type, the largest it can be
+      minimum:
+        type: number
+        description: For number type, the smallest it can be
     required: [name, type]
 
   InsightInfo:
