@@ -182,6 +182,9 @@ definitions:
       description:
         type: string
         description: Some words for the user about this constant
+      default:
+        type: [string, number]
+        description: Optional value to use if user doesn't specify one.
       enum:
         type: array
         description: An array of allowed values.
