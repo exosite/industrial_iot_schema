@@ -270,7 +270,7 @@ definitions:
         type: integer
         description: Unix timestamp in microseconds of when this SignalData was generated
       value:
-        type: [string, integer, object]
+        type: [string, number, object]
         description: The value for this instance of data
       origin:
         type: string
@@ -303,7 +303,7 @@ definitions:
             type: integer
             description: Unix timestamp in microseconds of when the data was stored
           value:
-            type: [string, integer, object]
+            type: [string, number, object]
             description: The value for this instance of data
         required: [ts, value]
 
