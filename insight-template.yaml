@@ -138,14 +138,17 @@ definitions:
   SignalTypeInputInfo:
     type: object
     description: What data type the incoming Signal must have. If omitted, than allows any type.
-    required: [data_type]
+    required: [data_type, name]
     properties:
       data_type:
         type: string
         description: The type that the connecting signal must have
       data_unit:
-        type: string
-        description: The unit that the connecting signal must have
+        type: array
+        description: The units that the connecting signal must have
+        items:
+          type: string
+          description: A required unit.
       tag:
         type: string
         description: Optional tag to add to the SingalData for inlet matching
