@@ -8,7 +8,7 @@ This document defines the information required to interface with ExoSense™️ 
 
 This document will not cover how to interact with Murano’s product/device interfaces, including how to provision a device inside of a product defined in Murano, how to communicate with the [HTTP](http://docs.exosite.com/reference/products/device-api/http/) or [MQTT](http://docs.exosite.com/reference/products/device-api/mqtt/) interfaces or other topics covered in [Murano’s public documentation](https://docs.exosite.com).  It will however cover how to use some of these interfaces in certain situations, and will define a standard product resource list.
 
-## 2. Definitions
+### Definitions
 The reader of this document should have a grasp on the following items or will need to for this document to make sense.
 
 Term|Description|More Information
@@ -23,7 +23,7 @@ Asset|An ExoSense concept for digitzing an Asset (a machine, system, eqiupment, 
 Fieldbus|Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc|
 
 
-## 3. Murano Device Interface Configuration Requirements
+## Murano Device Interface Configuration Requirements
 
 The Murano Product Solution interface requires the following specific resources are setup regardless of the connection type (MQTT, HTTP, etc)
 These resources are are:
@@ -42,7 +42,7 @@ raw_data|*deprecated*|-|Replaced by data_in
 
 
 
-## 4. Device/Gateway Channel Configuration Schema
+## Device/Gateway Channel Configuration Schema
 This section defines the Channel Configuration object (sometimes called a device or gateway template).  The idea is data used by ExoSense flows as 'Channels' to and from devices.  These device channel sources can then be mapped to Asset signals.
 
 A gateway or device will require some level of configuration in order to do several things:
@@ -176,14 +176,14 @@ channels: # "device channel" as opposed to an "asset signal"
 
 More Examples can be found below
 
-### Configuration Schema To-Do
+#### Configuration Schema To-Do
 > _1. Support for controlling 'who' can edit a channel to lock specific channels down to not be able to be modified via the application_
 > 
 >
 
 
 
-## 5. Device Data Transport Schema
+## Device Data Transport Schema
 When the gateway and cloud share a common configuration definition we can omit any of the unchanged or information that won’t change on an update for a value that has changed since the last sensor reading.
 
 To that end, we want to define how the over-the-wire information will be sent after the configuration is shared in both places.
@@ -243,7 +243,7 @@ The error object is a list of keys of the channel ids with an error, and then th
 
 _Note: the device can report a channel data payload, even if the data is erroneous, but that is optional.  We will accept a chanel value and an error, just an error for a channel, or just a value.  All combinations are supported._
 
-## 6. Data Type Definitions
+## Data Type Definitions
 
 For each data point there is a possible type, which predominantly relates to the units of the signal value, and the possible values for a given signal.
 
@@ -258,7 +258,7 @@ Below we will discuss features of each category of signal, and list all the prop
 
 _NOTE: Anything in the following 2 subsections that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
-### 6.1 	State Representation Types
+###  	State Representation Types
 
 There are only two main types of signals that can represent state, but both have a requirement that the values aren’t fixed in their labeling, which means they must be defined per-signal.
 
@@ -280,7 +280,7 @@ Categorical|CATEGORICAL|`value_mapping`|Any string, or from list of common enume
 
 ```
 
-### 6.2 Generic Types
+### Generic Types
 For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.
 
 Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|UI Unit Abbreviation|Notes
@@ -310,7 +310,7 @@ Number (unitless)|Number|Not Used|na|Any Real Number
 
 
 ```
-### 6.3 Unit Orignated Types
+### Unit Orignated Types
 The following assume a fixed unit type is provided as a part of the origination and that would carry through the system.
 
 Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).
