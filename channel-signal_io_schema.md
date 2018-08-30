@@ -3,7 +3,7 @@
 
 **Document Status:** Version 2.2 _Draft_
 
-## 1. Introduction
+## Introduction
 This document defines the information required to interface with ExoSense™️ from the “first mile” perspective of the connected device or gateway, as well as describing how this information is carried on into the “last mile” or client-side APIs and Application.
 
 This document will not cover how to interact with Murano’s product/device interfaces, including how to provision a device inside of a product defined in Murano, how to communicate with the [HTTP](http://docs.exosite.com/reference/products/device-api/http/) or [MQTT](http://docs.exosite.com/reference/products/device-api/mqtt/) interfaces or other topics covered in [Murano’s public documentation](https://docs.exosite.com).  It will however cover how to use some of these interfaces in certain situations, and will define a standard product resource list.
