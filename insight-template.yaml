@@ -212,6 +212,11 @@ definitions:
       description:
         type: string
         description: A description of this insight function to display to users.
+      asynchronous:
+        type: boolean
+        description: |
+          When true, this function requires the Callback Info block since it will respond
+          with some or all of its results asynchronously.
       constants:
         type: array
         description: Additional user specified values to pass to this insight function
