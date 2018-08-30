@@ -263,7 +263,7 @@ _NOTE: Anything in the following 2 subsections that isn’t given a “Type Key 
 There are only two main types of signals that can represent state, but both have a requirement that the values aren’t fixed in their labeling, which means they must be defined per-signal.
 
 Type|Key<br>(`data_type`)|Required Property|Accpted Values|Notes
---|--|--|--
+--|--|--|--|--
 Binary|BINARY|`value_mapping`|Any string, or from list of common enumerated types: ON,OFF,UP,DOWN,START,STOP|An integer value - typically 1 or 0 sent from devices, OR exact match string.
 Categorical|CATEGORICAL|`value_mapping`|Any string, or from list of common enumerated types|Integer value, or exact match string.  Future: Evaluate if it is useful to have translated words for common multi-state values - e.g. ON, OFF, UP, DOWN, START, STOP, STOPING, RUNNING, ROTATING, IDLE
 
