@@ -309,7 +309,7 @@ definitions:
 
   CallbackInfo:
     type: object
-    description: URL and auth token to use to send results if not immeaditily availible.
+    description: URL and auth token to use to send results if not immediately available.
     properties:
       url:
         type: string
@@ -355,7 +355,7 @@ definitions:
             description: Which group_id this is under
           constants:
             type: object
-            description: Additional conatant parameters for the selected function
+            description: Additional constant parameters for the selected function
 
 
   ErrorResponse:
