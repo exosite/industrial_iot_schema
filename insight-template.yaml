@@ -305,6 +305,13 @@ definitions:
           value:
             type: [string, number, object]
             description: The value for this instance of data
+          tags:
+            type: object
+            description: Tag-Value pairs to help ID the data.  (Tags here are a subset of those in SignalData)
+            additionalProperties:
+              type: string
+              description: Value for a tag
+              minLength: 1
         required: [ts, value]
 
   CallbackInfo:
