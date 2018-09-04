@@ -419,3 +419,38 @@ Wavenumber|--|--|--|not supported
 Wavevector|--|--|--|not supported
 Weight|WEIGHT|NEWTON<br>POUND|--|--
 Work|--|--|--|not supported
+
+## Device Channel Protocol Interfaces
+This section defines the supported protocol interfaces and parameters.
+
+### Modbus TCP
+
+Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
+```yaml 
+    ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
+    port : "INTEGER" # port to make the request on
+    register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
+    register_offset : "INTEGER" # [1-4]00000-[1-4]99999
+    register_count : "INTEGER" # 1, 2, 4, 8, ...
+    byte_endianness" : [ "little", "big" ]
+    register_endianness" : [ "little", "big" ]
+    evaluation_mode : ["floating point: ieee754", "whole-remainder", "signed integer", "unsigned", "bitmask_int", "bitmask_bool", "string-ascii-byte", "string-ascii-register"]               
+    bitmask : "HEXADECIMAL" # hex value for bits to mask out/pass-thru
+```
+
+
+### Modbus RTU
+
+Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
+```yaml 
+    slave_id : "INTEGER"
+    register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
+    register_offset : "INTEGER" # [1-4]00000-[1-4]99999
+    register_count : "INTEGER" # 1, 2, 4, 8, ...
+    byte_endianness" : [ "little", "big" ]
+    register_endianness" : [ "little", "big" ]
+    evaluation_mode : ["floating point: ieee754", "whole-remainder", "signed integer", "unsigned", "bitmask_int", "bitmask_bool", "string-ascii-byte", "string-ascii-register"]               
+    bitmask : "HEXADECIMAL" # hex value for bits to mask out/pass-thru
+```
+
+### CANopen
