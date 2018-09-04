@@ -430,7 +430,7 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
     ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
     port : "INTEGER" # port to make the request on
     register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]00000-[1-4]99999
+    register_offset : "INTEGER" # [1-4]0000-[1-4]9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
@@ -443,9 +443,9 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 
 Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
-    slave_id : "INTEGER"
+    slave_id : "INTEGER" 
     register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]00000-[1-4]99999
+    register_offset : "INTEGER" # [1-4]0000-[1-4]9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
@@ -454,3 +454,13 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 ```
 
 ### CANopen
+
+Parameters for a channel's 'app_specific_config' field when using CANopen.
+```yaml
+    node_id : "HEXADECIMAL" # e.g. "0x01"
+    msg_index : "HEXADECIMAL"  # "PDO" starts at 0x180,"SDO" starts at 0x580, required
+    offset : "INTEGER" # e.g. "0" bytes (determines starting byte position to read), default is 0, required
+    data_length : "INTEGER" # e.g. "8" bytes (determines how many PDOs to read), default is 8, required
+    evaluation_mode : [“REAL32”, “INT8”, “INT16”, “UINT16”, “UINT32”, “STRING”, “BOOLEAN”]
+    bitmask : "HEXADECIMAL" # optional, hex value for bits to mask out/pass-thru 
+```
