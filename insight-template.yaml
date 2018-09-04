@@ -217,6 +217,27 @@ definitions:
         description: |
           When true, this function requires the Callback Info block since it will respond
           with some or all of its results asynchronously.
+      history:
+        type: object
+        description: |
+          When this object is present, a timeseries query will be called and the results sent along
+          to the function call.  The properties here will be used to augment the query.  Only the
+          Signals connected to the calling of this function will be queried.
+        additionalProperties:
+          type: object
+          description: An additional parameter to the query.  Use only one property. (value, constant, template)
+          properties:
+            value:
+              type: [string, number]
+              description: The exact value to use
+            constant:
+              type: string
+              description: Which of this function's constants to use the value of here
+            template:
+              type: string
+              description: |
+                Which of this function's constants to use the value of here, fitted into a templeate
+                string.  The constants must be surrounded with '{{}}'.  For example '-{{days}}d'
       constants:
         type: array
         description: Additional user specified values to pass to this insight function
