@@ -212,6 +212,12 @@ definitions:
       description:
         type: string
         description: A description of this insight function to display to users.
+      type:
+        type: string
+        enum: [transform, rule, action]
+        description: |
+          What kind of insight this function is.  Determines how it gets used and how the UI
+          presents it.  If omitted, then 'transform' is used.
       asynchronous:
         type: boolean
         description: |
