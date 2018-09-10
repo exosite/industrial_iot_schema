@@ -16,3 +16,6 @@ tags
 coverage/
 docs/
 .eslintcache
+**/.murano
+insights/examples/murano-try/
+.venv/
