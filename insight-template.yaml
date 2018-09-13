@@ -386,9 +386,9 @@ definitions:
         type: object
         description: Object of instance arguments.
         properties:
-          insight_id:
+          function_id:
             type: string
-            description: Which insight to run
+            description: Which insight function to run
           group_id:
             type: string
             description: Which group_id this is under
