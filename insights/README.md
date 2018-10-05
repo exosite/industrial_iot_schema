@@ -1,22 +1,31 @@
-# Insight Transform How-To Guide
+# ExoSense™ Insight How-To Guide
 
 ## Basic Concepts
 
-ExoSense™ Insights are a specific type of Signal Transformation that allow
-customers to integrate in a flexible way with a wide array of external
-streaming analytics services. They are:
+ExoSense™ Insights are processes that act on Asset Signals within the
+application. They allow customers to integrate in a flexible way with a wide
+array of internal and external services to provide analytics, decision, and
+action capabilities. Correspondingly, there are three types of Insights:
+
+* Transforms
+* Rules
+* Actions
+
+Fundamentally, all Insights are:
 
 ### Streaming
+
 * At their core, Insights are not stateful; similar to other
   Transformations like Join and Linear Gain, they operate on a single piece of
   Signal data.
 * For a given Join on SignalA and SignalB, each time a piece of
   data comes in from _either_ of those Signals, the Join runs (and returns a
   joined value).
-* The Join transform uses the last seen value of any Signal not
+* The Join Transform uses the last seen value of any Signal not
   present in the data sent to the Join at any given time.
 
 ### Exchange Elements
+
 * From the ExoSense and Murano perspective, an Insight is an
   IoT Exchange Service that begins with the word "Insight".
 * The Swagger definition for the Service is found in this repository:
@@ -24,6 +33,7 @@ streaming analytics services. They are:
   the incoming and outgoing data format.
 
 ### Webservers
+
 * The Exchange Service created for an Insight defines the URL
   to be requested when ExoSense needs to do any of the following:
     * get high-level information about the Insight
@@ -38,6 +48,7 @@ streaming analytics services. They are:
     * Google Cloud Products
 
 ### Services
+
 * The code behind the Insight is entirely up to its creator; as long as it
   conforms to the Swagger definition, ExoSense will happily send and receive
   data from it.
@@ -45,6 +56,7 @@ streaming analytics services. They are:
   within the chosen host.
 
 ## Enabling Within ExoSense
+
 To enable an Insight within ExoSense:
 1. Create an Asset and add Signals to that Asset.
 1. Click the [+] button next to a Signal
@@ -72,8 +84,9 @@ To enable an Insight within ExoSense:
   file.
     * `get /info`
 
-      This endpoint is used to get high-level information about an Insight,
-      including the name displayed within the ExoSense UI.
+      This endpoint is used to get high-level information about an Insight.
+      The name displayed within the ExoSense UI, the Insight description, and
+      whether or not a `group_id` is required are supplied via this endpoint.
 
     * `get /insight/{fn}`
 
@@ -92,7 +105,7 @@ To enable an Insight within ExoSense:
 
     * `post /process`
 
-      This endpoint is used to process Signal data and return a new Signal
+      This endpoint is used to process Signal data and return a new Signal(s)
 1. Exchange Service beginning with the word "Insight" and using the Swagger
   file URL.
 1. Exchange Service added to your Business.
@@ -103,6 +116,7 @@ To enable an Insight within ExoSense:
 ### Murano Example
 
 #### Swagger File
+
 Modify the info, host, and basePath sections of the Swagger template:
 ```yaml
 swagger: "2.0"
@@ -124,10 +138,12 @@ basePath: / # Set this or the path according to your function
 ```
 
 #### Public URL
+
 Upload via [GitHub Gist](https://gist.github.com/) 
 or use [defunkt/gist](https://github.com/defunkt/gist)
 
 #### HTTP Service
+
 1. Create a Murano Application with a reasonable name (e.g. mydemoinsight)
 1. Using either Murano in a browser or with
   [MuranoCLI](http://docs.exosite.com/development/tools/murano-cli/),
@@ -140,6 +156,7 @@ or use [defunkt/gist](https://github.com/defunkt/gist)
     * `insightModule`
 
 #### Exchange Service
+
 * In Murano, go to IoT Marketplace and click on Publish on the left
 * Parameters:
   * Element name: *must* begin with "Insight" (e.g. "Insight Demo 01")
@@ -149,9 +166,11 @@ or use [defunkt/gist](https://github.com/defunkt/gist)
   * ... (fill the rest out as you see fit)
 
 #### Add Insight To Business
+
 Go to the Element you created in IoT Marketplace and add it to your Murano Business.
 
 #### Add Insight To ExoSense
+
 Go to the ExoSense instance Solution in Murano, and click the orange "Enable
 Services" button at the top right. Find the Service you just created and enable
 it. Your Insight is now available to use in ExoSense! Now, all you need to do is
