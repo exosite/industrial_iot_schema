@@ -77,7 +77,7 @@ paths:
     post:
       operationId: lifecycle
       description: |
-        Notifications of when a linkage that will call you process function is created or deleted.
+        Notifications of when a linkage that will call the process function is created or deleted.
       parameters:
         - name: body
           in: body
