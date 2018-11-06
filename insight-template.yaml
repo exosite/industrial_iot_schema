@@ -73,6 +73,22 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
 
+  /lifecycle:
+    post:
+      operationId: lifecycle
+      description: |
+        Notifications of when a linkage that will call the process function is created or deleted.
+      parameters:
+        - name: body
+          in: body
+          description: Lifecycle event
+          required: true
+          schema:
+            $ref: '#/definitions/LifecycleEvent'
+      responses:
+        default:
+          description: The response to this is ignored.
+
   /process: # The acutal path can be anything.
     post:
       operationId: process
@@ -116,6 +132,11 @@ definitions:
       description:
         type: string
         description: Additional text about this insight
+      wants_lifecycle_events:
+        type: boolean
+        description: |
+          True if this insight wants to be notified when linkages using it are created and deleted.
+          Defaults to false.
     required: [group_id_required]
 
   InsightsFilterParams:
@@ -281,6 +302,21 @@ definitions:
       - insights
       - total
       - count
+
+  LifecycleEvent:
+    type: object
+    description: A Lifecycle event
+    properties:
+      event:
+        type: string
+        description: What action caused this event
+        pattern: "(create|delete)"
+      id:
+        type: string
+        description: The unique id for the linkage that has the event.  This id will match in the calls to process.
+      args:
+        type: object
+        description: The arguments for this linkage that will be also passed to each call of process.
 
   SignalData:
     type: object
