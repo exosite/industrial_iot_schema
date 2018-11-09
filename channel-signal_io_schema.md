@@ -270,7 +270,7 @@ There are only two main types of signals that can represent state, but both have
 #### Binary
 Key (`data_type`): BINARY<br>
 Accepted Units (`data_unit`): Not used<br>
-Primitive Type (`primitive_type`): NUMERIC, BOOLEAN, STRING
+Primitive Type (`primitive_type`): NUMERIC, BOOLEAN, STRING<br>
 Required Property: `value_mapping`<br>
 Accepted Values: For NUMERIC, 1 or 0.  For BOOLEAN, true or false.  For STRING, a value from `value_mapping`<br>
 Notes: Strings such as ON,OFF,UP,DOWN,START,STOP
@@ -285,7 +285,7 @@ Notes: Strings such as ON,OFF,UP,DOWN,START,STOP
 #### Categorical
 Key (`data_type`): CATEGORICAL<br>
 Accepted Units (`data_unit`): Not used<br>
-Primitive Type (`primitive_type`): NUMERIC, STRING
+Primitive Type (`primitive_type`): NUMERIC, STRING<br>
 Required Property: `value_mapping`<br>
 Accepted Values: For NUMERIC, a key from `value_mapping`.  For STRING, a value from `value_mapping`<br>
 Notes: Strings such as ON, OFF, UP, DOWN, START, STOP, STOPING, RUNNING, ROTATING, IDLE
