@@ -288,11 +288,28 @@ Categorical|CATEGORICAL|`value_mapping`|Any string, or from list of common enume
 ### Generic Types
 For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.
 
-Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|Primitive Type|UI Unit Abbreviation|Notes
---|--|--|--|--|--
-String (unitless)|STRING|Not Used|STRING|na|Any string
-JSON (unitless)|JSON|Not Used|JSON|na|Any JSON blob
-Number (unitless)|Number|Not Used|NUMERIC|na|Any Real Number
+#### String (unitless)
+Key (`data_type`): STRING<br>
+Accepted Units (`data_unit`): Not Used<br>
+Primitive Type (`primitive_type`): STRING<br>
+UI Unit Abbreviation: na<br>
+Notes: Any string
+
+#### JSON (unitless)
+Key (`data_type`): JSON<br>
+Accepted Units (`data_unit`): Not Used<br>
+Primitive Type (`primitive_type`): JSON<br>
+UI Unit Abbreviation: na<br>
+Notes: Any JSON blob
+
+#### Number (unitless)
+Key (`data_type`): NUMBER<br>
+Accepted Units (`data_unit`): Not Used<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: na<br>
+Notes: Any Real Number
+
+
 
 *Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
 
@@ -350,7 +367,7 @@ Notes: --
 
 #### Angular acceleration
 Key (`data_type`): ANGULAR_ACCEL<br>
-Accepted Units (`data_unit`): RAD_PER_SEC2<br> ROTATIONS_PER_MIN2<br>DEG_PER_SEC2<br>
+Accepted Units (`data_unit`): RAD_PER_SEC2, ROTATIONS_PER_MIN2, DEG_PER_SEC2<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -364,14 +381,14 @@ Notes: not supported
 
 #### Angular Speed / Velocity
 Key (`data_type`): ANGULAR_VEL<br>
-Accepted Units (`data_unit`): RAD_PER_SEC<br>ROTATIONS_PER_MIN<br>DEG_PER_SEC<br>
+Accepted Units (`data_unit`): RAD_PER_SEC, ROTATIONS_PER_MIN, DEG_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
 #### Area
 Key (`data_type`): AREA<br>
-Accepted Units (`data_unit`): METER2<br>KILOMETER2<br>FEET2<br>INCH2<br>MILE2<br>
+Accepted Units (`data_unit`): METER2, KILOMETER2, FEET2, INCH2, MILE2<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -448,7 +465,7 @@ Notes: not supported
 
 #### Dynamic viscosity
 Key (`data_type`): DYNAMIC_VISCOSITY<br>
-Accepted Units (`data_unit`): CENTISTOKES<br>METERS2_PER_SEC<br>
+Accepted Units (`data_unit`): CENTISTOKES, METERS2_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -469,7 +486,7 @@ Notes: not supported
 
 #### Electric Current
 Key (`data_type`): ELEC_CURRENT<br>
-Accepted Units (`data_unit`): AMPERE<br>MILLIAMP<br>MICROAMP<br>
+Accepted Units (`data_unit`): AMPERE, MILLIAMP, MICROAMP<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -504,14 +521,14 @@ Notes: not supported
 
 #### Electrical Potential
 Key (`data_type`): ELEC_POTENTIAL<br>
-Accepted Units (`data_unit`): VOLT<br>MILLIVOLT<br>MICROVOLT<br>KILOVOLT<br>MEGAVOLT<br>
+Accepted Units (`data_unit`): VOLT, MILLIVOLT, MICROVOLT, KILOVOLT, MEGAVOLT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
 #### Electrical Resistance
 Key (`data_type`): ELEC_RESISTANCE<br>
-Accepted Units (`data_unit`): OHM<br>MILLIOHM<br>MICROOHM<br>KILOOHM<br>MEGAOHM<br>
+Accepted Units (`data_unit`): OHM, MILLIOHM, MICROOHM, KILOOHM, MEGAOHM<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -546,14 +563,14 @@ Notes: not supported
 
 #### Flow (Volumetric)
 Key (`data_type`): FLOW<br>
-Accepted Units (`data_unit`): METERS3_PER_SEC<br>PERCENT<br>SCFM<br>LITERS_PER_SEC<br>LITERS_PER_MIN<br>GALLONS_PER_SEC<br>GALLONS_PER_MIN<br>
+Accepted Units (`data_unit`): METERS3_PER_SEC, PERCENT, SCFM, LITERS_PER_SEC, LITERS_PER_MIN, GALLONS_PER_SEC, GALLONS_PER_MIN<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
 #### Flow (Mass)
 Key (`data_type`): FLOW_MASS<br>
-Accepted Units (`data_unit`): KILO_PER_SEC<br>LBS_PER_SEC<br>
+Accepted Units (`data_unit`): KILO_PER_SEC, LBS_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -567,7 +584,7 @@ Notes: --
 
 #### Frequency
 Key (`data_type`): FREQUENCY<br>
-Accepted Units (`data_unit`): HERTZ<br>KHZ<br>MHZ<br>
+Accepted Units (`data_unit`): HERTZ, KHZ, MHZ<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -581,7 +598,7 @@ Notes: not supported
 
 #### GPS / Location
 Key (`data_type`): LOCATION<br>
-Accepted Units (`data_unit`): LAT_LONG<br>LAT_LONG_ALT<br>
+Accepted Units (`data_unit`): LAT_LONG, LAT_LONG_ALT<br>
 Primitive Type (`primitive_type`): JSON<br>
 UI Unit Abbreviation: --<br>
 Notes: JSON payload example:<br> <pre><code>{"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}</code></pre>
@@ -630,7 +647,7 @@ Notes: not supported
 
 #### Impedance
 Key (`data_type`): IMPEDANCE<br>
-Accepted Units (`data_unit`): OHM<br>KILOOHM<br>MEGAOHM<br>
+Accepted Units (`data_unit`): OHM, KILOOHM, MEGAOHM<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -679,7 +696,7 @@ Notes: not supported
 
 #### Length
 Key (`data_type`): LENGTH<br>
-Accepted Units (`data_unit`): METERS<br>CENTIMETERS<br>KILOMETERS<br>MILLIMETERS<br>FEET<br>INCH<br>YARD<br>MILES<br>MICRONS<br>
+Accepted Units (`data_unit`): METERS, CENTIMETERS, KILOMETERS, MILLIMETERS, FEET, INCH, YARD, MILES, MICRONS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -735,7 +752,7 @@ Notes: not supported
 
 #### Mass
 Key (`data_type`): MASS<br>
-Accepted Units (`data_unit`): MILLIGRAM<br>GRAM<br>KILOGRAM<br>POUND<br>OZ<br>TON<br>METRIC_TON<br>
+Accepted Units (`data_unit`): MILLIGRAM, GRAM, KILOGRAM, POUND, OZ, TON, METRIC_TON<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -819,21 +836,21 @@ Notes: not supported
 
 #### Plane angle
 Key (`data_type`): ANGLE<br>
-Accepted Units (`data_unit`): RADIAN<br>DEGREE<br>ARCMINUTE<br>ARCSECOND<br>
+Accepted Units (`data_unit`): RADIAN, DEGREE, ARCMINUTE, ARCSECOND<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
 #### Power
 Key (`data_type`): POWER<br>
-Accepted Units (`data_unit`): WATT<br>MILLIWATT<br>KILOWATT<br>MEGAWATT<br>
+Accepted Units (`data_unit`): WATT, MILLIWATT, KILOWATT, MEGAWATT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
 #### Pressure
 Key (`data_type`): PRESSURE<br>
-Accepted Units (`data_unit`): MBAR<br>BAR<br>PSI<br>TORR<br>PASCAL<br>ATMOSPHERE<br>
+Accepted Units (`data_unit`): MBAR, BAR, PSI, TORR, PASCAL, ATMOSPHERE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -903,7 +920,7 @@ Notes: not supported
 
 #### Speed
 Key (`data_type`): SPEED<br>
-Accepted Units (`data_unit`): METER_PER_SEC<br>MPH<br>KPH<br>IN_PER_SEC<br>
+Accepted Units (`data_unit`): METER_PER_SEC, MPH, KPH, IN_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -959,7 +976,7 @@ Notes: not supported
 
 #### Temperature
 Key (`data_type`): TEMPERATURE<br>
-Accepted Units (`data_unit`): KELVIN<br>DEG_FAHRENHEIT<br>DEG_CELSIUS<br>RANKINE<br>
+Accepted Units (`data_unit`): KELVIN, DEG_FAHRENHEIT, DEG_CELSIUS, RANKINE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -973,14 +990,14 @@ Notes: not supported
 
 #### Time
 Key (`data_type`): TIME<br>
-Accepted Units (`data_unit`): SECONDS<br>MILLISECOND<br>MINUTE<br>HOUR<br>DAY<br>YEAR<br>
+Accepted Units (`data_unit`): SECONDS, MILLISECOND, MINUTE, HOUR, DAY, YEAR<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
 #### Torque
 Key (`data_type`): TORQUE<br>
-Accepted Units (`data_unit`): NEWTON_METER<br>POUND_FOOT<br>
+Accepted Units (`data_unit`): NEWTON_METER, POUND_FOOT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -994,7 +1011,7 @@ Notes: --
 
 #### Volume
 Key (`data_type`): VOLUME<br>
-Accepted Units (`data_unit`): METER3<br>FEET3<br>LITRE<br>GALLON<br>PINT<br>INCH3<br>CENTIMETER3<br>
+Accepted Units (`data_unit`): METER3, FEET3, LITRE, GALLON, PINT, INCH3, CENTIMETER3<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
@@ -1022,7 +1039,7 @@ Notes: not supported
 
 #### Weight
 Key (`data_type`): WEIGHT<br>
-Accepted Units (`data_unit`): NEWTON<br>POUND<br>
+Accepted Units (`data_unit`): NEWTON, POUND<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
