@@ -70,8 +70,8 @@ channels: # "device channel" as opposed to an "asset signal"
     display_name: "Human readable channel name" 
     description: "One-liner description (optional)",
     properties:
-      data_type: "BINARY", # taken from dictionary of types
-      primitive_type: "${defined_primitive_type_name}" # See "types" section - in this case it would be "NUMERIC"
+      data_type: "CATEGORICAL", # taken from dictionary of types
+      primitive_type: "${defined_primitive_type_name}" # See "types" section - in this case it would be "STRING"
       value_mapping:
           0: "${lookup_key_name}" # e.g. "ON"
           1: "${lookup_key_name}" # e.g. "DOWN"
@@ -124,8 +124,8 @@ channels: # "device channel" as opposed to an "asset signal"
     "display_name": "Input State",
     "description": "Machine Input State Information",
     "properties": {
-      "data_type": "BINARY",
-      "primitive_type": "NUMERIC",
+      "data_type": "CATEGORICAL",
+      "primitive_type": "STRING",
       "value_mapping": {
           "0": "ON",
           "1": "DOWN"  
