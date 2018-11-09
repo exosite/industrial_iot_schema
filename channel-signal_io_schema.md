@@ -1,21 +1,21 @@
 # ExoSense™️ Channel and Signal Data Schema
 
 
-**Document Status:** Version 2.2 _Draft_
+**Document Status:** Version 3.0 _Draft_
 
 ## Introduction
-This document defines the information required to interface with ExoSense™️ from the “first mile” perspective of the connected device or gateway, as well as describing how this information is carried on into the “last mile” or client-side APIs and Application.
+This document defines the information required to interface with ExoSense™️ from the “first mile” perspective of the connected device or gateway, as well as describing how this information is carried on into the “last mile” or client-side Application.
 
-This document will not cover how to interact with Murano’s product/device interfaces, including how to provision a device inside of a product defined in Murano, how to communicate with the [HTTP](http://docs.exosite.com/reference/products/device-api/http/) or [MQTT](http://docs.exosite.com/reference/products/device-api/mqtt/) interfaces or other topics covered in [Murano’s public documentation](https://docs.exosite.com).  It will however cover how to use some of these interfaces in certain situations, and will define a standard product resource list.
+This document is meant for device developers building native support into the device or a proxy/gateway service for connection to ExoSense via an IoT service and for those looking to gain a deeper understanding of the architecture of channels and signals in the ExoSense environement.  It is not required for typical regular use of the ExoSense application itself.
 
 ### Definitions
 The reader of this document should have a grasp on the following items or will need to for this document to make sense.
 
 Term|Description|More Information
 --|--|---
-Murano|Exosite's IoT Platform|[Murano Docs](https://docs.exosite.com)
-ExoSense™️|Industrial IoT Application|Built on top of Murano
-Device/Gateway|A thing with a IP Connection sending data to a platform|
+Murano|IoT Platform|[Murano Docs](https://docs.exosite.com)
+ExoSense™️|Industrial IoT Application|
+Device/Gateway|A thing with an IP Connection sending data to a platform|
 Sensors|Conencted to Device/Gateway via wired or wireless protocol or IO| 
 Channel|A individual piece information sent to ExoSense by a device.|Typically a sensor output and typically a device is sending many channels of data.
 Signal|An ExoSense concept similiar to channel but as a part of a virtual Asset object.  Source is typically a device channel but doesn't have to be.|
@@ -23,27 +23,28 @@ Asset|An ExoSense concept for digitzing an Asset (a machine, system, eqiupment, 
 Fieldbus|Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc|
 
 
-## Murano Device Interface Configuration Requirements
+## IoT Platform Device Interface Configuration Requirements
 
-The Murano Product Solution interface requires the following specific resources are setup regardless of the connection type (MQTT, HTTP, etc)
-These resources are are:
+ExoSense uses the Murano IoT Platform device interface for it's device connectivity.  The following information details the specific resources used (HTTP resources / MQTT topics) regardless of the transport protocol  (MQTT or HTTP).
 
-Resource Name|Status|Cloud Writable|Description
+*Note: This document does not cover most details of how to interact with Murano’s IoT product/device interfaces including how to provision a device inside of a product defined in Murano, how to communicate with the [HTTP](http://docs.exosite.com/reference/products/device-api/http/) or [MQTT](http://docs.exosite.com/reference/products/device-api/mqtt/) APIs or other topics covered in [Murano’s public documentation](https://docs.exosite.com).*
+
+**Device resource use is as follows:**
+
+Resource Name|ExoSense Status|Who Can Write To|Description
 --|--|--|---
-data_in|supported|yes|Used to send the live data in the format defined in Section 4
-config_io|supported|yes|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
-data_out|*planned*|yes|To be defined in the future - used for writing commands to devices
+data_in|supported|Device|Used to send data from device to cloud in the format defined in Section 4
+config_io|supported|Device / App|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
+data_out|*planned*|App|To be defined in the future - used for writing commands to devices
 config_oem|*reserved*|tbd|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
 config_applications|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)
 config_interfaces|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)  
 config_rules |*reserved*|tbd|Possibly to be defined in the future
 config_network|*reserved*|tbd|Initial Concepts in Appendix, but not implemented
-raw_data|*deprecated*|-|Replaced by data_in
 
 
-
-## Device/Gateway Channel Configuration Schema
-This section defines the Channel Configuration object (sometimes called a device or gateway template).  The idea is data used by ExoSense flows as 'Channels' to and from devices.  These device channel sources can then be mapped to Asset signals.
+## Device / Gateway Channel Configuration Schema
+This section defines the Channel Configuration object (sometimes called a device or gateway template).  This is the 'contract' for each individual device as to what channels of data it will be sending. The idea is data used by ExoSense flows as 'Channels' to and from devices.  These device channel sources can then be mapped as sources to Asset signals in the ExoSense application.
 
 A gateway or device will require some level of configuration in order to do several things:
 
@@ -55,7 +56,7 @@ Of note for this section - the channel (io) configuration will be stored in the 
 
 The configuration below wraps a user-defined value with a ${...}, and other names/keys are meant to be an exact match that will be used by ExoSense.  Some values for a key are filled in with example strings - noted with an “e.g.”.
 
-**Channel Configuration Definition**
+**Channel Configuration Definition Description**
 ```yaml
 # config_io channel definition 
 last_edited: "{$date_timestamp}" # e.g. 2018-03-28T13:27:39+00:00 
@@ -110,7 +111,7 @@ channels: # "device channel" as opposed to an "asset signal"
         down_sample : "${MIN|MAX|AVG|ACT}" # Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
         report_on_change : "${true|false}" # optional - default false (always report on start-up)
 ```
-**Example config_io in JSON format**
+**Example config_io (JSON format)**
 ```json
 "last_edited": "2018-03-28T13:27:39+00:00 ",
 "last_editor" : "user",
@@ -184,10 +185,9 @@ More Examples can be found below
 
 
 ## Device Data Transport Schema
-When the gateway and cloud share a common configuration definition we can omit any of the unchanged or information that won’t change on an update for a value that has changed since the last sensor reading.
+Having a common shared channel configuration (a contract essentially) between the device and the cloud/application allows us to keep the actual data sent betwee devices and the cloud to a minimum - focusing only on the sending of values for channels rather than unecesary configuration information that rarely changes.  
 
-To that end, we want to define how the over-the-wire information will be sent after the configuration is shared in both places.
-In this section we assume that a single Murano resource exists for writing all data from the gateway to the cloud - it will be referred to going forward as “data_in” - which is a common name used on many projects previously.
+The resource used for writing channel values from devices to the cloud/application is “data_in”, as mentioned in the resource section.
 
 > _Note: A future consideration moving beyond “monitoring” to control - we would add a second resource in Murano called “data_out” when the cloud UI writes a value to the gateway to change an actuator value._
 
@@ -225,8 +225,9 @@ Utilize the Record API from Murano, and apply the array of signals to each times
 This requires that the clock be sync’d on the gateway to the global network time via ntp which is used by our servers in our cluster. Our recommendation will be that the ntp server syncs with the gateway at least once every time the power is cycled on the gateway, and once per 12-24 hours of continuous operation time.
 
 ### Channel Error Handling
-Special Considerations for Errors
-When an error occurs for a signal, the payload will change by adding the protected keyword property “error” to the JSON root object like so:
+*Special Considerations for Errors*
+
+When an error occurs for a signal, the payload will change by adding the protected keyword property `__error` to the JSON root object like so:
 
 ```json
 {
@@ -245,7 +246,7 @@ _Note: the device can report a channel data payload, even if the data is erroneo
 
 ## Data Type Definitions
 
-For each data point there is a possible type, which predominantly relates to the units of the signal value, and the possible values for a given signal.
+For each channel there is a specific type, which signal inherit from the channel.  This type relates to the units of the channel/signal value, format, and the possible values for a given signal.
 
 In the section below we will begin to note what comprises a “type”, and what the different types are.
 
