@@ -289,7 +289,7 @@ Categorical|CATEGORICAL|`value_mapping`|Any string, or from list of common enume
 For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.
 
 Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|Primitive Type|UI Unit Abbreviation|Notes
---|--|--|--|--
+--|--|--|--|--|--
 String (unitless)|STRING|Not Used|STRING|na|Any string
 JSON (unitless)|JSON|Not Used|JSON|na|Any JSON blob
 Number (unitless)|Number|Not Used|NUMERIC|na|Any Real Number
@@ -322,11 +322,11 @@ Many of these types will represent base physical measurements (temperature, leng
 
 #### Acceleration
 
-Key<br>(`data_type`)|ACCELERATION
-Accepted Units<br>(`data_units`)|METER_PER_SEC2
-Primitive Type<br>(`primitive_type`)|NUMERIC
-UI Unit Abbreviation|–
-Notes|
+|Key<br>(`data_type`)|ACCELERATION|
+|Accepted Units<br>(`data_units`)|METER_PER_SEC2|
+|Primitive Type<br>(`primitive_type`)|NUMERIC|
+|UI Unit Abbreviation|–|
+|Notes||
 
 
 |Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|Primitive Type|UI Unit Abbreviation|Notes|
