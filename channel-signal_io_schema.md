@@ -320,118 +320,720 @@ The following assume a fixed unit type is provided as a part of the origination 
 
 Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).
 
+#### Abasement
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
 #### Acceleration
 Key (`data_type`): ACCELERATION<br>
-Accepted Units (`data_units`): METER_PER_SEC2<br>
+Accepted Units (`data_unit`): METER_PER_SEC2<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: –<br>
-Notes: 
+UI Unit Abbreviation: --<br>
+Notes: --
 
+#### Absorbed dose rate
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
 
-|Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|Primitive Type|UI Unit Abbreviation|Notes|
-|--|--|--|--|--|--|
-Abasement|--|--|NUMERIC|--|not supported
-Acceleration|ACCELERATION|METER_PER_SEC2|NUMERIC|--|--
-Absorbed dose rate|--|--|NUMERIC|--|not supported
-Amount of Substance|AMOUNT|MOLE|NUMERIC|--|--
-Angular acceleration|ANGULAR_ACCEL|RAD_PER_SEC2<br> ROTATIONS_PER_MIN2<br>DEG_PER_SEC2|NUMERIC|--|--
-Angular momentum|--|--|NUMERIC|--|not supported
-Angular Speed / Velocity|ANGULAR_VEL|RAD_PER_SEC<br>ROTATIONS_PER_MIN<br>DEG_PER_SEC|NUMERIC|--|--
-Area|AREA|METER2<br>KILOMETER2<br>FEET2<br>INCH2<br>MILE2|NUMERIC|--|--
-Area density|--|--|NUMERIC|--|not supported
-Capacitance|CAPACITANCE|FARAD|NUMERIC|--|--
-Catalytic activity|--|--|NUMERIC|--|not supported
-Catalytic activity concentration|--|--|NUMERIC|--|not supported
-Chemical Potential|--|--|NUMERIC|--|not supported
-Crackle|--|--|NUMERIC|--|not supported
-Currency|CURRENCY|AFN, ALL, DZD, USD, EUR, AOA, XCD, ARS, AMD, AWG, AUD, AZN, BSD, BHD, BDT, BBD, BYR, BZD, XOF, BMD, BTN, INR, BOB, BOV, BAM, BWP, NOK, BRL, BND, BGN, BIF, CVE, KHR, XAF, CAD, KYD, CLF, CLP, CNY, COP, COU, KMF, CDF, NZD, CRC, HRK, CUC, CUP, ANG, CZK, DKK, DJF, DOP, EGP, SVC, ERN, ETB, FKP, FJD, XPF, GMD, GEL, GHS, GIP, GTQ, GBP, GNF, GYD, HTG, HNL, HKD, HUF, ISK, IDR, XDR, IRR, IQD, ILS, JMD, JPY, JOD, KZT, KES, KPW, KRW, KWD, KGS, LAK, LBP, LSL, ZAR, LRD, LYD, CHF, MOP, MKD, MGA, MWK, MYR, MVR, MRU, MUR, XUA, MXN, MXV, MDL, MNT, MAD, MZN, MMK, NAD, NPR, NIO, NGN, OMR, PKR, PAB, PGK, PYG, PEN, PHP, PLN, QAR, RON, RUB, RWF, SHP, WST, STN, SAR, RSD, SCR, SLL, SGD, XSU, SBD, SOS, SSP, LKR, SDG, SRD, SZL, SEK, CHE, CHW, SYP, TWD, TJS, TZS, THB, TOP, TTD, TND, TRY, TMT, UGX, UAH, AED, USN, UYI, UYU, UZS, VUV, VEF, VND, YER, ZMW, ZWL|NUMERIC|--|Currency codes (based on list found here: https://www.iban.com/currency-codes.html) 
-Current density|--|--|NUMERIC|--|not supported
-Density|DENSITY|KG_PER_M3|NUMERIC|--|--
-Dose equivalent|--|--|NUMERIC|--|not supported
-Dynamic viscosity|DYNAMIC_VISCOSITY|CENTISTOKES<br>METERS2_PER_SEC|NUMERIC|--|--
-Electric Charge|--|--|NUMERIC|--|not supported
-Electric Charge Density|--|--|NUMERIC|--|not supported
-Electric Current|ELEC_CURRENT|AMPERE<br>MILLIAMP<br>MICROAMP|NUMERIC|--|--
-Electric Displacement|--|--|NUMERIC|--|not supported
-Electric Field Strength|--|--|NUMERIC|--|not supported
-Electrical Conductance|--|--|NUMERIC|--|not supported
-Electrical Conductivity|--|--|NUMERIC|--|not supported
-Electrical Potential|ELEC_POTENTIAL|VOLT<br>MILLIVOLT<br>MICROVOLT<br>KILOVOLT<br>MEGAVOLT|NUMERIC|--|--
-Electrical Resistance|ELEC_RESISTANCE|OHM<br>MILLIOHM<br>MICROOHM<br>KILOOHM<br>MEGAOHM|NUMERIC|--|--
-Electrical resistivity|--|--|NUMERIC|--|not supported
-Energy|--|--|NUMERIC|--|not supported
-Energy density|--|--|NUMERIC|--|not supported
-Entropy|--|--|NUMERIC|--|not supported
-Flow (Volumetric)|FLOW|METERS3_PER_SEC<br>PERCENT<br>SCFM<br>LITERS_PER_SEC<br>LITERS_PER_MIN<br>GALLONS_PER_SEC<br>GALLONS_PER_MIN|NUMERIC|--|--
-Flow (Mass)|FLOW_MASS|KILO_PER_SEC<br>LBS_PER_SEC|NUMERIC|--|--
-Force|FORCE|NEWTON|NUMERIC|--|--
-Frequency|FREQUENCY|HERTZ<br>KHZ<br>MHZ|NUMERIC|--|--
-Fuel efficiency|--|--|NUMERIC|--|not supported
-GPS / Location|LOCATION|LAT_LONG<br>LAT_LONG_ALT|JSON|--|JSON payload example:<br> <pre><code>{"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}</code></pre>
-Half-life|--|--|NUMERIC|--|not supported
-Heat|HEAT|--|NUMERIC|--|not supported
-Heat capacity|--|--|NUMERIC|--|not supported
-Heat flux density|--|--|NUMERIC|--|not supported
-Humidity|HUMIDITY|PERCENT|NUMERIC|%|--
-Illuminance|--|--|NUMERIC|--|not supported
-Impedance|IMPEDANCE|OHM<br>KILOOHM<br>MEGAOHM|NUMERIC|--|--
-Impulse|--|--|NUMERIC|--|not supported
-Inductance|--|--|NUMERIC|--|not supported
-Irradiance|--|--|NUMERIC|--|not supported
-Intensity|--|--|NUMERIC|--|not supported
-Jerk|JERK|METER_PER_SEC3|NUMERIC|--|--
-Jounce|--|--|NUMERIC|--|not supported
-Length|LENGTH|METERS<br>CENTIMETERS<br>KILOMETERS<br>MILLIMETERS<br>FEET<br>INCH<br>YARD<br>MILES<br>MICRONS|NUMERIC|--|--
-Linear density|--|--|NUMERIC|--|not supported
-Luminous Intensity|LUMINOUS_INTENSITY|CANDELA|NUMERIC|--|--
-Luminious flux|--|--|NUMERIC|--|not supported
-Magnetic field strength|--|--|NUMERIC|--|not supported
-Magnetic flux|--|--|NUMERIC|--|not supported
-Magnetic flux density|--|--|NUMERIC|--|not supported
-Magnetization|--|--|NUMERIC|--|not supported
-Mass|MASS|MILLIGRAM<br>GRAM<br>KILOGRAM<br>POUND<br>OZ<br>TON<br>METRIC_TON|NUMERIC|--|--
-Mass fraction|--|--|NUMERIC|--|not supported
-Mean lifetime|--|--|NUMERIC|--|not supported
-Molar concentration|--|--|NUMERIC|--|not supported
-Molar energy|--|--|NUMERIC|--|not supported
-Molar entropy|--|--|NUMERIC|--|not supported
-Molar heat capacity|--|--|NUMERIC|--|not supported
-Moment of inertia|--|--|NUMERIC|--|not supported
-Momentum|--|--|NUMERIC|--|not supported
-Percentage|PERCENTAGE|PERCENT|NUMERIC|%|--
-Permeability|--|--|NUMERIC|--|not supported
-Permittivity|--|--|NUMERIC|--|not supported
-Plane angle|ANGLE|RADIAN<br>DEGREE<br>ARCMINUTE<br>ARCSECOND|NUMERIC|--|--
-Power|POWER|WATT<br>MILLIWATT<br>KILOWATT<br>MEGAWATT|NUMERIC|--|--
-Pressure|PRESSURE|MBAR<br>BAR<br>PSI<br>TORR<br>PASCAL<br>ATMOSPHERE|NUMERIC|--|--
-Pop|--|--|NUMERIC|--|not supported
-Radioactive Activity|--|--|NUMERIC|--|not supported
-Radioactive Dose|--|--|NUMERIC|--|not supported
-Radiance|--|--|NUMERIC|--|not supported
-Radiant intensity|--|--|NUMERIC|--|not supported
-Reaction rate|--|--|NUMERIC|--|not supported
-Refraction rate|--|--|NUMERIC|--|not supported
-Refractive index|--|--|NUMERIC|--|not supported
-Solid angle|--|--|NUMERIC|--|not supported
-Speed|SPEED|METER_PER_SEC<br>MPH<br>KPH<br>IN_PER_SEC|NUMERIC|--|--
-Specific Energy|--|--|NUMERIC|--|not supported
-Specific heat capacity|--|--|NUMERIC|--|not supported
-Specific Volume|--|--|NUMERIC|--|not supported
-Spin|--|--|NUMERIC|--|not supported
-Strain|STRAIN|PERCENT|NUMERIC|%|--
-Stress|--|--|NUMERIC|--|not supported
-Surface tension|--|--|NUMERIC|--|not supported
-Temperature|TEMPERATURE|KELVIN<br>DEG_FAHRENHEIT<br>DEG_CELSIUS<br>RANKINE|NUMERIC|--|--
-Thermal conductivity|--|--|NUMERIC|--|not supported
-Time|TIME|SECONDS<br>MILLISECOND<br>MINUTE<br>HOUR<br>DAY<br>YEAR|NUMERIC|--|--
-Torque|TORQUE|NEWTON_METER<br>POUND_FOOT|NUMERIC|--|--
-Velocity|VELOCITY|METER_PER_SEC|NUMERIC|--|--
-Volume|VOLUME|METER3<br>FEET3<br>LITRE<br>GALLON<br>PINT<br>INCH3<br>CENTIMETER3|NUMERIC|--|--
-Wavelength|--|--|NUMERIC|--|not supported
-Wavenumber|--|--|NUMERIC|--|not supported
-Wavevector|--|--|NUMERIC|--|not supported
-Weight|WEIGHT|NEWTON<br>POUND|NUMERIC|--|--
-Work|--|--|NUMERIC|--|not supported
+#### Amount of Substance
+Key (`data_type`): AMOUNT<br>
+Accepted Units (`data_unit`): MOLE<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Angular acceleration
+Key (`data_type`): ANGULAR_ACCEL<br>
+Accepted Units (`data_unit`): RAD_PER_SEC2<br> ROTATIONS_PER_MIN2<br>DEG_PER_SEC2<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Angular momentum
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Angular Speed / Velocity
+Key (`data_type`): ANGULAR_VEL<br>
+Accepted Units (`data_unit`): RAD_PER_SEC<br>ROTATIONS_PER_MIN<br>DEG_PER_SEC<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Area
+Key (`data_type`): AREA<br>
+Accepted Units (`data_unit`): METER2<br>KILOMETER2<br>FEET2<br>INCH2<br>MILE2<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Area density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Capacitance
+Key (`data_type`): CAPACITANCE<br>
+Accepted Units (`data_unit`): FARAD<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Catalytic activity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Catalytic activity concentration
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Chemical Potential
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Crackle
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Currency
+Key (`data_type`): CURRENCY<br>
+Accepted Units (`data_unit`): AFN, ALL, DZD, USD, EUR, AOA, XCD, ARS, AMD, AWG, AUD, AZN, BSD, BHD, BDT, BBD, BYR, BZD, XOF, BMD, BTN, INR, BOB, BOV, BAM, BWP, NOK, BRL, BND, BGN, BIF, CVE, KHR, XAF, CAD, KYD, CLF, CLP, CNY, COP, COU, KMF, CDF, NZD, CRC, HRK, CUC, CUP, ANG, CZK, DKK, DJF, DOP, EGP, SVC, ERN, ETB, FKP, FJD, XPF, GMD, GEL, GHS, GIP, GTQ, GBP, GNF, GYD, HTG, HNL, HKD, HUF, ISK, IDR, XDR, IRR, IQD, ILS, JMD, JPY, JOD, KZT, KES, KPW, KRW, KWD, KGS, LAK, LBP, LSL, ZAR, LRD, LYD, CHF, MOP, MKD, MGA, MWK, MYR, MVR, MRU, MUR, XUA, MXN, MXV, MDL, MNT, MAD, MZN, MMK, NAD, NPR, NIO, NGN, OMR, PKR, PAB, PGK, PYG, PEN, PHP, PLN, QAR, RON, RUB, RWF, SHP, WST, STN, SAR, RSD, SCR, SLL, SGD, XSU, SBD, SOS, SSP, LKR, SDG, SRD, SZL, SEK, CHE, CHW, SYP, TWD, TJS, TZS, THB, TOP, TTD, TND, TRY, TMT, UGX, UAH, AED, USN, UYI, UYU, UZS, VUV, VEF, VND, YER, ZMW, ZWL<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: Currency codes (based on list found here: https://www.iban.com/currency-codes.html) 
+
+#### Current density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Density
+Key (`data_type`): DENSITY<br>
+Accepted Units (`data_unit`): KG_PER_M3<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Dose equivalent
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Dynamic viscosity
+Key (`data_type`): DYNAMIC_VISCOSITY<br>
+Accepted Units (`data_unit`): CENTISTOKES<br>METERS2_PER_SEC<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Electric Charge
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Electric Charge Density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Electric Current
+Key (`data_type`): ELEC_CURRENT<br>
+Accepted Units (`data_unit`): AMPERE<br>MILLIAMP<br>MICROAMP<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Electric Displacement
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Electric Field Strength
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Electrical Conductance
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Electrical Conductivity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Electrical Potential
+Key (`data_type`): ELEC_POTENTIAL<br>
+Accepted Units (`data_unit`): VOLT<br>MILLIVOLT<br>MICROVOLT<br>KILOVOLT<br>MEGAVOLT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Electrical Resistance
+Key (`data_type`): ELEC_RESISTANCE<br>
+Accepted Units (`data_unit`): OHM<br>MILLIOHM<br>MICROOHM<br>KILOOHM<br>MEGAOHM<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Electrical resistivity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Energy
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Energy density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Entropy
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Flow (Volumetric)
+Key (`data_type`): FLOW<br>
+Accepted Units (`data_unit`): METERS3_PER_SEC<br>PERCENT<br>SCFM<br>LITERS_PER_SEC<br>LITERS_PER_MIN<br>GALLONS_PER_SEC<br>GALLONS_PER_MIN<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Flow (Mass)
+Key (`data_type`): FLOW_MASS<br>
+Accepted Units (`data_unit`): KILO_PER_SEC<br>LBS_PER_SEC<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Force
+Key (`data_type`): FORCE<br>
+Accepted Units (`data_unit`): NEWTON<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Frequency
+Key (`data_type`): FREQUENCY<br>
+Accepted Units (`data_unit`): HERTZ<br>KHZ<br>MHZ<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Fuel efficiency
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### GPS / Location
+Key (`data_type`): LOCATION<br>
+Accepted Units (`data_unit`): LAT_LONG<br>LAT_LONG_ALT<br>
+Primitive Type (`primitive_type`): JSON<br>
+UI Unit Abbreviation: --<br>
+Notes: JSON payload example:<br> <pre><code>{"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}</code></pre>
+
+#### Half-life
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Heat
+Key (`data_type`): HEAT<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Heat capacity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Heat flux density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Humidity
+Key (`data_type`): HUMIDITY<br>
+Accepted Units (`data_unit`): PERCENT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: %<br>
+Notes: --
+
+#### Illuminance
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Impedance
+Key (`data_type`): IMPEDANCE<br>
+Accepted Units (`data_unit`): OHM<br>KILOOHM<br>MEGAOHM<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Impulse
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Inductance
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Irradiance
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Intensity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Jerk
+Key (`data_type`): JERK<br>
+Accepted Units (`data_unit`): METER_PER_SEC3<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Jounce
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Length
+Key (`data_type`): LENGTH<br>
+Accepted Units (`data_unit`): METERS<br>CENTIMETERS<br>KILOMETERS<br>MILLIMETERS<br>FEET<br>INCH<br>YARD<br>MILES<br>MICRONS<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Linear density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Luminous Intensity
+Key (`data_type`): LUMINOUS_INTENSITY<br>
+Accepted Units (`data_unit`): CANDELA<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Luminious flux
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Magnetic field strength
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Magnetic flux
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Magnetic flux density
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Magnetization
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Mass
+Key (`data_type`): MASS<br>
+Accepted Units (`data_unit`): MILLIGRAM<br>GRAM<br>KILOGRAM<br>POUND<br>OZ<br>TON<br>METRIC_TON<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Mass fraction
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Mean lifetime
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Molar concentration
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Molar energy
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Molar entropy
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Molar heat capacity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Moment of inertia
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Momentum
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Percentage
+Key (`data_type`): PERCENTAGE<br>
+Accepted Units (`data_unit`): PERCENT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: %<br>
+Notes: --
+
+#### Permeability
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Permittivity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Plane angle
+Key (`data_type`): ANGLE<br>
+Accepted Units (`data_unit`): RADIAN<br>DEGREE<br>ARCMINUTE<br>ARCSECOND<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Power
+Key (`data_type`): POWER<br>
+Accepted Units (`data_unit`): WATT<br>MILLIWATT<br>KILOWATT<br>MEGAWATT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Pressure
+Key (`data_type`): PRESSURE<br>
+Accepted Units (`data_unit`): MBAR<br>BAR<br>PSI<br>TORR<br>PASCAL<br>ATMOSPHERE<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Pop
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Radioactive Activity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Radioactive Dose
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Radiance
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Radiant intensity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Reaction rate
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Refraction rate
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Refractive index
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Solid angle
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Speed
+Key (`data_type`): SPEED<br>
+Accepted Units (`data_unit`): METER_PER_SEC<br>MPH<br>KPH<br>IN_PER_SEC<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Specific Energy
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Specific heat capacity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Specific Volume
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Spin
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Strain
+Key (`data_type`): STRAIN<br>
+Accepted Units (`data_unit`): PERCENT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: %<br>
+Notes: --
+
+#### Stress
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Surface tension
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Temperature
+Key (`data_type`): TEMPERATURE<br>
+Accepted Units (`data_unit`): KELVIN<br>DEG_FAHRENHEIT<br>DEG_CELSIUS<br>RANKINE<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Thermal conductivity
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Time
+Key (`data_type`): TIME<br>
+Accepted Units (`data_unit`): SECONDS<br>MILLISECOND<br>MINUTE<br>HOUR<br>DAY<br>YEAR<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Torque
+Key (`data_type`): TORQUE<br>
+Accepted Units (`data_unit`): NEWTON_METER<br>POUND_FOOT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Velocity
+Key (`data_type`): VELOCITY<br>
+Accepted Units (`data_unit`): METER_PER_SEC<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Volume
+Key (`data_type`): VOLUME<br>
+Accepted Units (`data_unit`): METER3<br>FEET3<br>LITRE<br>GALLON<br>PINT<br>INCH3<br>CENTIMETER3<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Wavelength
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Wavenumber
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Wavevector
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
+#### Weight
+Key (`data_type`): WEIGHT<br>
+Accepted Units (`data_unit`): NEWTON<br>POUND<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: --
+
+#### Work
+Key (`data_type`): --<br>
+Accepted Units (`data_unit`): --<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: --<br>
+Notes: not supported
+
 
 ## Device Channel Protocol Interfaces
 This section defines the supported protocol interfaces and parameters.
