@@ -321,7 +321,7 @@ The following assume a fixed unit type is provided as a part of the origination 
 Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).
 
 #### Acceleration
-
+|--|--|
 |Key<br>(`data_type`)|ACCELERATION|
 |Accepted Units<br>(`data_units`)|METER_PER_SEC2|
 |Primitive Type<br>(`primitive_type`)|NUMERIC|
