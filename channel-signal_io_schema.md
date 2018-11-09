@@ -267,8 +267,6 @@ A primitive type describes the actual underlying encoding used for values.  Ther
 
 There are only two main types of signals that can represent state, but both have a requirement that the values aren’t fixed in their labeling, which means they must be defined per-signal.
 
-Type|Key<br>(`data_type`)|Required Property|Accpted Values|Notes
---|--|--|--|--
 #### Binary
 Key (`data_type`): BINARY<br>
 Accepted Units (`data_unit`): Not used<br>
