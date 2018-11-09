@@ -269,15 +269,28 @@ There are only two main types of signals that can represent state, but both have
 
 Type|Key<br>(`data_type`)|Required Property|Accpted Values|Notes
 --|--|--|--|--
-Binary|BINARY|`value_mapping`|Any string, or from list of common enumerated types: ON,OFF,UP,DOWN,START,STOP|An integer value - typically 1 or 0 sent from devices, OR exact match string.
-Categorical|CATEGORICAL|`value_mapping`|Any string, or from list of common enumerated types|Integer value, or exact match string.  Future: Evaluate if it is useful to have translated words for common multi-state values - e.g. ON, OFF, UP, DOWN, START, STOP, STOPING, RUNNING, ROTATING, IDLE
-
+#### Binary
+Key (`data_type`): BINARY<br>
+Accepted Units (`data_unit`): Not used<br>
+Primitive Type (`primitive_type`): NUMERIC, BOOLEAN, STRING
+Required Property: `value_mapping`<br>
+Accepted Values: For NUMERIC, 1 or 0.  For BOOLEAN, true or false.  For STRING, a value from `value_mapping`<br>
+Notes: Strings such as ON,OFF,UP,DOWN,START,STOP
 
 **Example Binary Channel**
 ```json
 
 
 ```
+
+
+#### Categorical
+Key (`data_type`): CATEGORICAL<br>
+Accepted Units (`data_unit`): Not used<br>
+Primitive Type (`primitive_type`): NUMERIC, STRING
+Required Property: `value_mapping`<br>
+Accepted Values: For NUMERIC, a key from `value_mapping`.  For STRING, a value from `value_mapping`<br>
+Notes: Strings such as ON, OFF, UP, DOWN, START, STOP, STOPING, RUNNING, ROTATING, IDLE
 
 **Example Categorical Channel**
 ```json
@@ -295,12 +308,24 @@ Primitive Type (`primitive_type`): STRING<br>
 UI Unit Abbreviation: na<br>
 Notes: Any string
 
+**Example String Channel**
+```json
+
+
+```
+
 #### JSON (unitless)
 Key (`data_type`): JSON<br>
 Accepted Units (`data_unit`): Not Used<br>
 Primitive Type (`primitive_type`): JSON<br>
 UI Unit Abbreviation: na<br>
 Notes: Any JSON blob
+
+**Example JSON Channel**
+```json
+
+
+```
 
 #### Number (unitless)
 Key (`data_type`): NUMBER<br>
@@ -309,29 +334,15 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: na<br>
 Notes: Any Real Number
 
-
-
-*Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
-
-#### Examples
-**Example String Channel**
-```json
-
-
-```
-
-
 **Example Number Channel**
 ```json
 
 
 ```
 
-**Example JSON Channel**
-```json
 
+*Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
 
-```
 ### Unit Orignated Types
 The following assume a fixed unit type is provided as a part of the origination and that would carry through the system.
 
@@ -601,7 +612,12 @@ Key (`data_type`): LOCATION<br>
 Accepted Units (`data_unit`): LAT_LONG, LAT_LONG_ALT<br>
 Primitive Type (`primitive_type`): JSON<br>
 UI Unit Abbreviation: --<br>
-Notes: JSON payload example:<br> <pre><code>{"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}</code></pre>
+Notes: --
+
+**JSON payload example:**
+```json
+{"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}
+```
 
 #### Half-life
 Key (`data_type`): --<br>
