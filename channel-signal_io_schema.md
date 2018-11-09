@@ -267,23 +267,9 @@ _NOTE: Anything in the following 2 subsections that isn’t given a “Type Key 
 
 A primitive type describes the actual underlying encoding used for values.  There are four primitive types: `NUMERIC`, `STRING`, `JSON`, `BOOLEAN`.
 
-###  	State Representation Types
+### State Representation Type
 
-There are only two main types of signals that can represent state, but both have a requirement that the values aren’t fixed in their labeling, which means they must be defined per-signal.
-
-#### Binary
-Key (`data_type`): BINARY<br>
-Accepted Units (`data_unit`): Not used<br>
-Primitive Type (`primitive_type`): STRING<br>
-Required Property: `value_mapping`<br>
-Accepted Values: A value from `value_mapping`<br>
-Notes:
-
-**Example Binary Channel**
-```json
-
-
-```
+There is only one main type of signals that can represent state, and it has the requirement that the values aren’t fixed in their labeling, which means they must be defined per-signal.
 
 #### Categorical
 Key (`data_type`): CATEGORICAL<br>
