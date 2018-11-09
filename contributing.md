@@ -7,7 +7,13 @@ Exosite maintains the schema, specifications, and examples in this repository.  
 
 ### Pull Requests
 
+*Branches*
 * Master branch - final releases
 * Working draft branch
-* PRs must be made against the working draft branch
-* Exosite will manage merging and versioning of the working draft into the master branch which will coincide with updates to the ExoSense solution.
+
+*Making Pull Requests*
+1. Create a Fork of the repository
+2. Submit PR against the working draft branch
+3. Exosite will review all pull rquests critically and while thinking about how it will affect the ExoSense roadmap and code-base.  
+
+Exosite manages merging and versioning of the working draft into the master branch which will coincide with updates to the ExoSense solution.
