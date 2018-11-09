@@ -71,6 +71,7 @@ channels: # "device channel" as opposed to an "asset signal"
     description: "One-liner description (optional)",
     properties:
       data_type: "BINARY", # taken from dictionary of types
+      primitive_type: "${defined_primitive_type_name}" # See "types" section - in this case it would be "NUMERIC"
       value_mapping:
           0: "${lookup_key_name}" # e.g. "ON"
           1: "${lookup_key_name}" # e.g. "DOWN"
@@ -85,31 +86,32 @@ channels: # "device channel" as opposed to an "asset signal"
       report_on_change : "${true|false}" # optional - default false (always report on start-up)
   ######### Example channel config 2 ############
   ${device_channel_id2}:   # real number type channel
-      display_name: "e.g. Temperature Setting"
-      description: "e.g. Temperature setting for a thing I have."
-      properties: 
-        data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
-        min: 16  # channel value min
-        max: 35  # channel value max
-        precision: 2 
-        data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
-        device_diagnostic: false # Tells RCM that this is a “meta” signal that describes an attribute of the devices health
-      protocol_config : 
-        application : "${fieldbus_logger_application_name}" # e.g. "Modbus_RTU"
-        interface : "${path_to_interface}" # e.g. "/dev/tty0/"
-        app_specific_config : {
-          ${app_specific_config_item1} : ${app_config_item1_value}"
-          ${app_specific_config_item2}" : "${config_item2_value}"
-        input_raw : 
-          max : ${raw_input_max} # (future) optional - above this puts the channel in error
-          min : ${raw_input_max} # (future) optional - above this puts the channel in error
-          unit : "${raw_input_units}" # (future) optional - e.g. "mA", reference only
-        multiplier : ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
-        offset : "${offset}" # if not present assume 0
-        sample_rate : ${sample_time_in_ms} #required
-        report_rate : ${report_time_in_ms} # required - defaults to sample_rate
-        down_sample : "${MIN|MAX|AVG|ACT}" # Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
-        report_on_change : "${true|false}" # optional - default false (always report on start-up)
+    display_name: "e.g. Temperature Setting"
+    description: "e.g. Temperature setting for a thing I have."
+    properties: 
+      data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
+      primitive_type: "${defined_primitive_type_name}" # See "types" section - in this case it would be "NUMERIC"
+      min: 16  # channel value min
+      max: 35  # channel value max
+      precision: 2 
+      data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
+      device_diagnostic: false # Tells RCM that this is a “meta” signal that describes an attribute of the devices health
+    protocol_config : 
+      application : "${fieldbus_logger_application_name}" # e.g. "Modbus_RTU"
+      interface : "${path_to_interface}" # e.g. "/dev/tty0/"
+      app_specific_config : {
+        ${app_specific_config_item1} : ${app_config_item1_value}"
+        ${app_specific_config_item2}" : "${config_item2_value}"
+      input_raw : 
+        max : ${raw_input_max} # (future) optional - above this puts the channel in error
+        min : ${raw_input_max} # (future) optional - above this puts the channel in error
+        unit : "${raw_input_units}" # (future) optional - e.g. "mA", reference only
+      multiplier : ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
+      offset : "${offset}" # if not present assume 0
+      sample_rate : ${sample_time_in_ms} #required
+      report_rate : ${report_time_in_ms} # required - defaults to sample_rate
+      down_sample : "${MIN|MAX|AVG|ACT}" # Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
+      report_on_change : "${true|false}" # optional - default false (always report on start-up)
 ```
 **Example config_io (JSON format)**
 ```json
@@ -123,6 +125,7 @@ channels: # "device channel" as opposed to an "asset signal"
     "description": "Machine Input State Information",
     "properties": {
       "data_type": "BINARY",
+      "primitive_type": "NUMERIC",
       "value_mapping": {
           "0": "ON",
           "1": "DOWN"  
@@ -140,31 +143,32 @@ channels: # "device channel" as opposed to an "asset signal"
     },
   },
   "002": {
-      "display_name": "Temperature",
-      "description": "Temperature Sensor Reading",
-      "properties": {
-        "data_type": "TEMPERATURE",
-        "min": 16,
-        "max": 35,
-        "precision": 2,
-        "data_unit": "DEG_CELSIUS",
-        "device_diagnostic": false,
+    "display_name": "Temperature",
+    "description": "Temperature Sensor Reading",
+    "properties": {
+      "data_type": "TEMPERATURE",
+      "primitive_type": "NUMERIC",
+      "min": 16,
+      "max": 35,
+      "precision": 2,
+      "data_unit": "DEG_CELSIUS",
+      "device_diagnostic": false,
+    },
+    "protocol_config" : {
+      "application" : "Modbus_RTU",
+      "interface" : "/dev/tty0/",
+      "app_specific_config" : {
+        
       },
-      "protocol_config" : {
-        "application" : "Modbus_RTU",
-        "interface" : "/dev/tty0/",
-        "app_specific_config" : {
-          
-        },
-        "input_raw" : {
-          "max" : 0,
-          "min" : 20,
-          "unit" : "mA"
-        },
-        "sample_rate" : 2000,
-        "report_rate" : 10000, 
-        "down_sample" : "AVG",
-        "report_on_change" : false,
+      "input_raw" : {
+        "max" : 0,
+        "min" : 20,
+        "unit" : "mA"
+      },
+      "sample_rate" : 2000,
+      "report_rate" : 10000, 
+      "down_sample" : "AVG",
+      "report_on_change" : false,
     }
   }
 }
