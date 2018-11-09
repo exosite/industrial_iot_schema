@@ -320,8 +320,17 @@ The following assume a fixed unit type is provided as a part of the origination 
 
 Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).
 
-Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|Primitive Type|UI Unit Abbreviation|Notes
---|--|--|--|--|--
+#### Acceleration
+
+Key<br>(`data_type`)|ACCELERATION
+Accepted Units<br>(`data_units`)|METER_PER_SEC2
+Primitive Type<br>(`primitive_type`)|NUMERIC
+UI Unit Abbreviation|–
+Notes|
+
+
+|Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|Primitive Type|UI Unit Abbreviation|Notes|
+|--|--|--|--|--|--|
 Abasement|--|--|NUMERIC|--|not supported
 Acceleration|ACCELERATION|METER_PER_SEC2|NUMERIC|--|--
 Absorbed dose rate|--|--|NUMERIC|--|not supported
