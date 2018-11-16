@@ -37,7 +37,7 @@ Your function defines the following `constants` and `history` blocks:
   ],
   "history": {
     "relative_start": {
-      "format": "-{{days}}d"
+      "template": "-{{days}}d"
     },
     "aggregate": {
       "constant": "aggregation_function"
@@ -94,12 +94,6 @@ Supported TSDB query parameters are:
 * end_time
 * aggregate
 * sampling_size
-* tags
-
-<aside class="warning">
-Note: the `tags` TSDB query parameter should not be used in this context, as
-ExoSense™ does not tag timeseries data.
-</aside>
 
 #### Value Formats
 
@@ -107,5 +101,5 @@ Values can be injected by the Pipeline via one of three methods:
 
 1. value: the literal value to pass. e.g. "2"
 1. constant: the user-provided constant value to pass. e.g. "days"
-1. format: format one or more constants, where the constant is specified
+1. template: format one or more constants, where the constant is specified
   betwixt two sets of brackets (`{{$constant}}`). e.g. "-{{days}}d"
