@@ -319,7 +319,7 @@ Many of these types will represent base physical measurements (temperature, leng
 Type|Key<br>(`data_type`)|Accepted Units<br> (`data_unit`)|UI Unit Abbreviation|Notes
 --|--|--|--|--
 Abasement|--|--|--|not supported
-Acceleration|ACCELERATION|METER_PER_SEC2|--
+Acceleration|ACCELERATION|METER_PER_SEC2<br>STANDARD_GRAVITY|--
 Absorbed dose rate|--|--|--|not supported
 Amount of Substance|AMOUNT|MOLE|--|--
 Angular acceleration|ANGULAR_ACCEL|RAD_PER_SEC2<br> ROTATIONS_PER_MIN2<br>DEG_PER_SEC2|--|--
