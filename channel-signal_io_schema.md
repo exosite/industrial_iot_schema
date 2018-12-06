@@ -6,7 +6,7 @@
 ## Introduction
 This document defines the information required to interface with ExoSense™️ from the “first mile” perspective of the connected device or gateway, as well as describing how this information is carried on into the “last mile” or client-side Application.
 
-This document is meant for device developers building native support into the device or a proxy/gateway service for connection to ExoSense via an IoT service and for those looking to gain a deeper understanding of the architecture of channels and signals in the ExoSense environement.  It is not required for typical regular use of the ExoSense application itself.
+This document is meant for device developers building native support into the device or a proxy/gateway service for connection to ExoSense via an IoT service and for those looking to gain a deeper understanding of the architecture of channels and signals in the ExoSense environment.  It is not required for typical regular use of the ExoSense application itself.
 
 ### Definitions
 The reader of this document should have a grasp on the following items or will need to for this document to make sense.
@@ -16,10 +16,10 @@ Term|Description|More Information
 Murano|IoT Platform|[Murano Docs](https://docs.exosite.com)
 ExoSense™️|Industrial IoT Application|
 Device/Gateway|A thing with an IP Connection sending data to a platform|
-Sensors|Conencted to Device/Gateway via wired or wireless protocol or IO| 
+Sensors|Connected to Device/Gateway via wired or wireless protocol or IO| 
 Channel|A individual piece information sent to ExoSense by a device.|Typically a sensor output and typically a device is sending many channels of data.
-Signal|An ExoSense concept similiar to channel but as a part of a virtual Asset object.  Source is typically a device channel but doesn't have to be.|
-Asset|An ExoSense concept for digitzing an Asset (a machine, system, eqiupment, etc)|
+Signal|An ExoSense concept similar to channel but as a part of a virtual Asset object.  Source is typically a device channel but doesn't have to be.|
+Asset|An ExoSense concept for digitizing an Asset (a machine, system, equipment, etc)|
 Fieldbus|Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc|
 
 
@@ -52,7 +52,7 @@ A gateway or device will require some level of configuration in order to do seve
 2.  Translate that information from machine-readable and terse input to Murano, back into contextual and human readable data ready to be taken into ExoSense - i.e. a signal object
 3.  Provides a consistent way for standardizing interfaces so that analytic apps downstream are able to consume this common data type.
 
-Of note for this section - the channel (io) configuration will be stored in the config_io product resource for the device as defined in Section 2 of this document.  The value in that resource will be considered the source of truth for the shared gateway configuration.  Meaning if a gateway is re-configured manually at the gateway, or if it is a gateway that is autoconfigured by discovering the devices connected to it, the updated value must be pushed to that resource before RCM will become aware of any changes.
+Of note for this section - the channel (io) configuration will be stored in the config_io product resource for the device as defined in Section 2 of this document.  The value in that resource will be considered the source of truth for the shared gateway configuration.  Meaning if a gateway is re-configured manually at the gateway, or if it is a gateway that is auto-configured by discovering the devices connected to it, the updated value must be pushed to that resource before RCM will become aware of any changes.
 
 The configuration below wraps a user-defined value with a ${...}, and other names/keys are meant to be an exact match that will be used by ExoSense.  Some values for a key are filled in with example strings - noted with an “e.g.”.
 
@@ -189,7 +189,7 @@ More Examples can be found below
 
 
 ## Device Data Transport Schema
-Having a common shared channel configuration (a contract essentially) between the device and the cloud/application allows us to keep the actual data sent betwee devices and the cloud to a minimum - focusing only on the sending of values for channels rather than unecesary configuration information that rarely changes.  
+Having a common shared channel configuration (a contract essentially) between the device and the cloud/application allows us to keep the actual data sent between devices and the cloud to a minimum - focusing only on the sending of values for channels rather than unnecessary configuration information that rarely changes.  
 
 The resource used for writing channel values from devices to the cloud/application is “data_in”, as mentioned in the resource section.
 
@@ -226,7 +226,7 @@ Utilize the Record API from Murano, and apply the array of signals to each times
 [Murano Device Record API - MQTT](http://docs.exosite.com/reference/products/device-api/mqtt/#report-data-to-historical-timestamps) 
 
 
-This requires that the clock be sync’d on the gateway to the global network time via ntp which is used by our servers in our cluster. Our recommendation will be that the ntp server syncs with the gateway at least once every time the power is cycled on the gateway, and once per 12-24 hours of continuous operation time.
+This requires that the clock be synced on the gateway to the global network time via ntp which is used by our servers in our cluster. Our recommendation will be that the ntp server syncs with the gateway at least once every time the power is cycled on the gateway, and once per 12-24 hours of continuous operation time.
 
 ### Channel Error Handling
 *Special Considerations for Errors*
@@ -288,7 +288,7 @@ Notes:
 ### Generic Types
 For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.
 
-#### String (unitless)
+#### String (unit-less)
 Key (`data_type`): STRING<br>
 Accepted Units (`data_unit`): Not Used<br>
 Primitive Type (`primitive_type`): STRING<br>
@@ -301,7 +301,7 @@ Notes: Any string
 
 ```
 
-#### JSON (unitless)
+#### JSON (unit-less)
 Key (`data_type`): JSON<br>
 Accepted Units (`data_unit`): Not Used<br>
 Primitive Type (`primitive_type`): JSON<br>
@@ -314,7 +314,7 @@ Notes: Any JSON blob
 
 ```
 
-#### Number (unitless)
+#### Number (unit-less)
 Key (`data_type`): NUMBER<br>
 Accepted Units (`data_unit`): Not Used<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
@@ -330,7 +330,7 @@ Notes: Any Real Number
 
 *Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
 
-### Unit Orignated Types
+### Unit Originated Types
 The following assume a fixed unit type is provided as a part of the origination and that would carry through the system.
 
 Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).
@@ -718,7 +718,7 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
-#### Luminious flux
+#### Luminous flux
 Key (`data_type`): --<br>
 Accepted Units (`data_unit`): --<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
