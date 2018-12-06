@@ -96,18 +96,27 @@ channels: # "device channel" as opposed to an "asset signal"
       precision: 2 
       data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
       device_diagnostic: false # Tells RCM that this is a “meta” signal that describes an attribute of the devices health
+    iot_properties:
+      multiplier: ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
+      offset: ${offset} # if not present assume 0
+      data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
+      primitive_type: "${defined_primitive_type_name}" # Optional, See "types" section - in this case it would be "NUMERIC"
+      data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
+      conversion_name: "${name}" # Name of conversion use to fill the multiplier and offset fields.
+      min: 60.8 # minimum after conversion
+      max: 95 # maximum after conversion
     protocol_config : 
       application : "${fieldbus_logger_application_name}" # e.g. "Modbus_RTU"
       interface : "${path_to_interface}" # e.g. "/dev/tty0/"
-      app_specific_config : {
-        ${app_specific_config_item1} : ${app_config_item1_value}"
-        ${app_specific_config_item2}" : "${config_item2_value}"
+      app_specific_config :
+        ${app_specific_config_item1} : "${app_config_item1_value}"
+        ${app_specific_config_item2} : "${config_item2_value}"
       input_raw : 
         max : ${raw_input_max} # (future) optional - above this puts the channel in error
         min : ${raw_input_max} # (future) optional - above this puts the channel in error
         unit : "${raw_input_units}" # (future) optional - e.g. "mA", reference only
       multiplier : ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
-      offset : "${offset}" # if not present assume 0
+      offset : ${offset} # if not present assume 0
       sample_rate : ${sample_time_in_ms} #required
       report_rate : ${report_time_in_ms} # required - defaults to sample_rate
       down_sample : "${MIN|MAX|AVG|ACT}" # Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
@@ -153,6 +162,15 @@ channels: # "device channel" as opposed to an "asset signal"
       "precision": 2,
       "data_unit": "DEG_CELSIUS",
       "device_diagnostic": false,
+    },
+    "iot_properties": {
+      "conversion_name": "CelsiusToFahrenheit",
+      "data_type": "TEMPERATURE",
+      "primitive_type": "NUMERIC",
+      "min": 60.8,
+      "max": 95,
+      "precision": 2,
+      "data_unit": "DEG_FAHRENHEIT",
     },
     "protocol_config" : {
       "application" : "Modbus_RTU",
