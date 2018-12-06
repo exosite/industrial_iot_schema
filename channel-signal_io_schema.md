@@ -344,7 +344,7 @@ Notes: not supported
 
 #### Acceleration
 Key (`data_type`): ACCELERATION<br>
-Accepted Units (`data_unit`): METER_PER_SEC2<br>
+Accepted Units (`data_unit`): METER_PER_SEC2, STANDARD_GRAVITY<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
