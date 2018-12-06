@@ -71,7 +71,7 @@ channels: # "device channel" as opposed to an "asset signal"
     description: "One-liner description (optional)",
     properties:
       data_type: "CATEGORICAL", # taken from dictionary of types
-      primitive_type: "${defined_primitive_type_name}" # See "types" section - in this case it would be "STRING"
+      primitive_type: "${defined_primitive_type_name}" # Optional, See "types" section - in this case it would be "STRING"
       value_mapping:
           0: "${lookup_key_name}" # e.g. "ON"
           1: "${lookup_key_name}" # e.g. "DOWN"
@@ -90,7 +90,7 @@ channels: # "device channel" as opposed to an "asset signal"
     description: "e.g. Temperature setting for a thing I have."
     properties: 
       data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
-      primitive_type: "${defined_primitive_type_name}" # See "types" section - in this case it would be "NUMERIC"
+      primitive_type: "${defined_primitive_type_name}" # Optional, See "types" section - in this case it would be "NUMERIC"
       min: 16  # channel value min
       max: 35  # channel value max
       precision: 2 
@@ -265,7 +265,7 @@ _NOTE: Anything in the following 2 subsections that isn’t given a “Type Key 
 
 ### Primitive Types
 
-A primitive type describes the actual underlying encoding used for values.  There are four primitive types: `NUMERIC`, `STRING`, `JSON`, `BOOLEAN`.
+A primitive type describes the actual underlying encoding used for values.  There are four primitive types: `NUMERIC`, `STRING`, `JSON`, `BOOLEAN`.  Declaring the primitive type in a channel is optional as the primitive type can be derived from the data type.
 
 ### State Representation Type
 
