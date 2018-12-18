@@ -327,6 +327,7 @@ Angular momentum|--|--|--|not supported
 Angular Speed / Velocity|ANGULAR_VEL|RAD_PER_SEC<br>ROTATIONS_PER_MIN<br>DEG_PER_SEC|--|--
 Area|AREA|METER2<br>KILOMETER2<br>FEET2<br>INCH2<br>MILE2|--|--
 Area density|--|--|--|not supported
+Battery Percentage|BATTERY_PERCENTAGE|PERCENT|--|Diagnostic Type
 Capacitance|CAPACITANCE|FARAD|--|--
 Catalytic activity|--|--|--|not supported
 Catalytic activity concentration|--|--|--|not supported
@@ -400,6 +401,7 @@ Radiant intensity|--|--|--|not supported
 Reaction rate|--|--|--|not supported
 Refraction rate|--|--|--|not supported
 Refractive index|--|--|--|not supported
+Signal Strength as Percentage|SIGNAL_STRENGTH_PERCENTAGE|PERCENT|--|Diagnostic Type
 Solid angle|--|--|--|not supported
 Speed|SPEED|METER_PER_SEC<br>MPH<br>KPH<br>IN_PER_SEC|--|--
 Specific Energy|--|--|--|not supported
