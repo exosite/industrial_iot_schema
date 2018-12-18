@@ -416,6 +416,13 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: not supported
 
+#### Battery Percentage
+Key (`data_type`): BATTERY_PERCENTAGE<br>
+Accepted Units (`data_unit`): PERCENT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: %<br>
+Notes: Device diagnostic
+
 #### Capacitance
 Key (`data_type`): CAPACITANCE<br>
 Accepted Units (`data_unit`): FARAD<br>
@@ -931,6 +938,13 @@ Accepted Units (`data_unit`): --<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: not supported
+
+#### Signal Strength as Signal Strength
+Key (`data_type`): SIGNAL_STRENGTH_PERCENTAGE<br>
+Accepted Units (`data_unit`): PERCENT<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: %<br>
+Notes: Device diagnostic
 
 #### Solid angle
 Key (`data_type`): --<br>
