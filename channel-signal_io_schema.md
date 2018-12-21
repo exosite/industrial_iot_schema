@@ -84,6 +84,7 @@ channels: # "device channel" as opposed to an "asset signal"
       sample_rate : "${sample_time_in_ms}" # required
       report_rate : "${report_time_in_ms}" # required - defaults to sample_rate
       report_on_change : "${true|false}" # optional - default false (always report on start-up)
+      timeout : "${timeout_period_time_in_ms}" # optional - used by application to provide timeout indication, typically several times expected report rate
   ######### Example channel config 2 ############
   ${device_channel_id2}:   # real number type channel
     display_name: "e.g. Temperature Setting"
@@ -121,72 +122,73 @@ channels: # "device channel" as opposed to an "asset signal"
       report_rate : ${report_time_in_ms} # required - defaults to sample_rate
       down_sample : "${MIN|MAX|AVG|ACT}" # Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
       report_on_change : "${true|false}" # optional - default false (always report on start-up)
+      timeout : "${timeout_period_time_in_ms}" # optional - used by application to provide timeout indication, typically several times expected report rate
 ```
 **Example config_io (JSON format)**
 ```json
-"last_edited": "2018-03-28T13:27:39+00:00 ",
-"last_editor" : "user",
-"meta" : {},
-"locked": false,
-"channels": {
-  "001": {
-    "display_name": "Input State",
-    "description": "Machine Input State Information",
-    "properties": {
-      "data_type": "CATEGORICAL",
-      "primitive_type": "STRING",
-      "value_mapping": {
+{
+  "last_edited": "2018-03-28T13:27:39+00:00 ",
+  "last_editor": "user",
+  "meta": {},
+  "locked": false,
+  "channels": {
+    "001": {
+      "display_name": "Input State",
+      "description": "Machine Input State Information",
+      "properties": {
+        "data_type": "CATEGORICAL",
+        "primitive_type": "STRING",
+        "value_mapping": {
           "0": "ON",
-          "1": "DOWN"  
+          "1": "DOWN"
+        }
+      },
+      "protocol_config": {
+        "application": "Modbus_TCP",
+        "interface": "/dev/eth0",
+        "app_specific_config": {},
+        "sample_rate": 5000,
+        "report_rate": 5000,
+        "report_on_change": false,
+        "timeout": 60000
       }
     },
-    "protocol_config" : {
-      "application" : "Modbus_TCP",
-      "interface" : "/dev/eth0",
-      "app_specific_config" : {
-        
+    "002": {
+      "display_name": "Temperature",
+      "description": "Temperature Sensor Reading",
+      "properties": {
+        "data_type": "TEMPERATURE",
+        "primitive_type": "NUMERIC",
+        "min": 16,
+        "max": 35,
+        "precision": 2,
+        "data_unit": "DEG_CELSIUS",
+        "device_diagnostic": false
       },
-      "sample_rate" : 5000,
-      "report_rate" : 5000,
-      "report_on_change" : false,
-    },
-  },
-  "002": {
-    "display_name": "Temperature",
-    "description": "Temperature Sensor Reading",
-    "properties": {
-      "data_type": "TEMPERATURE",
-      "primitive_type": "NUMERIC",
-      "min": 16,
-      "max": 35,
-      "precision": 2,
-      "data_unit": "DEG_CELSIUS",
-      "device_diagnostic": false,
-    },
-    "iot_properties": {
-      "conversion_name": "CelsiusToFahrenheit",
-      "data_type": "TEMPERATURE",
-      "primitive_type": "NUMERIC",
-      "min": 60.8,
-      "max": 95,
-      "precision": 2,
-      "data_unit": "DEG_FAHRENHEIT",
-    },
-    "protocol_config" : {
-      "application" : "Modbus_RTU",
-      "interface" : "/dev/tty0/",
-      "app_specific_config" : {
-        
+      "iot_properties": {
+        "conversion_name": "CelsiusToFahrenheit",
+        "data_type": "TEMPERATURE",
+        "primitive_type": "NUMERIC",
+        "min": 60.8,
+        "max": 95,
+        "precision": 2,
+        "data_unit": "DEG_FAHRENHEIT"
       },
-      "input_raw" : {
-        "max" : 0,
-        "min" : 20,
-        "unit" : "mA"
-      },
-      "sample_rate" : 2000,
-      "report_rate" : 10000, 
-      "down_sample" : "AVG",
-      "report_on_change" : false,
+      "protocol_config": {
+        "application": "Modbus_RTU",
+        "interface": "/dev/tty0/",
+        "app_specific_config": {},
+        "input_raw": {
+          "max": 0,
+          "min": 20,
+          "unit": "mA"
+        },
+        "sample_rate": 2000,
+        "report_rate": 10000,
+        "down_sample": "AVG",
+        "report_on_change": false,
+        "timeout": 300000
+      }
     }
   }
 }
@@ -198,12 +200,6 @@ channels: # "device channel" as opposed to an "asset signal"
 4. Channel IDs can be any valid string.  At this time, if RCM generates a channel ID from the UI it will be in the form of a UUID.
 
 More Examples can be found below
-
-#### Configuration Schema To-Do
-> _1. Support for controlling 'who' can edit a channel to lock specific channels down to not be able to be modified via the application_
-> 
->
-
 
 
 ## Device Data Transport Schema
