@@ -280,8 +280,11 @@ ties an individual Datapoint back to its Inlet using the Inlet tag.
 
 ##### Origin
 
-Origin is useful when idenfitying the Murano source of the data, and has the
-following format:
+Origin describes the source of the Datapoint. Frequently this source is a Device
+Channel, but could also be from a Signal injection, in which case the Origin
+will be the UUID of the Signal.
+
+The most common `origin` is in the following format:
 
 ```text
 <PRODUCT_ID>.<DEVICE_ID>.<RESOURCE_ID>.<CHANNEL_ID>
