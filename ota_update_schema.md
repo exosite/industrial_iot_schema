@@ -63,7 +63,7 @@ Before UTF-8 Encoding
       "name": "<package name>",
       "description": "<Friendly description information>",
       "type": "FILE",
-      "payload": "https://www.example.com/outau.txt"
+      "payload": "https://www.example.com/otau.txt"
   }
 }
 
