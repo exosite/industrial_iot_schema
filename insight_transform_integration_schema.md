@@ -134,7 +134,7 @@ Your Function defines the following `constants` and `history` blocks:
   ],
   "history": {
     "relative_start": {
-      "template": "-{{days}}d"
+      "template": "-{days}d"
     },
     "aggregate": {
       "constant": "aggregation_function"
@@ -200,7 +200,7 @@ Values can be injected by the Pipeline via one of three methods:
 1. value: the literal value to pass. e.g. "2"
 1. constant: the user-provided constant value to pass. e.g. "days"
 1. template: format one or more constants, where the constant is specified
-  betwixt two sets of brackets (`{{$constant}}`). e.g. "-{{days}}d"
+  betwixt brackets (`{$constant}`). e.g. `-{days}d`
 
 ### Signal Data
 
