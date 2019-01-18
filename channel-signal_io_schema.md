@@ -68,19 +68,12 @@ channels: # "device channel" as opposed to an "asset signal"
   ######### Example channel config 1 ############
   ${device_channel_id1}: # unique channel identifier
     display_name: "Human readable channel name" 
-    description: "One-liner description (optional)",
+    description: "One-liner description (optional)"
     properties:
-      data_type: "CATEGORICAL", # taken from dictionary of types
-      primitive_type: "${defined_primitive_type_name}" # Optional, See "types" section - in this case it would be "STRING"
-      value_mapping:
-          0: "${lookup_key_name}" # e.g. "ON"
-          1: "${lookup_key_name}" # e.g. "DOWN"
+      data_type: ${defined_type_name}  #See "types" section - in this case it could be "BOOLEAN" or "TEMPERATURE"
+      primitive_type: "${defined_primitive_type_name}" #Optional, See "types" section - in this case it would be "BOOLEAN" or "NUMERIC"
+      data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
     protocol_config" : 
-      application : "${fieldbus_logger_application_id}" # e.g. "Modbus_TCP"
-      interface : "${path_to_interface}" # e.g. "/dev/eth0"
-      app_specific_config :  # See section X for specific application configuration parameters
-        ${app_specific_config_item1}" : "${config_item1_value}"
-        ${app_specific_config_item2}" : "${config_item2_value}"
       sample_rate : "${sample_time_in_ms}" # required
       report_rate : "${report_time_in_ms}" # required - defaults to sample_rate
       report_on_change : "${true|false}" # optional - default false (always report on start-up)
@@ -133,20 +126,13 @@ channels: # "device channel" as opposed to an "asset signal"
   "locked": false,
   "channels": {
     "001": {
-      "display_name": "Input State",
-      "description": "Machine Input State Information",
+      "display_name": "Valve Open",
+      "description": "Machine Valve Open State Information",
       "properties": {
-        "data_type": "CATEGORICAL",
-        "primitive_type": "STRING",
-        "value_mapping": {
-          "0": "ON",
-          "1": "DOWN"
-        }
+        "data_type": "BOOLEAN",
+        "primitive_type": "BOOLEAN"
       },
       "protocol_config": {
-        "application": "Modbus_TCP",
-        "interface": "/dev/eth0",
-        "app_specific_config": {},
         "sample_rate": 5000,
         "report_rate": 5000,
         "report_on_change": false,
@@ -340,6 +326,42 @@ Notes: Any Real Number
 
 
 ```
+#### BOOLEAN (unit-less)
+Key (`data_type`): BOOLEAN<br>
+Accepted Units (`data_unit`): Not Used<br>
+Primitive Type (`primitive_type`): BOOLEAN<br>
+UI Unit Abbreviation: na<br>
+Notes: 
+* Only two values supported -> `true` or `false`
+* Not supported in ExoSense UI yet
+
+**Example Boolean Channel Configuration**
+```json
+{
+  "channels": {
+    "023": {
+      "display_name": "Valve Open",
+      "description": "Machine Valve Open State Information",
+      "properties": {
+        "data_type": "BOOLEAN",
+        "primitive_type": "BOOLEAN"
+      },
+      "protocol_config": {
+        "sample_rate": 5000,
+        "report_rate": 5000,
+        "timeout": 60000
+      }
+    }
+  }
+}
+```
+**Example Boolean Channel Data (data_in) Packet**
+```json
+{
+  "023":true
+}
+```
+
 
 
 *Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
