@@ -202,19 +202,29 @@ Values can be injected by the Pipeline via one of three methods:
 1. template: format one or more constants, where the constant is specified
   betwixt brackets (`{$constant}`). e.g. `-{days}d`
 
+#### Asynchronous
+
+If `asynchronous` is `true`, callback info will be sent along with Signal Data
+to the `/process` endpoint of your Insight under the key `cbi`.
+
+> Note: if your Insight Function is asynchronous, it should still respond back
+> from calls to `POST /process` with an empty array of arrays `[[]]`.
+
 ### Signal Data
 
 > Reference [SignalDataObjectArray](./insight-template.yaml#L408) in the Swagger
 file
 
 When an Insight Function receives Signal Data, the object the Function receives
-has three top-level keys:
+has three to five top-level keys:
 
 Key                   | Type    | Description
 :---------------------|---------|:------------
 id                    | string  | The ID of the Linkage this Signal Datapoint was sent from.
 data                  | array   | List of Signal Datapoints.
 args                  | object  | Information about the specific Insight including values for user-provided Constants.
+history               | object  | If requested, history of Signals. Each Signal ID is the key, with an array of (timestamp, value) pairs.
+cbi                   | object  | If requested, an object containing the `url` to POST the results to, and a `token` to use in the authorization header.
 
 #### ID
 
