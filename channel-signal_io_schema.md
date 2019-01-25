@@ -1127,3 +1127,229 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
     evaluation_mode : [“REAL32”, “INT8”, “INT16”, “UINT16”, “UINT32”, “STRING”, “BOOLEAN”]
     bitmask : "HEXADECIMAL" # optional, hex value for bits to mask out/pass-thru 
 ```
+
+### J1939
+
+Parameters for a channel's 'app_specific_config' field when using J1939.
+```yaml
+    $schema: http://json-schema.org/draft-07/schema
+    description: App specific config.
+    type: object
+    properties:
+    application:
+        type: string
+        const: j1939
+    report_on_change:
+        type: boolean
+    interface:
+        parameters:
+        type: string
+        description: >
+            Backend specific channel for the CAN interface.
+            This should match one of config_applications's channel.
+        default: 'vcan0'
+        examples:
+            - 'vcan0'
+    app_specific_config:
+        type: object
+        properties:
+        module:
+            type: string
+            description: The module from which ExoEdge imports the `function`.
+            default: ''
+            examples:
+            - exoedge_j1939
+            enum:
+            - exoedge_j1939
+        function:
+            type: string
+            description: The function that ExoEdge calls with `positionals` and `parameters`.
+            default: ''
+        parameters:
+            type: object
+            enum:
+            - bitmask
+            - data_length
+            - data_length_bit
+            - data_page
+            - evaluation_mode
+            - pdu_format
+            - pdu_specific
+            - priority
+            - offset
+            - offset_bit
+            properties:
+            bitmask:
+                type: string
+                description: >
+                Bitmask, not support currently.
+                Hex format in string, minimum: '0x0' maximum: '0xffffffff'
+                default: ''
+                pattern: '^0x[a-fA-F0-9]{1,16}$|""'
+                examples:
+                - '0xffffffff'
+            data_length:
+                type: integer
+                description: >
+                How many bytes to read.
+                It would end up like `data_length * 8 + data_length_bit`.
+                minimum: 0
+                maximum: 8
+                default: 8
+                examples:
+                - 1
+            data_length_bit:
+                type: integer
+                description: >
+                How many bits to read.
+                It would end up like `data_length * 8 + data_length_bit`.
+                minimum: 0
+                maximum: 64
+                default: 0
+                examples:
+                - 1
+            data_page:
+                type: boolean
+                description: Data page.
+                default: 0
+                emum:
+                - 0
+                - 1
+                examples:
+                - 1
+            device_address_preferred:
+                type: integer
+                description: >
+                Only for data_out
+                addresses from 0..127 and 248..253 should start immediately
+                minimum: 0
+                maximum: 255
+                default: 1
+                examples:
+                - 1
+            evaluation_mode:
+                type: string
+                description: >
+                The lenth INT8, INT16, INT32, INT64 etc is depend on the data_length and data_length_bit.
+                When use FLOAT, it only support float32 and float64.
+                default: UINT
+                emum:
+                - BOOL
+                - FLOAT
+                - INT
+                - RAW
+                - UINT
+                examples:
+                - UINT
+            pdu_format:
+                type: integer
+                description: Pdu format.
+                minimum: 0
+                maximum: 255
+                examples:
+                - 254
+            pdu_specific:
+                type: integer
+                description: Pdu specific.
+                minimum: 0
+                maximum: 255
+                examples:
+                - 4
+            priority:
+                type: integer
+                description: Priority for data_out.
+                minimum: 0
+                maximum: 7
+                examples:
+                - 7
+            offset:
+                type: integer
+                description: >
+                Starting byte position to read.
+                It would end up like `offset * 8 + offset_bit`.
+                minimum: 0
+                maximum: 7
+                default: 0
+                examples:
+                - 1
+            offset_bit:
+                type: integer
+                description: >
+                Starting bits position to read.
+                It would end up like `offset * 8 + offset_bit`.
+                minimum: 0
+                maximum: 63
+                default: 0
+                examples:
+                - 1
+        required:
+        - pdu_format
+        - pdu_specific
+    required:
+    - application
+    - interface
+    - app_specific_config
+```
+
+Parameters for a channel's 'config_applications' field when using J1939.
+```yaml
+    $schema: http://json-schema.org/draft-07/schema
+    description: applications
+    type: object
+    properties:
+    applications:
+        description: Config applications.
+        type: object
+        properties:
+        j1939:
+            type: object
+            properties:
+            interfaces:
+                type: array
+                items:
+                type: object
+                properties:
+                    bustype:
+                    type: string
+                    description: CAN interface.
+                    default: ''
+                    emum:
+                        - socketcan
+                        - kvaser
+                        - serial
+                        - slcan
+                        - ixxat
+                        - pcan
+                        - usb2can
+                        - nican
+                        - iscan
+                        - neovi
+                        - vector
+                        - virtual
+                    examples:
+                        - socketcan
+                    bitrate:
+                    type: integer
+                    description: Bitrate in bit/s. Usually bitrate is 250000 in J1939.
+                    default: 250000
+                    examples:
+                        - 250000
+                    channel:
+                    type: string
+                    description: Backend specific channel for the CAN interface.
+                    default: ''
+                    examples:
+                        - 'vcan0'
+                required:
+                    - bustype
+                    - channel
+                minItems: 1
+            required:
+            - interfaces
+        required:
+        - j1939
+    required:
+        - applications
+```
+
+For detail, please ref [lib_exoedge_j1939_python](https://github.com/exosite/lib_exoedge_j1939_python)
