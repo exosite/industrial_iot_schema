@@ -314,16 +314,30 @@ Accepted Units (`data_unit`): Not Used<br>
 Primitive Type (`primitive_type`): BOOLEAN<br>
 UI Unit Abbreviation: na<br>
 Notes: 
-* Only two values supported -> `true` or `false`
-* Not supported in ExoSense UI yet
+* True ("Truthy") accepted values: [`true`, `"on"`, `1`, `"yes"`, any  number that is not `0`]
+* False ("Falsy") accepted values: [`false`, `"off"`, `0`, `"no"`]
+* All values will be converted to `true` and `false` at ingestion in ExoSense for use by transform insights, rules, and UI panels.  
 
 **Example Boolean Channel Configuration**
 ```json
 {
   "channels": {
     "023": {
-      "display_name": "Valve Open",
-      "description": "Machine Valve Open State Information",
+      "display_name": "Valve 1 Open",
+      "description": "Machine Valve 1 Open State Information",
+      "properties": {
+        "data_type": "BOOLEAN",
+        "primitive_type": "BOOLEAN"
+      },
+      "protocol_config": {
+        "sample_rate": 5000,
+        "report_rate": 5000,
+        "timeout": 60000
+      }
+    },
+    "025": {
+      "display_name": "Valve 2 Open",
+      "description": "Machine Valve 2 Open State Information",
       "properties": {
         "data_type": "BOOLEAN",
         "primitive_type": "BOOLEAN"
@@ -340,7 +354,8 @@ Notes:
 **Example Boolean Channel Data (data_in) Packet**
 ```json
 {
-  "023":true
+  "023":true,
+  "025":0
 }
 ```
 
