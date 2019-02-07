@@ -1191,7 +1191,7 @@ applications: # device applications for handling channel protocols, used to show
 ```
 
 
-** Example Application Configuration (`config_applications`)**
+**Example Full Application Configuration (`config_applications`)**
 ```json
 {
   "last_edited": "2018-03-28T13:27:39+00:00",
@@ -1206,8 +1206,46 @@ applications: # device applications for handling channel protocols, used to show
           "stop_bits": 1,
           "parity": "none",
           "data_bits": 8
+        },
+        {
+          "interface": "/dev/tty4",
+          "baud_rate": 9600,
+          "stop_bits": 1,
+          "parity": "even",
+          "data_bits": 8
         }
       ]
+    },
+    "Modbus_TCP": {
+      "application_display_name": "Modbus TCP",
+      "interfaces": [
+        {
+          "interface": "eth0",
+        }
+      ]
+    },
+    "CANopen": {
+      "application_display_name": "CANopen",
+      "interfaces": [
+        {
+          "channel": "canA-10",
+          "bitrate": 20000
+        }
+      ]
+    },
+    "CUSTOM_ACME_PROTOCOL": {
+      "application_display_name": "Acme Custom Protocol",
+      "interfaces": [
+        {
+          "param1": "param1value",
+          "param2": "param2value"
+        }
+      ],
+      "app_specific_config_options":
+      {
+        "custom_option1":0,
+        "custom_option2":"option2_value"
+      }
     }
   }
 }
