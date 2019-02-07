@@ -1152,10 +1152,10 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
 ## Protocol Interface Application Configuration
 The gateway / device applications that handle reading/writing for channels may have properites that need to be set that are useful for all channels using that protocol / inteface.  For example, 10 channels may be set up to use Modbus_RTU at interface /dev/tty0.  The application that handles the modbus communication needs to know the interface details such as baud rate, etc.  
 
-The resource used to hold this information that may then be communicated from cloud application to device is `config_application`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
+The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
 
 
-**Application Configuration (`config_application`) Description**
+**Application Configuration (`config_applications`) Description**
 ```yaml
 # config_applications channel definition 
 last_edited: "{$date_timestamp}" # e.g. 2018-03-28T13:27:39+00:00 
