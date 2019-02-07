@@ -1154,6 +1154,7 @@ The gateway / device applications that handle reading/writing for channels may h
 
 The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
 
+The application protocols and interfaces listed below are used in `config_io` and therefore are used to drive channel configuration options in the user application. 
 
 **Application Configuration (`config_applications`) Description**
 ```yaml
