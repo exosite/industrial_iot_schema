@@ -1150,7 +1150,7 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
 ```
 
 ## Protocol Interface Application Configuration
-The gateway / device applications that handle reading/writing for channels may have properites that need to be set that are useful for all channels using that protocol / inteface.  For example, 10 channels may be set up to use Modbus_RTU at interface /dev/tty0.  The application that handles the modbus communication needs to know the interface details such as baud rate, etc.  
+The gateway / device applications that handle reading/writing for channels may have properties that need to be set that are useful for all channels using that protocol / interface.  For example, 10 channels may be set up to use Modbus_RTU at interface /dev/tty0.  The application that handles the modbus communication needs to know the interface details such as baud rate, etc.  
 
 The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
 
@@ -1254,7 +1254,7 @@ applications: # device applications for handling channel protocols, used to show
 ```
 
 ### Specific Protocol Application Interface Configuration 
-This section defines the supported protocol application configuration paraemeters (i.e. what goes into the `interfaces` array objects in `config_applications` ).
+This section defines the supported protocol application configuration parameters (i.e. what goes into the `interfaces` array objects in `config_applications` ).
 
 #### Modbus TCP Application Interface Options
 
@@ -1332,7 +1332,7 @@ Parameters for an application interface when using Modbus_RTU.  Device applicati
 
 #### CANopen Application Interface Options
 
-Parameters for an application intrface when using CANopen.  Device application must use appropriately. 
+Parameters for an application interface when using CANopen.  Device application must use appropriately. 
 ```yaml
 channel: "STRING" #e.g. canA-10
 bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bit rate in bps
@@ -1359,7 +1359,7 @@ bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bi
 
 #### Custom Application and Protocol Options
 
-Hardware application developers may support cusotm protocols by specifying their own applications in `config_applications` with appropriate interfaces and/or app_specific_config_options.
+Hardware application developers may support custom protocols by specifying their own applications in `config_applications` with appropriate `interfaces` and/or `app_specific_config_options`.
 
 **Example**
 
