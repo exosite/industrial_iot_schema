@@ -1238,6 +1238,7 @@ applications: # device applications for handling channel protocols, used to show
       "application_display_name": "Acme Custom Protocol",
       "interfaces": [
         {
+          "interface": "/dev/tty3",
           "param1": "param1value",
           "param2": "param2value"
         }
@@ -1363,7 +1364,27 @@ Hardware application developers may support custom protocols by specifying their
 
 **Example**
 
-```JSON
-
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "CUSTOM_ACME_PROTOCOL": {
+      "application_display_name": "Acme Custom Wireless Protocol",
+      "interfaces": [
+        {
+          "interface": "/dev/tty3",
+          "param1": "param1value",
+          "param2": "param2value"
+        }
+      ],
+      "app_specific_config_options":
+      {
+        "custom_option1":0,
+        "custom_option2":"option2_value"
+      }
+    }
+  }
+}
 
 ```
