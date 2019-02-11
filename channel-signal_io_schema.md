@@ -560,11 +560,10 @@ Notes: --
 
 #### Electrical Resistivity
 Key (`data_type`): ELEC_RESISTIVITY<br>
-Accepted Units (`data_unit`): OHM_METER, RHO<br>
+Accepted Units (`data_unit`): OHM_METER<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 * `OHM_METER`: Ω⋅m
-* `RHO`: ρ
 
 Notes: --
 
@@ -789,7 +788,7 @@ UI Unit Abbreviation: <br>
 * `PPM`: ppm
 * `PPB`: ppb
 * `PPT`: ppt
-Notes: Psuedo-units to describe particles as a quantity of quantity. 
+Notes: **not supported** Psuedo-units to describe particles as a quantity of quantity. 
 
 #### Percentage
 Key (`data_type`): PERCENTAGE<br>
