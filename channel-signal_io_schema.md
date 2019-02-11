@@ -182,15 +182,11 @@ channels: # "device channel" as opposed to an "asset signal"
   }
 }
 ```
-**Notes:**
-1. Report on change assumes that the report rate is still used and observed (e.g. 10 minutes) but if report on change is set to true, then it will send on any changes outside the typical 10 minute report rate
-2. Report on change is by default false
-3. Channel IDs must be unique in the device context.  (the RCM context for globally unique will be: “product ID” + “device id” + “channel id”
-4. Channel IDs can be any valid string.  At this time, if RCM generates a channel ID from the UI it will be in the form of a UUID.
+
 
 
 ### Channel identifiers
-Channel identifiers must be unique in a config_io and recommend using no special characters or spaces. ExoSense uses a `"###"` scheme starting at `"001"`.  For devices that hard code their configuration and are not remotely configurable, any string can be used and can be more descriptive (e.g. "humidity").  Identifiers are not made viewable by users of the application, the display name is what users will see.
+Channel identifiers must be unique to the device context, in the device's config_io and recommend using no special characters or spaces, but must be a valid string. ExoSense uses a `"###"` scheme starting at `"001"`.  For devices that hard code their configuration and are not remotely configurable, any string can be used and can be more descriptive (e.g. "humidity").  Identifiers are not made viewable by users of the application, the display name is what users will see.
 
 ### Data types / units
 The data type definitions are detailed below.  Each channel has a unique type and unit tied to the channel identifier that can not be changed after set.  The ExoSense application UI will not allow this.  Technically a device could overwrite a channel type, but this will have unknown consequences and will likely result in signals not functioning properly.  Information about primitive types is also in the Data Types Definition section.  
