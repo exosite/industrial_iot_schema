@@ -73,6 +73,7 @@ channels: # "device channel" as opposed to an "asset signal"
       data_type: ${defined_type_name}  #See "types" section - in this case it could be "BOOLEAN" or "TEMPERATURE"
       primitive_type: "${defined_primitive_type_name}" #Optional, See "types" section - in this case it would be "BOOLEAN" or "NUMERIC"
       data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
+      locked: ${locked_config_state} #optional - Boolean, marks as not editable by UI, defaults to false if not present
     protocol_config" : 
       sample_rate : "${sample_time_in_ms}" # required
       report_rate : "${report_time_in_ms}" # required - defaults to sample_rate
@@ -90,7 +91,8 @@ channels: # "device channel" as opposed to an "asset signal"
       precision: 2 
       data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
       device_diagnostic: false # Tells RCM that this is a “meta” signal that describes an attribute of the devices health
-    iot_properties:
+      locked: ${locked_config_state} #optional - Boolean, marks as not editable by UI, defaults to false if not present
+    iot_properties: ## Advanced use only / for use by server side only (not device)
       multiplier: ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
       offset: ${offset} # if not present assume 0
       data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
@@ -149,7 +151,8 @@ channels: # "device channel" as opposed to an "asset signal"
         "max": 35,
         "precision": 2,
         "data_unit": "DEG_CELSIUS",
-        "device_diagnostic": false
+        "device_diagnostic": false,
+        "locked": true
       },
       "iot_properties": {
         "conversion_name": "CelsiusToFahrenheit",
@@ -179,13 +182,39 @@ channels: # "device channel" as opposed to an "asset signal"
   }
 }
 ```
-**Notes:**
-1. Report on change assumes that the report rate is still used and observed (e.g. 10 minutes) but if report on change is set to true, then it will send on any changes outside the typical 10 minute report rate
-2. Report on change is by default false
-3. Channel IDs must be unique in the device context.  (the RCM context for globally unique will be: “product ID” + “device id” + “channel id”
-4. Channel IDs can be any valid string.  At this time, if RCM generates a channel ID from the UI it will be in the form of a UUID.
 
-More Examples can be found below
+
+
+### Channel identifiers
+Channel identifiers must be unique to the device context, in the device's config_io and recommend using no special characters or spaces, but must be a valid string. ExoSense uses a `"###"` scheme starting at `"001"`.  For devices that hard code their configuration and are not remotely configurable, any string can be used and can be more descriptive (e.g. "humidity").  Identifiers are not made viewable by users of the application, the display name is what users will see.
+
+### Data types / units
+The data type definitions are detailed below.  Each channel has a unique type and unit tied to the channel identifier that can not be changed after set.  The ExoSense application UI will not allow this.  Technically a device could overwrite a channel type, but this will have unknown consequences and will likely result in signals not functioning properly.  Information about primitive types is also in the Data Types Definition section.  
+
+### Display Name and Description
+Used by the application to show the user a friendly name and description (optional) of the channel, which will provide them with better context to help map to asset signals.
+
+### Locked channels
+The 'locked' property is not required and is optional for use.  The entire configuration can be locked or channels can invidivually be locked.  If not set, defaults to 'false'.  A locked channel means that it is read-only on the application side.  Assumes the coniguration (config_io) has been set by the device and the device has no ability to take action based on changes on the application / cloud side.  
+
+Locked channels and full configurations generally are used by devices that have a hard coded configuration, the channels are all defined and the config_io is uploaded by the device.  Devices can use a combination of locked and configurable channels, thus why the locked field can be found at both the full config level and per channel.  
+
+### Protocol configuration
+Optionally used by the device to determine what application (protocol / interface) will be used and the specific details to get / set the information for the channel.  Used for fieldbus protocols (e.g. Modbus RTU) or custom applications such as a custom wireless handler or one that gathers data from local I/O on the hardware.  The protocol configuration parameters are optional to use, devices that are not configurable may not use this at all and therefore would not be specified.  
+
+Devices that are configurable should use the protocol configuration properties to get / set data, convert it, and determine how often to sample (read locally) and report (to cloud).   
+
+#### Report Rate
+The interval for the device to report values to the cloud (ExoSense).  May be used in the application to determine gaps in data.  
+
+#### Timeout
+The interval that is considered a timeout for a channel.  Can be the same as report rate but typically set at a larger interval to provide room for network slowness and reconnections.  Typically not used by the device but used by an Asset signal in the application to generate timeout events for the asset / device UI's, timeout events in the asset logs, and future possibilities.  *E.g. The device reports a channel every 1 minute but if it hasn't reported for 5 minutes, this is an event that may need to have a call to action for. *
+
+### Channel to Signal Configuration relationship
+Signals inherit channel properites once created in the application.  Once a signal has been created through, changes to the channel's configuration do not automatically get applied to the signal's properties.  A signals properties, such as 'timeout', can be changed (if the application allows for it), but will not result in a change back down to the device channel.  
+
+#### IoT Properties
+Advanced use only for allowing for server side conversion of data.  Not supported for normal ExoSense application use.  Not recommended.  Must not be used by the device.
 
 
 ## Device Data Transport Schema
