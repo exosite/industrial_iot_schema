@@ -197,7 +197,7 @@ Used by the application to show the user a friendly name and description (option
 ### Locked channels
 The 'locked' property is not required and is optional for use.  The entire configuration can be locked or channels can invidivually be locked.  If not set, defaults to 'false'.  A locked channel means that it is read-only on the application side.  Assumes the coniguration (config_io) has been set by the device and the device has no ability to take action based on changes on the application / cloud side.  
 
-Locked channels and full configuraitons generally are used by devices that have a hard coded configuration, the channels are all defined and the config_io is uploaded by the device.  Devices can use a combination of locked and configurable channels, thus why the locked field can be found at both the full config level and per channel.  
+Locked channels and full configurations generally are used by devices that have a hard coded configuration, the channels are all defined and the config_io is uploaded by the device.  Devices can use a combination of locked and configurable channels, thus why the locked field can be found at both the full config level and per channel.  
 
 ### Protocol configuration
 Optionally used by the device to determine what application (protocol / interface) will be used and the specific details to get / set the information for the channel.  Used for fieldbus protocols (e.g. Modbus RTU) or custom applications such as a custom wireless handler or one that gathers data from local I/O on the hardware.  The protocol configuration parameters are optional to use, devices that are not configurable may not use this at all and therefore would not be specified.  
@@ -211,10 +211,10 @@ The interval for the device to report values to the cloud (ExoSense).  May be us
 The interval that is considered a timeout for a channel.  Can be the same as report rate but typically set at a larger interval to provide room for network slowness and reconnections.  Typically not used by the device but used by an Asset signal in the application to generate timeout events for the asset / device UI's, timeout events in the asset logs, and future possibilities.  *E.g. The device reports a channel every 1 minute but if it hasn't reported for 5 minutes, this is an event that may need to have a call to action for. *
 
 ### Channel to Signal Configuration relationship
-Signals inherit channel properites once created in the application.  Once a signal has been created through, changs to the channel's configuration do not automatically get applied to the signal's properties.  A signals properties, such as 'timeout', can be changed (if the application allows for it), but will not result in a change back down to the device channel.  
+Signals inherit channel properites once created in the application.  Once a signal has been created through, changes to the channel's configuration do not automatically get applied to the signal's properties.  A signals properties, such as 'timeout', can be changed (if the application allows for it), but will not result in a change back down to the device channel.  
 
 #### IoT Properties
-Advanced use only for allowing for server side converion of data.  Not supported for normal ExoSense application use.  Not recommended.  Must not be used by the device.
+Advanced use only for allowing for server side conversion of data.  Not supported for normal ExoSense application use.  Not recommended.  Must not be used by the device.
 
 
 ## Device Data Transport Schema
