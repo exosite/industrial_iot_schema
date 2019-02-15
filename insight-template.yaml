@@ -13,6 +13,9 @@ info:
 
 host: a.real.host # Set this to the host your function is on
 basePath: / # Set this or the path according to your function
+tags:
+  - name: insight
+    description: Insight Module
 schemes:
   - https  # Only https is supported.
 consumes:
