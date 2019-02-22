@@ -455,11 +455,11 @@ Key (`data_type`): DATA<br>
 Accepted Units (`data_unit`): BYTE, KILOBYTE, MEGABYTE, GIGABYTE, TERABYTE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: <br>
-* BYTE: B
-* KILOBYTE: KB
-* MEGABYTE: MB
-* GIGABYTE: GB
-* TERABYTE: TB
+* `BYTE`: B
+* `KILOBYTE`: KB
+* `MEGABYTE`: MB
+* `GIGABYTE`: GB
+* `TERABYTE`: TB
 
 Notes: --
 
@@ -602,19 +602,21 @@ Notes:
 * Flow as PERCENT can not be automatically converted 
 
 
-
 #### Flow (Mass)
 Key (`data_type`): FLOW_MASS<br>
-Accepted Units (`data_unit`): KILO_PER_SEC, LBS_PER_SEC<br>
+Accepted Units (`data_unit`): KG_PER_SEC, LBS_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
+UI Unit Abbreviation: <br>
+* `KG_PER_SEC`: kg/s
+* `LBS_PER_SEC`: lb/s
+Notes: **not supported**  
 
 #### Force
 Key (`data_type`): FORCE<br>
 Accepted Units (`data_unit`): NEWTON<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+UI Unit Abbreviation: <br>
+* `NEWTON`: N
 Notes: --
 
 #### Frequency
@@ -775,9 +777,20 @@ Notes: **not supported**
 
 #### Mass
 Key (`data_type`): MASS<br>
-Accepted Units (`data_unit`): MILLIGRAM, GRAM, KILOGRAM, POUND, OZ, TON, METRIC_TON, SLUG, DRAM, LBM<br>
+Accepted Units (`data_unit`): MILLIGRAM, GRAM, KILOGRAM, POUND, OZ, TON, METRIC_TON, SLUG, DRAM, POUNDMASS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+UI Unit Abbreviation: <br>
+* `MILLIGRAM`: mg
+* `GRAM`: g
+* `KILOGRAM`: kg
+* `POUND`: lb
+* `OZ`: oz
+* `TON`: Ton 
+* `METRIC_TON`: t
+* `SLUG`: slug
+* `DRAM`: dr
+* `POUNDMASS`: lbm
+
 Notes: --
 
 #### Particles
@@ -788,13 +801,14 @@ UI Unit Abbreviation: <br>
 * `PPM`: ppm
 * `PPB`: ppb
 * `PPT`: ppt
-Notes: **not supported** Psuedo-units to describe particles as a quantity of quantity. 
+Notes: Psuedo-units to describe particles as a quantity of quantity. 
 
 #### Percentage
 Key (`data_type`): PERCENTAGE<br>
 Accepted Units (`data_unit`): PERCENT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: %<br>
+UI Unit Abbreviation: <br>
+* `PERCENT: %`
 Notes: --
 
 #### pH
@@ -869,7 +883,16 @@ Key (`data_type`): SOLID_ANGLE<br>
 Accepted Units (`data_unit`): STERADIAN<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: <br>
-* `steradian`: sr
+* `STERADIAN`: sr
+
+Notes: **not supported**
+
+#### Sound
+Key (`data_type`): SOUND<br>
+Accepted Units (`data_unit`): DECIBEL<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: <br>
+* `DECIBEL`: dB
 
 Notes: **not supported**
 
