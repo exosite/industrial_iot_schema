@@ -352,9 +352,8 @@ Many of these types will represent base physical measurements (temperature, leng
 
 #### Acceleration
 Key (`data_type`): ACCELERATION<br>
-Accepted Units (`data_unit`): METER_PER_SEC2, STANDARD_GRAVITY, FEET_PER_SEC2, IN_PER_SEC2<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METER_PER_SEC2`: m/s²
 * `STANDARD_GRAVITY` : g₀
 * `FEET_PER_SEC2`: ft/s²
@@ -364,36 +363,26 @@ Notes: --
 
 #### Amount of Substance
 Key (`data_type`): AMOUNT<br>
-Accepted Units (`data_unit`): MOLE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `MOLE`: mol
 
 Notes: --
 
 #### Angular acceleration
 Key (`data_type`): ANGULAR_ACCEL<br>
-Accepted Units (`data_unit`): RAD_PER_SEC2, ROTATIONS_PER_MIN2, DEG_PER_SEC2<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
-* `RAD_PER_SEC2`:
-* `ROTATIONS_PER_MIN2`:
-* `DEG_PER_SEC2`:
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
+* `RAD_PER_SEC2`: rad/s²
+* `ROTATIONS_PER_MIN2`: r/min²
+* `DEG_PER_SEC2`: deg/s²
 
 Notes: --
 
-#### Angular momentum
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: **not supported**
-
 #### Angular Velocity / Speed
 Key (`data_type`): ANGULAR_VEL<br>
-Accepted Units (`data_unit`): RAD_PER_SEC, RAD_PER_MIN, RAD_PER_HOUR ROTATIONS_PER_MIN, DEG_PER_SEC, DEG_PER_MIN, DEG_PER_HOUR<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `RAD_PER_SEC`: rad/s
 * `RAD_PER_MIN`: rad/m
 * `RAD_PER_HOUR`: rad/hr
@@ -406,9 +395,8 @@ Notes: --
 
 #### Area
 Key (`data_type`): AREA<br>
-Accepted Units (`data_unit`): METER2, KILOMETER2, FEET2, INCH2, MILE2, MM2, ACRE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METER2`: m²
 * `KILOMETER2`: km²
 * `MM2`: mm²
@@ -421,18 +409,16 @@ Notes: --
 
 #### Battery Percentage
 Key (`data_type`): BATTERY_PERCENTAGE<br>
-Accepted Units (`data_unit`): PERCENT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PERCENT`: %
 
 Notes: Device diagnostic
 
 #### Capacitance
 Key (`data_type`): CAPACITANCE<br>
-Accepted Units (`data_unit`): FARAD, MILLIFARAD, MICROFARAD, NANOFARAD, PICOFARAD<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `FARAD`: F
 * `MILLIFARAD`: mF
 * `MICROFARAD`: µF
@@ -443,18 +429,20 @@ Notes: --
 
 #### Currency
 Key (`data_type`): CURRENCY<br>
-Accepted Units (`data_unit`): AFN, ALL, DZD, USD, EUR, AOA, XCD, ARS, AMD, AWG, AUD, AZN, BSD, BHD, BDT, BBD, BYR, BZD, XOF, BMD, BTN, INR, BOB, BOV, BAM, BWP, NOK, BRL, BND, BGN, BIF, CVE, KHR, XAF, CAD, KYD, CLF, CLP, CNY, COP, COU, KMF, CDF, NZD, CRC, HRK, CUC, CUP, ANG, CZK, DKK, DJF, DOP, EGP, SVC, ERN, ETB, FKP, FJD, XPF, GMD, GEL, GHS, GIP, GTQ, GBP, GNF, GYD, HTG, HNL, HKD, HUF, ISK, IDR, XDR, IRR, IQD, ILS, JMD, JPY, JOD, KZT, KES, KPW, KRW, KWD, KGS, LAK, LBP, LSL, ZAR, LRD, LYD, CHF, MOP, MKD, MGA, MWK, MYR, MVR, MRU, MUR, XUA, MXN, MXV, MDL, MNT, MAD, MZN, MMK, NAD, NPR, NIO, NGN, OMR, PKR, PAB, PGK, PYG, PEN, PHP, PLN, QAR, RON, RUB, RWF, SHP, WST, STN, SAR, RSD, SCR, SLL, SGD, XSU, SBD, SOS, SSP, LKR, SDG, SRD, SZL, SEK, CHE, CHW, SYP, TWD, TJS, TZS, THB, TOP, TTD, TND, TRY, TMT, UGX, UAH, AED, USN, UYI, UYU, UZS, VUV, VEF, VND, YER, ZMW, ZWL<br>
+Accepted Units (`data_unit`):
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
+`AFN`, `ALL`, `DZD`, `USD`, `EUR`, `AOA`, `XCD`, `ARS`, `AMD`, `AWG`, `AUD`, `AZN`, `BSD`, `BHD`, `BDT`, `BBD`, `BYR`, `BZD`, `XOF`, `BMD`, `BTN`, `INR`, `BOB`, `BOV`, `BAM`, `BWP`, `NOK`, `BRL`, `BND`, `BGN`, `BIF`, `CVE`, `KHR`, `XAF`, `CAD`, `KYD`, `CLF`, `CLP`, `CNY`, `COP`, `COU`, `KMF`, `CDF`, `NZD`, `CRC`, `HRK`, `CUC`, `CUP`, `ANG`, `CZK`, `DKK`, `DJF`, `DOP`, `EGP`, `SVC`, `ERN`, `ETB`, `FKP`, `FJD`, `XPF`, `GMD`, `GEL`, `GHS`, `GIP`, `GTQ`, `GBP`, `GNF`, `GYD`, `HTG`, `HNL`, `HKD`, `HUF`, `ISK`, `IDR`, `XDR`, `IRR`, `IQD`, `ILS`, `JMD`, `JPY`, `JOD`, `KZT`, `KES`, `KPW`, `KRW`, `KWD`, `KGS`, `LAK`, `LBP`, `LSL`, `ZAR`, `LRD`, `LYD`, `CHF`, `MOP`, `MKD`, `MGA`, `MWK`, `MYR`, `MVR`, `MRU`, `MUR`, `XUA`, `MXN`, `MXV`, `MDL`, `MNT`, `MAD`, `MZN`, `MMK`, `NAD`, `NPR`, `NIO`, `NGN`, `OMR`, `PKR`, `PAB`, `PGK`, `PYG`, `PEN`, `PHP`, `PLN`, `QAR`, `RON`, `RUB`, `RWF`, `SHP`, `WST`, `STN`, `SAR`, `RSD`, `SCR`, `SLL`, `SGD`, `XSU`, `SBD`, `SOS`, `SSP`, `LKR`, `SDG`, `SRD`, `SZL`, `SEK`, `CHE`, `CHW`, `SYP`, `TWD`, `TJS`, `TZS`, `THB`, `TOP`, `TTD`, `TND`, `TRY`, `TMT`, `UGX`, `UAH`, `AED`, `USN`, `UYI`, `UYU`, `UZS`, `VUV`, `VEF`, `VND`, `YER`, `ZMW`, `ZWL`<br>
+
 Notes: 
 * Currency codes (based on list found here: https://www.iban.com/currency-codes.html) 
+* No Unit Abbreviations
 * No conversions supported.  
 
 #### Data
 Key (`data_type`): DATA<br>
-Accepted Units (`data_unit`): BYTE, KILOBYTE, MEGABYTE, GIGABYTE, TERABYTE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `BYTE`: B
 * `KILOBYTE`: KB
 * `MEGABYTE`: MB
@@ -465,18 +453,16 @@ Notes: --
 
 #### Density
 Key (`data_type`): DENSITY<br>
-Accepted Units (`data_unit`): KG_PER_M3<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `KG_PER_M3`: kg/m³
 
 Notes: --
 
 #### Displacement
 Key (`data_type`): DISPLACEMENT<br>
-Accepted Units (`data_unit`): METERS, CENTIMETERS, KILOMETERS, MILLIMETERS, FEET, INCH, YARD, MILES, MICRONS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 *	`METERS`: m
 * `CENTIMETERS`: cm
 *	`KILOMETERS`: km
@@ -489,22 +475,20 @@ UI Unit Abbreviation: --<br>
 
 Notes: --
 
-#### Dynamic viscosity
+#### Dynamic Viscosity
 Key (`data_type`): DYNAMIC_VISCOSITY<br>
-Accepted Units (`data_unit`): PASCAL_SEC, MILLIPASCAL_SEC, POISE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PASCAL_SEC`: Pa·s
 * `MILLIPASCAL_SEC`: mPa·s
 * `POISE`: P
 
 Notes: **Not Supported**
 
-#### Kinematic viscosity
+#### Kinematic Viscosity
 Key (`data_type`): KINEMATIC_VISCOSITY<br>
-Accepted Units (`data_unit`): STOKES, CENTISTOKES, METERS2_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `CENTISTOKES`: cSt
 * `STOKES`: St
 * `METERS2_PER_SEC`: m2/s
@@ -514,9 +498,8 @@ Notes: **Not Supported**
 
 #### Electric Current
 Key (`data_type`): ELEC_CURRENT<br>
-Accepted Units (`data_unit`): AMPERE, MILLIAMP, MICROAMP, KILOAMP<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `AMPERE`: A
 * `MILLIAMP`: mA
 * `MICROAMP`: µA
@@ -526,17 +509,15 @@ Notes: --
 
 #### Electrical Conductance
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): SIEMENS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `SIEMENS`: S
 Notes: **not supported**
 
 #### Electrical Potential (Voltage)
 Key (`data_type`): ELEC_POTENTIAL<br>
-Accepted Units (`data_unit`): VOLT, MILLIVOLT, MICROVOLT, KILOVOLT, MEGAVOLT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `VOLT`: V
 * `MILLIVOLT`: mV
 * `MICROVOLT`: µV
@@ -547,9 +528,8 @@ Notes: --
 
 #### Electrical Resistance
 Key (`data_type`): ELEC_RESISTANCE<br>
-Accepted Units (`data_unit`): OHM, MILLIOHM, MICROOHM, KILOOHM, MEGAOHM<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `OHM`: Ω
 * `MILLIOHM`: mΩ
 * `MICROOHM`: µΩ
@@ -560,27 +540,24 @@ Notes: --
 
 #### Electrical Resistivity
 Key (`data_type`): ELEC_RESISTIVITY<br>
-Accepted Units (`data_unit`): OHM_METER<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `OHM_METER`: Ω⋅m
 
 Notes: --
 
 #### Energy
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): JOULE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `JOULE`: J
 
 Notes:
 
 #### Field Level
 Key (`data_type`): FIELD_LEVEL<br>
-Accepted Units (`data_unit`): DECIBEL<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `DECIBEL`: dB
 
 Notes: Used for logarithmic measures. Reference: [https://en.wikipedia.org/wiki/Level_(logarithmic_quantity)]
@@ -588,9 +565,8 @@ Notes: Used for logarithmic measures. Reference: [https://en.wikipedia.org/wiki/
 
 #### Flow (Volumetric)
 Key (`data_type`): FLOW<br>
-Accepted Units (`data_unit`): METERS3_PER_SEC, PERCENT, SCFM, SCFH, SLPS, SLPM, NCMH, NCMM, NLPS, LITERS_PER_SEC, LITERS_PER_MIN, LITERS_PER_HOUR, GALLONS_PER_SEC, GALLONS_PER_MIN, GALLONS_PER_HOUR<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METERS3_PER_SEC`: m³/s
 * `PERCENT`: %
 * `SCFM`: SCFM (Standard cubic feet per minute)
@@ -614,26 +590,25 @@ Notes:
 
 #### Flow (Mass)
 Key (`data_type`): FLOW_MASS<br>
-Accepted Units (`data_unit`): KG_PER_SEC, LBS_PER_SEC<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `KG_PER_SEC`: kg/s
 * `LBS_PER_SEC`: lb/s
-Notes: **not supported**  
+
+Notes: 
 
 #### Force
 Key (`data_type`): FORCE<br>
-Accepted Units (`data_unit`): NEWTON<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `NEWTON`: N
+
 Notes: --
 
 #### Frequency
 Key (`data_type`): FREQUENCY<br>
-Accepted Units (`data_unit`): HERTZ, KHZ, MHZ<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `HERTZ`: Hz
 * `KHZ`:KHz
 * `MHZ`: MHz
@@ -643,9 +618,11 @@ Notes: --
 
 #### GPS / Location
 Key (`data_type`): LOCATION<br>
-Accepted Units (`data_unit`): LAT_LONG, LAT_LONG_ALT<br>
 Primitive Type (`primitive_type`): JSON<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
+* `LAT_LONG`
+* `LAT_LONG_ALT`
+
 Notes: 
 * LAT_LONG contains both latitude and longitude in a JSON structured
 * LAT_LONG_ALT unit includes altitude.  
@@ -660,9 +637,8 @@ Notes:
 
 #### Heat
 Key (`data_type`): HEAT<br>
-Accepted Units (`data_unit`): JOULE, BTU, CALORIE, KILOCALORIE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `JOULE`: J
 * `BTU`: Btu
 * `CALORIE`: cal
@@ -672,17 +648,15 @@ Notes:
 
 #### Humidity
 Key (`data_type`): HUMIDITY<br>
-Accepted Units (`data_unit`): PERCENT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PERCENT`: %
 Notes: --
 
 #### Illuminance
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): LUX, FOOT_CANDLES<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `LUX`: lx
 * `FOOT_CANDLES`: fc
 
@@ -690,25 +664,22 @@ Notes:
 
 #### Inductance
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): HENRY<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `HENRY`: H
 Notes: **not supported**
 
 #### Jerk
 Key (`data_type`): JERK<br>
-Accepted Units (`data_unit`): METER_PER_SEC3<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METER_PER_SEC3`: m/s³
 Notes: --
 
 #### Length
 Key (`data_type`): LENGTH<br>
-Accepted Units (`data_unit`): METERS, CENTIMETERS, KILOMETERS, MILLIMETERS, FEET, INCH, YARD, MILES, MICRONS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 *	`METERS`: m
 * `CENTIMETERS`: cm
 *	`KILOMETERS`: km
@@ -723,73 +694,40 @@ Notes: --
 
 #### Linear density
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): KILOGRAM_PER_METER<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `KILOGRAM_PER_METER`: kg/m
 
 Notes: **not supported**
 
 #### Luminance
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): •	CANDELA_PER_METER2<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `CANDELA_PER_METER2`: cd/m2
 
 Notes: 
 
 #### Luminous Flux
 Key (`data_type`): --<br>
-Accepted Units (`data_unit`): LUMENS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `LUMENS`: lm
 
 Notes: 
 
 #### Luminous Intensity
 Key (`data_type`): LUMINOUS_INTENSITY<br>
-Accepted Units (`data_unit`): CANDELA<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `CANDELA`: cd
 
 Notes: --
 
-#### Magnetic field strength
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: **not supported**
-
-#### Magnetic flux
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: **not supported**
-
-#### Magnetic flux density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: **not supported**
-
-#### Magnetization
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: **not supported**
-
 #### Mass
 Key (`data_type`): MASS<br>
-Accepted Units (`data_unit`): MILLIGRAM, GRAM, KILOGRAM, POUND, OZ, TON, METRIC_TON, SLUG, DRAM, POUNDMASS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `MILLIGRAM`: mg
 * `GRAM`: g
 * `KILOGRAM`: kg
@@ -805,9 +743,8 @@ Notes: --
 
 #### Particles
 Key (`data_type`): PARTICLES<br>
-Accepted Units (`data_unit`): PPM, PPB, PPT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PPM`: ppm
 * `PPB`: ppb
 * `PPT`: ppt
@@ -815,26 +752,24 @@ Notes: Psuedo-units to describe particles as a quantity of quantity.
 
 #### Percentage
 Key (`data_type`): PERCENTAGE<br>
-Accepted Units (`data_unit`): PERCENT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PERCENT: %`
+
 Notes: --
 
 #### pH
 Key (`data_type`): PH<br>
-Accepted Units (`data_unit`): PH<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PH`: pH
 
 Notes: 
 
 #### Plane angle
 Key (`data_type`): ANGLE<br>
-Accepted Units (`data_unit`): RADIAN, DEGREE, ARCMINUTE, ARCSECOND<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `RADIAN`: rad
 * `DEGREE`: °
 * `ARCMINUTE`: '
@@ -842,11 +777,10 @@ UI Unit Abbreviation: <br>
 
 Notes: --
 
-#### Power
+#### 
 Key (`data_type`): POWER<br>
-Accepted Units (`data_unit`): WATT, MILLIWATT, KILOWATT, MEGAWATT, MICROWATT, VOLTAMPS, KILOVOLTAMPS, VOLTAMPS_REACTIVE, VOLTAMPS_REACTIVE, HORSEPOWER<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `WATT`: W
 * `MILLIWATT`: mW
 * `KILOWATT` kW
@@ -862,9 +796,8 @@ Notes: --
 
 #### Power Level
 Key (`data_type`): POWER_LEVEL<br>
-Accepted Units (`data_unit`): DECIBEL<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `DECIBEL`: dB
 
 Notes: Used for logarithmic measures. Reference: [https://en.wikipedia.org/wiki/Level_(logarithmic_quantity)]
@@ -872,9 +805,8 @@ Notes: Used for logarithmic measures. Reference: [https://en.wikipedia.org/wiki/
 
 #### Pressure
 Key (`data_type`): PRESSURE<br>
-Accepted Units (`data_unit`): MBAR, BAR, PSI, TORR, PASCAL, KILOPASCAL, ATMOSPHERE, NEWTON_PER_METER_2, MM_HG, IN_H2O<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PASCAL`: Pa
 * `KILOPASCAL`: kPa
 * `BAR`: bar
@@ -891,27 +823,24 @@ Notes: --
 
 #### Signal Strength as Percent
 Key (`data_type`): SIGNAL_STRENGTH_PERCENTAGE<br>
-Accepted Units (`data_unit`): PERCENT<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PERCENT`: %
 
 Notes: Device diagnostic
 
 #### Solid angle
 Key (`data_type`): SOLID_ANGLE<br>
-Accepted Units (`data_unit`): STERADIAN<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `STERADIAN`: sr
 
 Notes: **not supported**
 
 #### Speed
 Key (`data_type`): SPEED<br>
-Accepted Units (`data_unit`): METER_PER_SEC, MPH, KPH, IN_PER_SEC, FEET_PER_SEC, KNOTS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METER_PER_SEC`: m/s
 * `KPH`: km/h
 * `MPH`: mph
@@ -923,9 +852,8 @@ Notes: --
 
 #### Temperature
 Key (`data_type`): TEMPERATURE<br>
-Accepted Units (`data_unit`): KELVIN, DEG_FAHRENHEIT, DEG_CELSIUS, RANKINE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `KELVIN`: K
 * `DEG_CELSIUS`: °C
 * `DEG_FAHRENHEIT`: °F 
@@ -935,9 +863,8 @@ Notes: --
 
 #### Time
 Key (`data_type`): TIME<br>
-Accepted Units (`data_unit`): SECONDS, MILLISECOND, MINUTE, HOUR, DAY, YEAR<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `SECONDS`: s
 * `MILLISECOND`: msec
 * `MINUTE`: min
@@ -949,9 +876,8 @@ Notes: --
 
 #### Torque
 Key (`data_type`): TORQUE<br>
-Accepted Units (`data_unit`): NEWTON_METER, FOOT_POUNDS, INCH_POUNDS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `NEWTON_METER`:  N⋅m
 * `FOOT_POUNDS`: lbf⋅ft
 * `INCH_POUNDS`: lbf⋅in
@@ -960,22 +886,20 @@ Notes: --
 
 #### Velocity
 Key (`data_type`): VELOCITY<br>
-Accepted Units (`data_unit`): METER_PER_SEC, MILLMETERS_PER_SEC, FEET_PER_SEC, INCH_PER_SEC, MPH<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METER_PER_SEC`: m/s
 * `MILLMETERS_PER_SEC`: mm/s
 * `MPH`: mph
-* `IN_PER_SEC`: ips
+* `INCH_PER_SEC`: ips
 * `FEET_PER_SEC`: fps
 
 Notes: --
 
 #### Volume
 Key (`data_type`): VOLUME<br>
-Accepted Units (`data_unit`): METER3, FEET3, LITRE, GALLON, PINT, QUARTS, INCH3, CENTIMETER3, MILLIMETERS3, MILLILITRES, IMPERIAL_GALLONS, FLUID_OZ<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 *	`METER3`: m³
 *	`LITRE`: L
 *	`MILLILITRES`: mL
@@ -993,9 +917,8 @@ Notes: --
 
 #### Weight
 Key (`data_type`): WEIGHT<br>
-Accepted Units (`data_unit`): NEWTON, POUND, OUNCE, TON, METRIC_TON <br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `NEWTON`: N
 * `POUND`: lb
 * `OUNCE`: oz
@@ -1006,9 +929,8 @@ Notes: --
 
 #### Work
 Key (`data_type`): WORK<br>
-Accepted Units (`data_unit`): JOULE, FOOT_POUNDS<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `JOULE`: J
 * `FOOT_POUND`: ft⋅lb
 
