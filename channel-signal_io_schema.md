@@ -576,6 +576,16 @@ UI Unit Abbreviation: <br>
 
 Notes:
 
+#### Field Level
+Key (`data_type`): FIELD_LEVEL<br>
+Accepted Units (`data_unit`): DECIBEL<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: <br>
+* `DECIBEL`: dB
+
+Notes: Used for logarithmic measures. Reference: [https://en.wikipedia.org/wiki/Level_(logarithmic_quantity)]
+
+
 #### Flow (Volumetric)
 Key (`data_type`): FLOW<br>
 Accepted Units (`data_unit`): METERS3_PER_SEC, PERCENT, SCFM, SCFH, SLPS, SLPM, NCMH, NCMM, NLPS, LITERS_PER_SEC, LITERS_PER_MIN, LITERS_PER_HOUR, GALLONS_PER_SEC, GALLONS_PER_MIN, GALLONS_PER_HOUR<br>
@@ -850,6 +860,16 @@ UI Unit Abbreviation: --<br>
 
 Notes: --
 
+#### Power Level
+Key (`data_type`): POWER_LEVEL<br>
+Accepted Units (`data_unit`): DECIBEL<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+UI Unit Abbreviation: <br>
+* `DECIBEL`: dB
+
+Notes: Used for logarithmic measures. Reference: [https://en.wikipedia.org/wiki/Level_(logarithmic_quantity)]
+
+
 #### Pressure
 Key (`data_type`): PRESSURE<br>
 Accepted Units (`data_unit`): MBAR, BAR, PSI, TORR, PASCAL, KILOPASCAL, ATMOSPHERE, NEWTON_PER_METER_2, MM_HG, IN_H2O<br>
@@ -884,15 +904,6 @@ Accepted Units (`data_unit`): STERADIAN<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: <br>
 * `STERADIAN`: sr
-
-Notes: **not supported**
-
-#### Sound
-Key (`data_type`): SOUND<br>
-Accepted Units (`data_unit`): DECIBEL<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: <br>
-* `DECIBEL`: dB
 
 Notes: **not supported**
 
