@@ -1086,7 +1086,17 @@ Key (`data_type`): URL<br>
 Accepted Units (`data_unit`): _Not Used_<br>
 Primitive Type (`primitive_type`): STRING<br>
 UI Unit Abbreviation: na<br>
-Notes: A string with proper URL scheme starting with `https`, etc.  Validation and security checks are not provided by the platform or application.  _Recommend only for use of encrypted and password protocted URLs.  OEMs implmenting device or custom Insight support to generate URL values, do so at their own risk to their users._ 
+Notes: A string with proper URL scheme starting with `https`, etc.  Uses 'Markdown' format to provide a Title that would be displayed in the UI. Application will define what URL types are actually supported.
+**_Validation and security checks are not provided by the platform or application.  Recommend only for use of encrypted and password protocted URLs.  OEMs implmenting device or custom Insight support to generate URL values, do so at their own risk to their users._**
+
+**Example with Title:**  
+```
+"[Title Here](https://exosite.com)"
+```
+**Example without Title:**
+```  
+"https://exosite.com"
+```
 
 #### Velocity
 Key (`data_type`): VELOCITY<br>
