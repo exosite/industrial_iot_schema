@@ -508,7 +508,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Electrical Conductance
-Key (`data_type`): ELEC_CAPACITANCE<br>
+Key (`data_type`): ELEC_CONDUCTANCe<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `SIEMENS`: S
