@@ -1081,6 +1081,13 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: --<br>
 Notes: --
 
+### URL 
+Key (`data_type`): URL<br>
+Accepted Units (`data_unit`): _Not Used_<br>
+Primitive Type (`primitive_type`): STRING<br>
+UI Unit Abbreviation: na<br>
+Notes: A string with proper URL scheme starting with `https`, etc.  Validation and security checks are not provided by the platform or application.  _Recommend only for use of encrypted and password protocted URLs.  OEMs implmenting device or custom Insight support to generate URL values, do so at their own risk to their users._ 
+
 #### Velocity
 Key (`data_type`): VELOCITY<br>
 Accepted Units (`data_unit`): METER_PER_SEC<br>
