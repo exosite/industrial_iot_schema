@@ -508,7 +508,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Electrical Conductance
-Key (`data_type`): --<br>
+Key (`data_type`): ELEC_CAPACITANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `SIEMENS`: S
@@ -547,7 +547,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Energy
-Key (`data_type`): --<br>
+Key (`data_type`): ENERGY<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `JOULE`: J
@@ -654,7 +654,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Illuminance
-Key (`data_type`): --<br>
+Key (`data_type`): ILLUMINANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `LUX`: lx
@@ -663,7 +663,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: 
 
 #### Inductance
-Key (`data_type`): --<br>
+Key (`data_type`): INDUCTANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `HENRY`: H
@@ -693,7 +693,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Linear density
-Key (`data_type`): --<br>
+Key (`data_type`): LINEAR_DENSITY<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `KILOGRAM_PER_METER`: kg/m
@@ -701,20 +701,20 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: **not supported**
 
 #### Luminance
-Key (`data_type`): --<br>
+Key (`data_type`): LUMINANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `CANDELA_PER_METER2`: cd/m2
 
-Notes: 
+Notes: --
 
 #### Luminous Flux
-Key (`data_type`): --<br>
+Key (`data_type`): LUMINANCE_FLUX<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `LUMENS`: lm
 
-Notes: 
+Notes: --
 
 #### Luminous Intensity
 Key (`data_type`): LUMINOUS_INTENSITY<br>
@@ -764,7 +764,7 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `PH`: pH
 
-Notes: 
+Notes: --
 
 #### Plane angle
 Key (`data_type`): ANGLE<br>
