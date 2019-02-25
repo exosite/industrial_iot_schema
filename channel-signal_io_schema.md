@@ -568,6 +568,7 @@ Key (`data_type`): FLOW<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `METERS3_PER_SEC`: m³/s
+* `METERS3_PER_HOUR`: m³/h
 * `PERCENT`: %
 * `SCFM`: SCFM (Standard cubic feet per minute)
 * `SCFH`: SCFH (Standard cubic feet per hour)
