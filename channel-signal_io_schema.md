@@ -586,7 +586,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `GALLONS_PER_HOUR`: GPH
 
 Notes: 
-* Flow as PERCENT can not be automatically converted 
+* Flow as PERCENT will not support conversions
 
 
 #### Flow (Mass)
