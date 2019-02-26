@@ -1171,24 +1171,21 @@ applications: # device applications for handling channel protocols, used to show
     interfaces:
       # first interface for this application protocol 
     - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
-      baud_rate: ${protocol_specific-baud_rate_enum}  #specific to protocol
-      stop_bits: ${protocol_specific-stop_bits_enum}  #specific to protocol
-      parity: ${protocol_specific-parity_enum}  #specific to protocol
-      data_bits: ${protocol_specific-data_bits_enum}  #specific to protocol
+      custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+      custom_interface_param2: ${protocol_specific_value}  #specific to protocol
+      custom_interface_paramN: ${protocol_specific_value}  #specific to protocol
       # second interface for this application protocol 
     - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
-      baud_rate: ${protocol_specific-baud_rate_enum}  #specific to protocol
-      stop_bits: ${protocol_specific-stop_bits_enum}  #specific to protocol
-      parity: ${protocol_specific-parity_enum}  #specific to protocol
-      data_bits: ${protocol_specific-data_bits_enum}  #specific to protocol
+      custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+      custom_interface_param2: ${protocol_specific_value}  #specific to protocol
+      custom_interface_paramN: ${protocol_specific_value}  #specific to protocol
   ######### Example application 2 e.g. CANOpen############
   ${application protocol 2}: # supported or custom protocol e.g. Modbus_RTU
     application_display_name: "Human readable application name" # Used in UI
     interfaces:
       # first interface for this application protocol 
-    - channel: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
-      bitrate: ${protocol_specific-bitrate_enum}  #specific to protocol
-
+      - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+        custom_interface_param1: ${protocol_specific_value}  #specific to protocol
 ```
 
 
@@ -1229,6 +1226,7 @@ applications: # device applications for handling channel protocols, used to show
       "application_display_name": "CANopen",
       "interfaces": [
         {
+          "interface": "canA-10",
           "channel": "canA-10",
           "bitrate": 20000
         }
@@ -1348,6 +1346,7 @@ bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bi
       "application_display_name": "CANopen",
       "interfaces": [
         {
+          "interface": "canA-10",
           "channel": "canA-10",
           "bitrate": 20000
         }
