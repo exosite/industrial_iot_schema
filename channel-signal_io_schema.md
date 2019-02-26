@@ -33,14 +33,16 @@ ExoSense uses the Murano IoT Platform device interface for it's device connectiv
 
 Resource Name|ExoSense Status|Who Can Write To|Description
 --|--|--|---
-data_in|supported|Device|Used to send data from device to cloud in the format defined in Section 4
-config_io|supported|Device / App|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
-data_out|*planned*|App|To be defined in the future - used for writing commands to devices
-config_oem|*reserved*|tbd|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
-config_applications|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)
-config_interfaces|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)  
-config_rules |*reserved*|tbd|Possibly to be defined in the future
-config_network|*reserved*|tbd|Initial Concepts in Appendix, but not implemented
+`data_in`|supported|Device|Used to send data from device to cloud in the format defined in Section 4
+`config_io`|supported|Device / App|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
+`data_out`|*planned*|App|To be defined in the future - used for writing commands to devices
+`config_applications`|supported|Device / App|Specifies configuration for the interfaces used by gateway protocol/fieldbus applications (i.e. “interface = /dev/tty0”)
+`config_oem`|*reserved*|tbd|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
+`config_interfaces`|*reserved*|tbd|
+`config_rules`|*reserved*|tbd|
+`config_network`|*reserved*|tbd|
+
+*Note: Generally do not recommend using custom resources with prefix of `config_`.*
 
 
 ## Device / Gateway Channel Configuration Schema
@@ -1174,4 +1176,243 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
     data_length : "INTEGER" # e.g. "8" bytes (determines how many PDOs to read), default is 8, required
     evaluation_mode : [“REAL32”, “INT8”, “INT16”, “UINT16”, “UINT32”, “STRING”, “BOOLEAN”]
     bitmask : "HEXADECIMAL" # optional, hex value for bits to mask out/pass-thru 
+```
+
+## Protocol Interface Application Configuration
+The gateway / device applications that handle reading/writing for channels may have properties that need to be set that are useful for all channels using that protocol / interface.  For example, 10 channels may be set up to use Modbus_RTU at interface /dev/tty0.  The application that handles the modbus communication needs to know the interface details such as baud rate, etc.  
+
+The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
+
+The application protocols and interfaces listed below are used in `config_io` and therefore are used to drive channel configuration options in the user application. 
+
+**Application Configuration (`config_applications`) Description**
+```yaml
+# config_applications channel definition 
+last_edited: "{$date_timestamp}" # e.g. 2018-03-28T13:27:39+00:00 
+last_editor" : "${edited_by}" # Person user name, "user", or "device"
+applications: # device applications for handling channel protocols, used to show users their protocol / interfaces available for channel configuration. 
+  ######### Example application 1 e.g. Modbus_RTU############
+  ${application protocol 1}: # supported or custom protocol e.g. Modbus_RTU
+    application_display_name: "Human readable application name" # Used in UI
+    app_specific_config_options:  # Optional app specific parameters
+      ${custom_param1}: ${custom_param1_value}
+      ${custom_param2}: ${custom_param2_value}
+    interfaces:
+      # first interface for this application protocol 
+    - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+      custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+      custom_interface_param2: ${protocol_specific_value}  #specific to protocol
+      custom_interface_paramN: ${protocol_specific_value}  #specific to protocol
+      # second interface for this application protocol 
+    - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+      custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+      custom_interface_param2: ${protocol_specific_value}  #specific to protocol
+      custom_interface_paramN: ${protocol_specific_value}  #specific to protocol
+  ######### Example application 2 e.g. CANOpen############
+  ${application protocol 2}: # supported or custom protocol e.g. Modbus_RTU
+    application_display_name: "Human readable application name" # Used in UI
+    interfaces:
+      # first interface for this application protocol 
+      - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+        custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+```
+
+
+**Example Full Application Configuration (`config_applications`)**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "Modbus_RTU": {
+      "application_display_name": "Modbus RTU",
+      "interfaces": [
+        {
+          "interface": "/dev/tty0",
+          "baud_rate": 115200,
+          "stop_bits": 1,
+          "parity": "none",
+          "data_bits": 8
+        },
+        {
+          "interface": "/dev/tty4",
+          "baud_rate": 9600,
+          "stop_bits": 1,
+          "parity": "even",
+          "data_bits": 8
+        }
+      ]
+    },
+    "Modbus_TCP": {
+      "application_display_name": "Modbus TCP",
+      "interfaces": [
+        {
+          "interface": "eth0",
+        }
+      ]
+    },
+    "CANopen": {
+      "application_display_name": "CANopen",
+      "interfaces": [
+        {
+          "interface": "canA-10",
+          "channel": "canA-10",
+          "bitrate": 20000
+        }
+      ]
+    },
+    "CUSTOM_ACME_PROTOCOL": {
+      "application_display_name": "Acme Custom Protocol",
+      "interfaces": [
+        {
+          "interface": "/dev/tty3",
+          "param1": "param1value",
+          "param2": "param2value"
+        }
+      ],
+      "app_specific_config_options":
+      {
+        "custom_option1":0,
+        "custom_option2":"option2_value"
+      }
+    }
+  }
+}
+
+```
+
+### Specific Protocol Application Interface Configuration 
+This section defines the supported protocol application configuration parameters (i.e. what goes into the `interfaces` array objects in `config_applications` ).
+
+#### Modbus TCP Application Interface Options
+
+Parameters for an application interface when using Modbus_TCP.  Device application must use appropriately.  
+*Note: If no interface information provided, assumes device application will properly handle detecting interfaces or is hardcoded.*
+
+```yaml 
+    interface: "STRING" #e.g. eth0
+```
+
+**Example**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "Modbus_TCP": {
+      "application_display_name": "Modbus TCP",
+      "interfaces": [
+        {
+          "interface": "eth1",
+        },
+        {
+          "interface": "wlan0",
+        }
+      ]
+    }
+  }
+}
+
+```
+
+#### Modbus RTU Application Interface Options
+
+Parameters for an application interface when using Modbus_RTU.  Device application must use appropriately. 
+
+```yaml 
+    interface: "STRING" #e.g. /dev/tty0
+    baud_rate: [300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200] #enum of standard baudrates, default to 19200
+    stop_bits: [1,0,2]
+    parity: ["even","odd","none"]
+    data_bits: [8,7]
+```
+
+**Example**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "Modbus_RTU": {
+      "application_display_name": "Modbus RTU",
+      "interfaces": [
+        {
+          "interface": "/dev/tty0",
+          "baud_rate": 115200,
+          "stop_bits": 1,
+          "parity": "none",
+          "data_bits": 8
+        },
+        {
+          "interface": "/dev/tty12",
+          "baud_rate": 15200,
+          "stop_bits": 1,
+          "parity": "even",
+          "data_bits": 8
+        }
+      ]
+    }
+  }
+}
+
+```
+
+
+#### CANopen Application Interface Options
+
+Parameters for an application interface when using CANopen.  Device application must use appropriately. 
+```yaml
+channel: "STRING" #e.g. canA-10
+bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bit rate in bps
+```
+**Example**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "CANopen": {
+      "application_display_name": "CANopen",
+      "interfaces": [
+        {
+          "interface": "canA-10",
+          "channel": "canA-10",
+          "bitrate": 20000
+        }
+      ]
+    }
+  }
+}
+
+```
+
+#### Custom Application and Protocol Options
+
+Hardware application developers may support custom protocols by specifying their own applications in `config_applications` with appropriate `interfaces` and/or `app_specific_config_options`.
+
+**Example**
+
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "CUSTOM_ACME_PROTOCOL": {
+      "application_display_name": "Acme Custom Wireless Protocol",
+      "interfaces": [
+        {
+          "interface": "/dev/tty3",
+          "param1": "param1value",
+          "param2": "param2value"
+        }
+      ],
+      "app_specific_config_options":
+      {
+        "custom_option1":0,
+        "custom_option2":"option2_value"
+      }
+    }
+  }
+}
+
 ```
