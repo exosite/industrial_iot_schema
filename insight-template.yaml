@@ -204,13 +204,13 @@ definitions:
         description: The name of this constant 
       type:
         type: string
-        enum: [string, number]
+        enum: [string, number, boolean]
         description: What kind of value this constant accepts
       description:
         type: string
         description: Some words for the user about this constant
       default:
-        type: [string, number]
+        type: [string, number, boolean]
         description: Optional value to use if user doesn't specify one.
       enum:
         type: array
