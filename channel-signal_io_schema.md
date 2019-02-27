@@ -508,7 +508,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Electrical Conductance
-Key (`data_type`): ELEC_CONDUCTANCe<br>
+Key (`data_type`): ELEC_CONDUCTANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `SIEMENS`: S
@@ -626,7 +626,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 
 Notes: 
 * LAT_LONG contains both latitude and longitude in a JSON structured
-* LAT_LONG_ALT unit includes altitude.  
+* LAT_LONG_ALT unit includes optionally sending altitude and acceleration.  
 
 **JSON payload example:**
 ```json
