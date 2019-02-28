@@ -161,15 +161,24 @@ definitions:
 
   SignalTypeInputInfo:
     type: object
-    description: What data type the incoming Signal must have. If omitted, than allows any type.
-    required: [data_type, name]
+    description: |
+      What data type the incoming Signal must have.  One of `primitive_type`, `data_type` or `data_unit`
+      must be specified.
+    required: [name]
     properties:
-      data_type:
+      primitive_type:
         type: string
-        description: The type that the connecting signal must have
+        enum: [NUMERIC, STRING, BOOLEAN, JSON]
+        description: If present, the primitive type that the connecting signal must have
+      data_type:
+        type: array
+        description: If present, the type that the connecting signal must have
+        items:
+          type: string
+          description: A required data type
       data_unit:
         type: array
-        description: The units that the connecting signal must have
+        description: If present, the units that the connecting signal must have
         items:
           type: string
           description: A required unit.
@@ -185,15 +194,26 @@ definitions:
 
   SignalTypeOutputInfo:
     type: object
-    description: What data type the incoming Signal must have. If omitted, than allows any type.
+    description: |
+      What data type the incoming Signal must have.  One of `primitive_type`, `data_type` or `data_unit`
+      must be specified.
     properties:
+      primitive_type:
+        type: string
+        enum: [NUMERIC, STRING, BOOLEAN, JSON]
+        description: If present, the primitive type that the connecting signal must have
       data_type:
-        type: string
+        type: array
         description: The type that the connecting signal must have
+        items:
+          type: string
+          description: A required data type.
       data_unit:
-        type: string
+        type: array
         description: The unit that the connecting signal must have
-    required: [data_type]
+        items:
+          type: string
+          description: A required unit.
 
   ConstantInfo:
     type: object
