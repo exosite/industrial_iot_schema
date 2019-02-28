@@ -163,7 +163,7 @@ definitions:
     type: object
     description: |
       What data type the incoming Signal must have.  One of `primitive_type`, `data_type` or `data_unit`
-      must be specified.
+      should be specified.
     required: [name]
     properties:
       primitive_type:
@@ -196,7 +196,7 @@ definitions:
     type: object
     description: |
       What data type the incoming Signal must have.  One of `primitive_type`, `data_type` or `data_unit`
-      must be specified.
+      should be specified.
     properties:
       primitive_type:
         type: string
@@ -204,13 +204,13 @@ definitions:
         description: If present, the primitive type that the connecting signal must have
       data_type:
         type: array
-        description: The type that the connecting signal must have
+        description: If present, the type that the connecting signal must have
         items:
           type: string
           description: A required data type.
       data_unit:
         type: array
-        description: The unit that the connecting signal must have
+        description: If present, the unit that the connecting signal must have
         items:
           type: string
           description: A required unit.
