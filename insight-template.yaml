@@ -300,7 +300,11 @@ definitions:
         items:
           $ref: '#/definitions/SignalTypeInputInfo'
       outlets:
-        $ref: '#/definitions/SignalTypeOutputInfo'
+        type: array
+        description: What kind of data each output will produce. (This is an ordered array)
+        maxItems: 5
+        items:
+          $ref: '#/definitions/SignalTypeOutputInfo'
     required:
       - id
       - name
