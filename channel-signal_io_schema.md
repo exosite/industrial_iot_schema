@@ -1030,7 +1030,6 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
     offset : "INTEGER" # e.g. "0" bytes (determines starting byte position to read), default is 0, required
     data_length : "INTEGER" # e.g. "8" bytes (determines how many PDOs to read), default is 8, required
     evaluation_mode : [“REAL32”, “INT8”, “INT16”, “UINT16”, “UINT32”, “STRING”, “BOOLEAN”]
-    bitmask : "HEXADECIMAL" # optional, hex value for bits to mask out/pass-thru 
 ```
 
 ## Protocol Interface Application Configuration
