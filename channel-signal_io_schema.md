@@ -997,12 +997,12 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
     ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
     port : "INTEGER" # port to make the request on
-    register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]0000-[1-4]9999
+    register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
+    register_offset : "INTEGER" # [1-4]0001-[1-4]9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
-    evaluation_mode : ["floating point: ieee754", "whole-remainder", "signed integer", "unsigned", "bitmask_int", "bitmask_bool", "string-ascii-byte", "string-ascii-register"]               
+    evaluation_mode : ["floating point: ieee754", "signed integer", "unsigned", "string-ascii"]               
     bitmask : "HEXADECIMAL" # hex value for bits to mask out/pass-thru
 ```
 
@@ -1012,12 +1012,12 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
     slave_id : "INTEGER" 
-    register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]0000-[1-4]9999
+    register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
+    register_offset : "INTEGER" # [1-4]0001-[1-4]9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
-    evaluation_mode : ["floating point: ieee754", "whole-remainder", "signed integer", "unsigned", "bitmask_int", "bitmask_bool", "string-ascii-byte", "string-ascii-register"]               
+    evaluation_mode : ["floating point: ieee754", "signed integer", "unsigned", "string-ascii"]               
     bitmask : "HEXADECIMAL" # hex value for bits to mask out/pass-thru
 ```
 
