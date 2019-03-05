@@ -1333,8 +1333,9 @@ Parameters for an application interface when using Modbus_RTU.  Device applicati
 
 Parameters for an application interface when using CANopen.  Device application must use appropriately. 
 ```yaml
+bustype: ["socketcan", "kvaser" ,"serial" ,"slcan" ,"ixxat" ,"pcan" ,"usb2can" , "nican", "iscan", "neovi"  "vector", "virtual"]
 channel: "STRING" #e.g. canA-10
-bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bit rate in bps
+bitrate: [ 10000, 20000, 50000, 115200, 125000, 250000, 500000, 800000, 1000000 ] #bit rate in bps. Not needed when using socketcan, or virtual.
 ```
 **Example**
 ```json
@@ -1348,6 +1349,7 @@ bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bi
         {
           "interface": "canA-10",
           "channel": "canA-10",
+          "bustype": "kvaser",
           "bitrate": 20000
         }
       ]
