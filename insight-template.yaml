@@ -44,11 +44,11 @@ paths:
   /insights:
     post:
       operationId: listInsights
-      description: Get a list of availible Insight Functions and info about them
+      description: Get a list of available Insight Functions and info about them
       parameters:
       - name: body
         in: body
-        description: Get a list of availible insight functions
+        description: Get a list of available insight functions
         required: true
         schema:
           $ref: '#/definitions/InsightsFilterParams'
@@ -92,7 +92,7 @@ paths:
         default:
           description: The response to this is ignored.
 
-  /process: # The acutal path can be anything.
+  /process: # The actual path can be anything.
     post:
       operationId: process
       description: |
@@ -134,12 +134,25 @@ definitions:
         description: Presented name
       description:
         type: string
-        description: Additional text about this insight
+        description: Additional text about this insight. Markdown can be used.
       wants_lifecycle_events:
         type: boolean
         description: |
           True if this insight wants to be notified when linkages using it are created and deleted.
           Defaults to false.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight. Markdown can be used.
     required: [group_id_required]
 
   InsightsFilterParams:
@@ -184,13 +197,26 @@ definitions:
           description: A required unit.
       tag:
         type: string
-        description: Optional tag to add to the SingalData for inlet matching
+        description: Optional tag to add to the SignalData for inlet matching
       name:
         type: string
         description: Name of this signal
       description:
         type: string
         description: Optional text to help users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight.
 
   SignalTypeOutputInfo:
     type: object
@@ -241,6 +267,19 @@ definitions:
       minimum:
         type: number
         description: For number type, the smallest it can be
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight.
     required: [name, type]
 
   InsightInfo:
@@ -256,6 +295,19 @@ definitions:
       description:
         type: string
         description: A description of this insight function to display to users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight.
       type:
         type: string
         enum: [transform, rule, action]
@@ -286,7 +338,7 @@ definitions:
             template:
               type: string
               description: |
-                Which of this function's constants to use the value of here, fitted into a templeate
+                Which of this function's constants to use the value of here, fitted into a template
                 string.  The constants must be surrounded with '{{}}'.  For example '-{{days}}d'
       constants:
         type: array
