@@ -216,7 +216,7 @@ definitions:
               description: Presented name
             description:
               type: string
-              description: Additional text about this insight. Markdown can be used.
+              description: Additional text about this insight.
 
   SignalTypeOutputInfo:
     type: object
@@ -279,7 +279,7 @@ definitions:
               description: Presented name
             description:
               type: string
-              description: Additional text about this insight. Markdown can be used.
+              description: Additional text about this insight.
     required: [name, type]
 
   InsightInfo:
@@ -307,7 +307,7 @@ definitions:
               description: Presented name
             description:
               type: string
-              description: Additional text about this insight. Markdown can be used.
+              description: Additional text about this insight.
       type:
         type: string
         enum: [transform, rule, action]
