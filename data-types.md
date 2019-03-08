@@ -30,7 +30,7 @@ Fieldbus|Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc that a
 
 
 
-## Data Type Definitions
+## Data Type Definition
 
 Each channel requires to be set as a specific type which should be the source of truth and therefore allows for allowing down-stream support for conversions, visualizations, etc that can be trusted. In the ExoSense application, Asset Signals inherit type/unit from the channel.  Type and units should not be changed for a channel/signal once created, instead a new channel or signal should be created to handle the change.  Each of these types stem from one of the four primitive types.
 
@@ -42,14 +42,14 @@ There are two type categories for Data Types
 
 **Primitive Types** are used to describe the format of the data type and allows visualizations, transforms, and rules to accept multiple types based on the format.   
 
-#### Primitive Types
+### Primitive Types
 
 A primitive type describes the actual underlying encoding / format used for values.   Declaring the primitive type in a channel is optional as the primitive type can be derived from the data type. There are four primitive types: `NUMERIC`, `STRING`, `JSON`, `BOOLEAN`. 
 
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
-### Generic Data Types
-For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.
+## Generic Data Types
+For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.  Generic types do not support a measureable unit or one that can be trusted, so standard conversions from one unit to another is not supported in the application.
 
 #### String (unit-less)
 Key (`data_type`): STRING<br>
@@ -206,7 +206,7 @@ Notes:
 
 *Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
 
-### Unit Originated Data Types
+## Unit Originated Data Types
 The following data types require a fixed unit type that is specified as a part of the origination channel configuration (`config_io`) and used as source of truth through the application.
 
 Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).  The list is assumed to never be complete and future types / units could be added.  Some physical quantities have simply been left off the list for simplicity and assumed lack of need for Industrial IoT applications.  
