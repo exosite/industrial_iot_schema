@@ -47,6 +47,7 @@ Resource Name|ExoSense Status|Who Can Write To|Description
 
 *Note: Generally do not recommend using custom resources with prefix of `config_`.*
 
+![Device Interface Diagram](device_interface_diagram.png)
 
 ## Device / Gateway Channel Configuration Schema
 This section defines the Channel Configuration object (sometimes called a device or gateway template).  This is the 'contract' for each individual device as to what channels of data it will be sending. The idea is data used by ExoSense flows as 'Channels' to and from devices.  These device channel sources can then be mapped as sources to Asset signals in the ExoSense application.
