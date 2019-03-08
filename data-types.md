@@ -6,7 +6,7 @@
 _Note: Originally this information was a part of the ["ExoSense™️ Channel and Signal Data Schema"](channel-signal_io_schema.md) document._
 
 ## Introduction
-This document defines the data types supported by the ExoSense™️ solution and related technologies.  
+This document defines the **data types and units** supported by the ExoSense™️ solution and related technologies.  
 
 **Who is this for:**
 This document is meant for developers building device software to interact with ExoSense, custom Insight transform functions, custom Rule functions, and contributing to the development of ExoSense and related technologies.  
@@ -14,6 +14,8 @@ This document is meant for developers building device software to interact with 
  It is not required for regular use of the ExoSense application itself, although may be helpful for creating end-user documentation.
  
  The data schema and inteface information can be found here: [ExoSense™️ Channel and Signal Data Schema](channel-signal_io_schema.md)
+ 
+ ![ExoSense Channel / Signal Simple Diagram](simple_channel_signal_diagram.png)
  
 ### Definitions
 The reader of this document should have a grasp on the following items or will need to for this document to make sense.

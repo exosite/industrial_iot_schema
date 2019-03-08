@@ -8,6 +8,9 @@ This document defines the information required to interface with ExoSense™️ 
 
 This document is meant for device developers building native support into the device or a proxy/gateway service for connection to ExoSense via an IoT service and for those looking to gain a deeper understanding of the architecture of channels and signals in the ExoSense environment.  It is not required for typical regular use of the ExoSense application itself.
 
+![ExoSense Channel / Signal Simple Diagram](simple_channel_signal_diagram.png)
+
+
 ### Definitions
 The reader of this document should have a grasp on the following items or will need to for this document to make sense.
 
