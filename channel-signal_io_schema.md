@@ -8,19 +8,28 @@ This document defines the information required to interface with ExoSense™️ 
 
 This document is meant for device developers building native support into the device or a proxy/gateway service for connection to ExoSense via an IoT service and for those looking to gain a deeper understanding of the architecture of channels and signals in the ExoSense environment.  It is not required for typical regular use of the ExoSense application itself.
 
+
+**Who is this for:**
+This document is meant for developers building device software to interact with ExoSenseand/or contributing to the development of ExoSense and related technologies.  
+
+ It is not required for regular use of the ExoSense application itself, although may be helpful for creating end-user documentation.
+ 
+
+![ExoSense Channel / Signal Simple Diagram](simple_channel_signal_diagram.png)
+
 ### Definitions
 The reader of this document should have a grasp on the following items or will need to for this document to make sense.
 
 Term|Description|More Information
 --|--|---
 Murano|IoT Platform|[Murano Docs](https://docs.exosite.com)
-ExoSense™️|Industrial IoT Application|
-Device/Gateway|A thing with an IP Connection sending data to a platform|
-Sensors|Connected to Device/Gateway via wired or wireless protocol or IO| 
-Channel|A individual piece information sent to ExoSense by a device.|Typically a sensor output and typically a device is sending many channels of data.
-Signal|An ExoSense concept similar to channel but as a part of a virtual Asset object.  Source is typically a device channel but doesn't have to be.|
+ExoSense™️|Industrial IoT Application solution created and offered by Exosite|[Exosite](exosite.com)
+Device/Gateway|An electronic device with an IP Connection sending data to a platform.  In this case is interacing with directly connected sensors, custom protocol connected sensors, or fieldbus connected equipment|
+Sensors|Physical sensors connected to a Device/Gateway via wired or wireless protocol or IO (onboard).  Sensors are typically specific to a unit of measure - e.g. temperature, pressure, etc.| 
+Channel|An ExoSense concept to identify an **individual stream** of information sent to ExoSense by an **unique device** that is specific to a type and with a specific unit of measure from that local physical environment (e.g. Temperature or Valve 1 status).  Can also be information such as memory on the device, status information, etc.|Typically a device is sending many channels of data for all of the sensors that are connected.
+Signal|An ExoSense concept similiar to channel but is the part of a virtual Asset object that describes and stores the data.  Signals can be transformed, exported, visualzied, and have rules ran on them.  The source for a signal is typically a device channel but doesn't have to be.  The signal essentially subscribes to it's source.|
 Asset|An ExoSense concept for digitizing an Asset (a machine, system, equipment, etc)|
-Fieldbus|Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc|
+Fieldbus|Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc that allow machines, controls, equipment to have a standard way to talk to each other.|
 
 
 ## IoT Platform Device Interface Configuration Requirements
@@ -33,15 +42,18 @@ ExoSense uses the Murano IoT Platform device interface for it's device connectiv
 
 Resource Name|ExoSense Status|Who Can Write To|Description
 --|--|--|---
-data_in|supported|Device|Used to send data from device to cloud in the format defined in Section 4
-config_io|supported|Device / App|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
-data_out|*planned*|App|To be defined in the future - used for writing commands to devices
-config_oem|*reserved*|tbd|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
-config_applications|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)
-config_interfaces|*reserved*|tbd|This will configure how each fieldbus or gateway control app behaves, and what is required to configure each channel that will utilize this application. (i.e. “interface = serial port 1”)  
-config_rules |*reserved*|tbd|Possibly to be defined in the future
-config_network|*reserved*|tbd|Initial Concepts in Appendix, but not implemented
+`data_in`|supported|Device|Used to send data from device to cloud in the format defined in Section 4
+`config_io`|supported|Device / App|Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally.
+`data_out`|*planned*|App|To be defined in the future - used for writing commands to devices
+`config_applications`|supported|Device / App|Specifies configuration for the interfaces used by gateway protocol/fieldbus applications (i.e. “interface = /dev/tty0”)
+`config_oem`|*reserved*|tbd|Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements
+`config_interfaces`|*reserved*|tbd|
+`config_rules`|*reserved*|tbd|
+`config_network`|*reserved*|tbd|
 
+*Note: Generally do not recommend using custom resources with prefix of `config_`.*
+
+![Device Interface Diagram](device_interface_diagram.png)
 
 ## Device / Gateway Channel Configuration Schema
 This section defines the Channel Configuration object (sometimes called a device or gateway template).  This is the 'contract' for each individual device as to what channels of data it will be sending. The idea is data used by ExoSense flows as 'Channels' to and from devices.  These device channel sources can then be mapped as sources to Asset signals in the ExoSense application.
@@ -191,6 +203,8 @@ Channel identifiers must be unique to the device context, in the device's config
 ### Data types / units
 The data type definitions are detailed below.  Each channel has a unique type and unit tied to the channel identifier that can not be changed after set.  The ExoSense application UI will not allow this.  Technically a device could overwrite a channel type, but this will have unknown consequences and will likely result in signals not functioning properly.  Information about primitive types is also in the Data Types Definition section.  
 
+Data types and units for channels and signals are defined in the [ExoSense™️ Channel and Signal Data Types](data-types.md) document.  
+
 ### Display Name and Description
 Used by the application to show the user a friendly name and description (optional) of the channel, which will provide them with better context to help map to asset signals.
 
@@ -277,878 +291,6 @@ The error object is a list of keys of the channel ids with an error, and then th
 
 _Note: the device can report a channel data payload, even if the data is erroneous, but that is optional.  We will accept a chanel value and an error, just an error for a channel, or just a value.  All combinations are supported._
 
-## Data Type Definitions
-
-For each channel there is a specific type, which signals inherit from the channel.  This type relates to the units of the channel/signal value, format, and the possible values for a given signal.  Each of these types stem from one of the four primitive types.
-
-In the section below we will begin to note what comprises a “type”, and what the different types are.
-
-The break neatly into two categories: 
-
-1.  State representation - a finite number of states a channel value can be
-2.  Real Number & Strings - unlimited measurement of the magnitude of a signal that doesn’t not correspond to any discrete states
-
-Below we will discuss features of each category of signal, and list all the properties and each available type.  One common shared property across all of these various types is “min” and “max”.  This is considered optional, and is used to be absolute ranges, not an alarm trigger, and won’t be enumerated for each type.
-
-_NOTE: Anything in the following 2 subsections that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
-
-### Primitive Types
-
-A primitive type describes the actual underlying encoding used for values.  There are four primitive types: `NUMERIC`, `STRING`, `JSON`, `BOOLEAN`.  Declaring the primitive type in a channel is optional as the primitive type can be derived from the data type.
-
-### Generic Types
-For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.
-
-#### String (unit-less)
-Key (`data_type`): STRING<br>
-Accepted Units (`data_unit`): Not Used<br>
-Primitive Type (`primitive_type`): STRING<br>
-UI Unit Abbreviation: na<br>
-Notes: Any string
-
-**Example String Channel**
-```json
-
-
-```
-
-#### JSON (unit-less)
-Key (`data_type`): JSON<br>
-Accepted Units (`data_unit`): Not Used<br>
-Primitive Type (`primitive_type`): JSON<br>
-UI Unit Abbreviation: na<br>
-Notes: Any JSON blob
-
-**Example JSON Channel**
-```json
-
-
-```
-
-#### Number (unit-less)
-Key (`data_type`): NUMBER<br>
-Accepted Units (`data_unit`): Not Used<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: na<br>
-Notes: Any Real Number
-
-**Example Number Channel**
-```json
-
-
-```
-#### BOOLEAN (unit-less)
-Key (`data_type`): BOOLEAN<br>
-Accepted Units (`data_unit`): Not Used<br>
-Primitive Type (`primitive_type`): BOOLEAN<br>
-UI Unit Abbreviation: na<br>
-Notes: 
-* True ("Truthy") accepted values: [`true`, `"on"`, `1`, `"yes"`, any  number that is not `0`]
-* False ("Falsy") accepted values: [`false`, `"off"`, `0`, `"no"`]
-* All values will be converted to `true` and `false` at ingestion in ExoSense for use by transform insights, rules, and UI panels.  
-
-**Example Boolean Channel Configuration**
-```json
-{
-  "channels": {
-    "023": {
-      "display_name": "Valve 1 Open",
-      "description": "Machine Valve 1 Open State Information",
-      "properties": {
-        "data_type": "BOOLEAN",
-        "primitive_type": "BOOLEAN"
-      },
-      "protocol_config": {
-        "sample_rate": 5000,
-        "report_rate": 5000,
-        "timeout": 60000
-      }
-    },
-    "025": {
-      "display_name": "Valve 2 Open",
-      "description": "Machine Valve 2 Open State Information",
-      "properties": {
-        "data_type": "BOOLEAN",
-        "primitive_type": "BOOLEAN"
-      },
-      "protocol_config": {
-        "sample_rate": 5000,
-        "report_rate": 5000,
-        "timeout": 60000
-      }
-    }
-  }
-}
-```
-**Example Boolean Channel Data (data_in) Packet**
-```json
-{
-  "023":true,
-  "025":0
-}
-```
-
-
-
-*Note: Generic types without accepted unit types will not be able to take advantage of unit conversion and other unit specific functionality in ExoSense.*
-
-### Unit Originated Types
-The following assume a fixed unit type is provided as a part of the origination and that would carry through the system.
-
-Many of these types will represent base physical measurements (temperature, length, etc), or derived measurements (velocity), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities).
-
-#### Abasement
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Acceleration
-Key (`data_type`): ACCELERATION<br>
-Accepted Units (`data_unit`): METER_PER_SEC2, STANDARD_GRAVITY<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Absorbed dose rate
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Amount of Substance
-Key (`data_type`): AMOUNT<br>
-Accepted Units (`data_unit`): MOLE<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Angular acceleration
-Key (`data_type`): ANGULAR_ACCEL<br>
-Accepted Units (`data_unit`): RAD_PER_SEC2, ROTATIONS_PER_MIN2, DEG_PER_SEC2<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Angular momentum
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Angular Speed / Velocity
-Key (`data_type`): ANGULAR_VEL<br>
-Accepted Units (`data_unit`): RAD_PER_SEC, ROTATIONS_PER_MIN, DEG_PER_SEC<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Area
-Key (`data_type`): AREA<br>
-Accepted Units (`data_unit`): METER2, KILOMETER2, FEET2, INCH2, MILE2<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Area density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Battery Percentage
-Key (`data_type`): BATTERY_PERCENTAGE<br>
-Accepted Units (`data_unit`): PERCENT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: %<br>
-Notes: Device diagnostic
-
-#### Capacitance
-Key (`data_type`): CAPACITANCE<br>
-Accepted Units (`data_unit`): FARAD<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Catalytic activity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Catalytic activity concentration
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Chemical Potential
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Crackle
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Currency
-Key (`data_type`): CURRENCY<br>
-Accepted Units (`data_unit`): AFN, ALL, DZD, USD, EUR, AOA, XCD, ARS, AMD, AWG, AUD, AZN, BSD, BHD, BDT, BBD, BYR, BZD, XOF, BMD, BTN, INR, BOB, BOV, BAM, BWP, NOK, BRL, BND, BGN, BIF, CVE, KHR, XAF, CAD, KYD, CLF, CLP, CNY, COP, COU, KMF, CDF, NZD, CRC, HRK, CUC, CUP, ANG, CZK, DKK, DJF, DOP, EGP, SVC, ERN, ETB, FKP, FJD, XPF, GMD, GEL, GHS, GIP, GTQ, GBP, GNF, GYD, HTG, HNL, HKD, HUF, ISK, IDR, XDR, IRR, IQD, ILS, JMD, JPY, JOD, KZT, KES, KPW, KRW, KWD, KGS, LAK, LBP, LSL, ZAR, LRD, LYD, CHF, MOP, MKD, MGA, MWK, MYR, MVR, MRU, MUR, XUA, MXN, MXV, MDL, MNT, MAD, MZN, MMK, NAD, NPR, NIO, NGN, OMR, PKR, PAB, PGK, PYG, PEN, PHP, PLN, QAR, RON, RUB, RWF, SHP, WST, STN, SAR, RSD, SCR, SLL, SGD, XSU, SBD, SOS, SSP, LKR, SDG, SRD, SZL, SEK, CHE, CHW, SYP, TWD, TJS, TZS, THB, TOP, TTD, TND, TRY, TMT, UGX, UAH, AED, USN, UYI, UYU, UZS, VUV, VEF, VND, YER, ZMW, ZWL<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: Currency codes (based on list found here: https://www.iban.com/currency-codes.html) 
-
-#### Current density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Density
-Key (`data_type`): DENSITY<br>
-Accepted Units (`data_unit`): KG_PER_M3<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Dose equivalent
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Dynamic viscosity
-Key (`data_type`): DYNAMIC_VISCOSITY<br>
-Accepted Units (`data_unit`): CENTISTOKES, METERS2_PER_SEC<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Electric Charge
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Electric Charge Density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Electric Current
-Key (`data_type`): ELEC_CURRENT<br>
-Accepted Units (`data_unit`): AMPERE, MILLIAMP, MICROAMP<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Electric Displacement
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Electric Field Strength
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Electrical Conductance
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Electrical Conductivity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Electrical Potential
-Key (`data_type`): ELEC_POTENTIAL<br>
-Accepted Units (`data_unit`): VOLT, MILLIVOLT, MICROVOLT, KILOVOLT, MEGAVOLT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Electrical Resistance
-Key (`data_type`): ELEC_RESISTANCE<br>
-Accepted Units (`data_unit`): OHM, MILLIOHM, MICROOHM, KILOOHM, MEGAOHM<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Electrical resistivity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Energy
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Energy density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Entropy
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Flow (Volumetric)
-Key (`data_type`): FLOW<br>
-Accepted Units (`data_unit`): METERS3_PER_SEC, PERCENT, SCFM, LITERS_PER_SEC, LITERS_PER_MIN, GALLONS_PER_SEC, GALLONS_PER_MIN<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Flow (Mass)
-Key (`data_type`): FLOW_MASS<br>
-Accepted Units (`data_unit`): KILO_PER_SEC, LBS_PER_SEC<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Force
-Key (`data_type`): FORCE<br>
-Accepted Units (`data_unit`): NEWTON<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Frequency
-Key (`data_type`): FREQUENCY<br>
-Accepted Units (`data_unit`): HERTZ, KHZ, MHZ<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Fuel efficiency
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### GPS / Location
-Key (`data_type`): LOCATION<br>
-Accepted Units (`data_unit`): LAT_LONG, LAT_LONG_ALT<br>
-Primitive Type (`primitive_type`): JSON<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-**JSON payload example:**
-```json
-{"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}
-```
-
-#### Half-life
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Heat
-Key (`data_type`): HEAT<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Heat capacity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Heat flux density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Humidity
-Key (`data_type`): HUMIDITY<br>
-Accepted Units (`data_unit`): PERCENT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: %<br>
-Notes: --
-
-#### Illuminance
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Impedance
-Key (`data_type`): IMPEDANCE<br>
-Accepted Units (`data_unit`): OHM, KILOOHM, MEGAOHM<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Impulse
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Inductance
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Irradiance
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Intensity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Jerk
-Key (`data_type`): JERK<br>
-Accepted Units (`data_unit`): METER_PER_SEC3<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Jounce
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Length
-Key (`data_type`): LENGTH<br>
-Accepted Units (`data_unit`): METERS, CENTIMETERS, KILOMETERS, MILLIMETERS, FEET, INCH, YARD, MILES, MICRONS<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Linear density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Luminous Intensity
-Key (`data_type`): LUMINOUS_INTENSITY<br>
-Accepted Units (`data_unit`): CANDELA<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Luminous flux
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Magnetic field strength
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Magnetic flux
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Magnetic flux density
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Magnetization
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Mass
-Key (`data_type`): MASS<br>
-Accepted Units (`data_unit`): MILLIGRAM, GRAM, KILOGRAM, POUND, OZ, TON, METRIC_TON<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Mass fraction
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Mean lifetime
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Molar concentration
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Molar energy
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Molar entropy
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Molar heat capacity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Moment of inertia
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Momentum
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Percentage
-Key (`data_type`): PERCENTAGE<br>
-Accepted Units (`data_unit`): PERCENT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: %<br>
-Notes: --
-
-#### Permeability
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Permittivity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Plane angle
-Key (`data_type`): ANGLE<br>
-Accepted Units (`data_unit`): RADIAN, DEGREE, ARCMINUTE, ARCSECOND<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Power
-Key (`data_type`): POWER<br>
-Accepted Units (`data_unit`): WATT, MILLIWATT, KILOWATT, MEGAWATT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Pressure
-Key (`data_type`): PRESSURE<br>
-Accepted Units (`data_unit`): MBAR, BAR, PSI, TORR, PASCAL, ATMOSPHERE<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Pop
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Radioactive Activity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Radioactive Dose
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Radiance
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Radiant intensity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Reaction rate
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Refraction rate
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Refractive index
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Signal Strength as Signal Strength
-Key (`data_type`): SIGNAL_STRENGTH_PERCENTAGE<br>
-Accepted Units (`data_unit`): PERCENT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: %<br>
-Notes: Device diagnostic
-
-#### Solid angle
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Speed
-Key (`data_type`): SPEED<br>
-Accepted Units (`data_unit`): METER_PER_SEC, MPH, KPH, IN_PER_SEC<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Specific Energy
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Specific heat capacity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Specific Volume
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Spin
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Strain
-Key (`data_type`): STRAIN<br>
-Accepted Units (`data_unit`): PERCENT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: %<br>
-Notes: --
-
-#### Stress
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Surface tension
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Temperature
-Key (`data_type`): TEMPERATURE<br>
-Accepted Units (`data_unit`): KELVIN, DEG_FAHRENHEIT, DEG_CELSIUS, RANKINE<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Thermal conductivity
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Time
-Key (`data_type`): TIME<br>
-Accepted Units (`data_unit`): SECONDS, MILLISECOND, MINUTE, HOUR, DAY, YEAR<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Torque
-Key (`data_type`): TORQUE<br>
-Accepted Units (`data_unit`): NEWTON_METER, POUND_FOOT<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-### URL 
-Key (`data_type`): URL<br>
-Accepted Units (`data_unit`): _Not Used_<br>
-Primitive Type (`primitive_type`): JSON<br>
-UI Unit Abbreviation: na<br>
-Notes: A JSON object that contains at minimum a key `url`.  The url value must be a string that consists of a proper URL address scheme starting with `https`, etc.  Optional `title` key to provide a title that would be displayed in the UI instead of the full URL address. The application (example ExoSense) will define what URL types are actually supported (click-able in the UI).
-**_Validation and security checks are not provided by the platform or application.  Recommend only for use of encrypted and password protocted URLs.  OEMs implmenting device or custom Insight support to generate URL values, do so at their own risk to their users._**
-
-**refrence:**
-```json
-{"url": "{proper_url_value_here}","title":"{optional_title_value_here}"}
-```
-
-**example:**
-```json
-{"url": "https://exosite.com","title":"Device Link"}
-```
-
-
-#### Velocity
-Key (`data_type`): VELOCITY<br>
-Accepted Units (`data_unit`): METER_PER_SEC<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Volume
-Key (`data_type`): VOLUME<br>
-Accepted Units (`data_unit`): METER3, FEET3, LITRE, GALLON, PINT, INCH3, CENTIMETER3<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Wavelength
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Wavenumber
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Wavevector
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
-#### Weight
-Key (`data_type`): WEIGHT<br>
-Accepted Units (`data_unit`): NEWTON, POUND<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: --
-
-#### Work
-Key (`data_type`): --<br>
-Accepted Units (`data_unit`): --<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-UI Unit Abbreviation: --<br>
-Notes: not supported
-
 
 ## Device Channel Protocol Interfaces
 This section defines the supported protocol interfaces and parameters.
@@ -1159,12 +301,12 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
     ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
     port : "INTEGER" # port to make the request on
-    register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]0000-[1-4]9999
+    register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
+    register_offset : "INTEGER" # [1-4]0001-[1-4]9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
-    evaluation_mode : ["floating point: ieee754", "whole-remainder", "signed integer", "unsigned", "bitmask_int", "bitmask_bool", "string-ascii-byte", "string-ascii-register"]               
+    evaluation_mode : ["floating point: ieee754", "signed integer", "unsigned", "string-ascii"]               
     bitmask : "HEXADECIMAL" # hex value for bits to mask out/pass-thru
 ```
 
@@ -1174,12 +316,12 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
     slave_id : "INTEGER" 
-    register_range : ["INPUT_COIL", "HOLDING_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]0000-[1-4]9999
+    register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
+    register_offset : "INTEGER" # [1-4]0001-[1-4]9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
-    evaluation_mode : ["floating point: ieee754", "whole-remainder", "signed integer", "unsigned", "bitmask_int", "bitmask_bool", "string-ascii-byte", "string-ascii-register"]               
+    evaluation_mode : ["floating point: ieee754", "signed integer", "unsigned", "string-ascii"]               
     bitmask : "HEXADECIMAL" # hex value for bits to mask out/pass-thru
 ```
 
@@ -1192,5 +334,243 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
     offset : "INTEGER" # e.g. "0" bytes (determines starting byte position to read), default is 0, required
     data_length : "INTEGER" # e.g. "8" bytes (determines how many PDOs to read), default is 8, required
     evaluation_mode : [“REAL32”, “INT8”, “INT16”, “UINT16”, “UINT32”, “STRING”, “BOOLEAN”]
-    bitmask : "HEXADECIMAL" # optional, hex value for bits to mask out/pass-thru 
+```
+
+## Protocol Interface Application Configuration
+The gateway / device applications that handle reading/writing for channels may have properties that need to be set that are useful for all channels using that protocol / interface.  For example, 10 channels may be set up to use Modbus_RTU at interface /dev/tty0.  The application that handles the modbus communication needs to know the interface details such as baud rate, etc.  
+
+The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
+
+The application protocols and interfaces listed below are used in `config_io` and therefore are used to drive channel configuration options in the user application. 
+
+**Application Configuration (`config_applications`) Description**
+```yaml
+# config_applications channel definition 
+last_edited: "{$date_timestamp}" # e.g. 2018-03-28T13:27:39+00:00 
+last_editor" : "${edited_by}" # Person user name, "user", or "device"
+applications: # device applications for handling channel protocols, used to show users their protocol / interfaces available for channel configuration. 
+  ######### Example application 1 e.g. Modbus_RTU############
+  ${application protocol 1}: # supported or custom protocol e.g. Modbus_RTU
+    application_display_name: "Human readable application name" # Used in UI
+    app_specific_config_options:  # Optional app specific parameters
+      ${custom_param1}: ${custom_param1_value}
+      ${custom_param2}: ${custom_param2_value}
+    interfaces:
+      # first interface for this application protocol 
+    - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+      custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+      custom_interface_param2: ${protocol_specific_value}  #specific to protocol
+      custom_interface_paramN: ${protocol_specific_value}  #specific to protocol
+      # second interface for this application protocol 
+    - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+      custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+      custom_interface_param2: ${protocol_specific_value}  #specific to protocol
+      custom_interface_paramN: ${protocol_specific_value}  #specific to protocol
+  ######### Example application 2 e.g. CANOpen############
+  ${application protocol 2}: # supported or custom protocol e.g. Modbus_RTU
+    application_display_name: "Human readable application name" # Used in UI
+    interfaces:
+      # first interface for this application protocol 
+      - interface: "${protocol_specific_hardware_interface}" # Specify hardware interface, depends on protocol
+        custom_interface_param1: ${protocol_specific_value}  #specific to protocol
+```
+
+
+**Example Full Application Configuration (`config_applications`)**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "Modbus_RTU": {
+      "application_display_name": "Modbus RTU",
+      "interfaces": [
+        {
+          "interface": "/dev/tty0",
+          "baud_rate": 115200,
+          "stop_bits": 1,
+          "parity": "none",
+          "data_bits": 8
+        },
+        {
+          "interface": "/dev/tty4",
+          "baud_rate": 9600,
+          "stop_bits": 1,
+          "parity": "even",
+          "data_bits": 8
+        }
+      ]
+    },
+    "Modbus_TCP": {
+      "application_display_name": "Modbus TCP",
+      "interfaces": [
+        {
+          "interface": "eth0",
+        }
+      ]
+    },
+    "CANopen": {
+      "application_display_name": "CANopen",
+      "interfaces": [
+        {
+          "interface": "canA-10",
+          "channel": "canA-10",
+          "bitrate": 20000
+        }
+      ]
+    },
+    "CUSTOM_ACME_PROTOCOL": {
+      "application_display_name": "Acme Custom Protocol",
+      "interfaces": [
+        {
+          "interface": "/dev/tty3",
+          "param1": "param1value",
+          "param2": "param2value"
+        }
+      ],
+      "app_specific_config_options":
+      {
+        "custom_option1":0,
+        "custom_option2":"option2_value"
+      }
+    }
+  }
+}
+
+```
+
+### Specific Protocol Application Interface Configuration 
+This section defines the supported protocol application configuration parameters (i.e. what goes into the `interfaces` array objects in `config_applications` ).
+
+#### Modbus TCP Application Interface Options
+
+Parameters for an application interface when using Modbus_TCP.  Device application must use appropriately.  
+*Note: If no interface information provided, assumes device application will properly handle detecting interfaces or is hardcoded.*
+
+```yaml 
+    interface: "STRING" #e.g. eth0
+```
+
+**Example**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "Modbus_TCP": {
+      "application_display_name": "Modbus TCP",
+      "interfaces": [
+        {
+          "interface": "eth1",
+        },
+        {
+          "interface": "wlan0",
+        }
+      ]
+    }
+  }
+}
+
+```
+
+#### Modbus RTU Application Interface Options
+
+Parameters for an application interface when using Modbus_RTU.  Device application must use appropriately. 
+
+```yaml 
+    interface: "STRING" #e.g. /dev/tty0
+    baud_rate: [300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200] #enum of standard baudrates, default to 19200
+    stop_bits: [1,0,2]
+    parity: ["even","odd","none"]
+    data_bits: [8,7]
+```
+
+**Example**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "Modbus_RTU": {
+      "application_display_name": "Modbus RTU",
+      "interfaces": [
+        {
+          "interface": "/dev/tty0",
+          "baud_rate": 115200,
+          "stop_bits": 1,
+          "parity": "none",
+          "data_bits": 8
+        },
+        {
+          "interface": "/dev/tty12",
+          "baud_rate": 15200,
+          "stop_bits": 1,
+          "parity": "even",
+          "data_bits": 8
+        }
+      ]
+    }
+  }
+}
+
+```
+
+
+#### CANopen Application Interface Options
+
+Parameters for an application interface when using CANopen.  Device application must use appropriately. 
+```yaml
+channel: "STRING" #e.g. canA-10
+bitrate: [ 10000, 20000, 50000, 125000, 250000, 500000, 800000 and 1000000 ] #bit rate in bps
+```
+**Example**
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "CANopen": {
+      "application_display_name": "CANopen",
+      "interfaces": [
+        {
+          "interface": "canA-10",
+          "channel": "canA-10",
+          "bitrate": 20000
+        }
+      ]
+    }
+  }
+}
+
+```
+
+#### Custom Application and Protocol Options
+
+Hardware application developers may support custom protocols by specifying their own applications in `config_applications` with appropriate `interfaces` and/or `app_specific_config_options`.
+
+**Example**
+
+```json
+{
+  "last_edited": "2018-03-28T13:27:39+00:00",
+  "last_editor": "user",
+  "applications": {
+    "CUSTOM_ACME_PROTOCOL": {
+      "application_display_name": "Acme Custom Wireless Protocol",
+      "interfaces": [
+        {
+          "interface": "/dev/tty3",
+          "param1": "param1value",
+          "param2": "param2value"
+        }
+      ],
+      "app_specific_config_options":
+      {
+        "custom_option1":0,
+        "custom_option2":"option2_value"
+      }
+    }
+  }
+}
+
 ```

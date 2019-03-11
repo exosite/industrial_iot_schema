@@ -18,17 +18,17 @@ needs to calculate a result.
 
 The object has the following keys:
 
-Key           | Type    | Description
-:-------------|---------|:------------
-id            | string  | The unique ID used for this Function. Internal to the Insight Module.
-name          | string  | The friendly name for this Function.
-description   | string  | The description of this Function.
-type          | string  | The type (transform, rule, or action) of this Function.
-asynchronous  | boolean | Whether or not the Function requires callback info so that it can operate asynchronously.
-history       | object  | Optionally attach timeseries data to `POST /process` calls.
-constants     | array   | Specify parameters for users to provide when adding this Function.
-inlets        | array   | Specify the Input Signals.
-outlets       | object  | Specify the Output Signal.
+Key           | Type    | Required | Description
+:-------------|---------|----------|:------------
+id            | string  | true     | The unique ID used for this Function. Internal to the Insight Module.
+name          | string  | true     | The friendly name for this Function.
+description   | string  | true     | The description of this Function.
+type          | string  | true     | The type (transform, rule, or action) of this Function.
+inlets        | array   | true     | Specify the Input Signals.
+outlets       | object  | true     | Specify the Output Signal.
+constants     | array   | false    | Specify parameters for users to provide when adding this Function.
+history       | object  | false    | Optionally attach timeseries data to `POST /process` calls.
+asynchronous  | boolean | false    | Whether or not the Function requires callback info so that it can operate asynchronously.
 
 #### Type
 
@@ -42,24 +42,24 @@ throughout the full stack.
 The `inlets` key is an array of Inlet objects, each of which can have the
 following keys:
 
-Key             | Type    | Description
-:---------------|---------|:------------
-tag             | string  | Tag to use to identify the Inlet. Shows up in Signal Datapoint tags.
-name            | string  | Friendly name for the Inlet.
-description     | string  | Useful descriptino for this Inlet.
-data_type       | string  | Optionally require specific data_type.
-data_unit       | string  | Optionally require specific data_unit.
-primitive_type  | string  | Optionally require specific primitive_type.
+Key             | Type    | Required | Description
+:---------------|---------|----------|:------------
+tag             | string  | true     | Tag to use to identify the Inlet. Shows up in Signal Datapoint tags.
+name            | string  | true     | Friendly name for the Inlet.
+description     | string  | true     | Useful descriptino for this Inlet.
+data_type       | string  | false    | Optionally require specific data_type.
+data_unit       | string  | false    | Optionally require specific data_unit.
+primitive_type  | string  | false    | Optionally require specific primitive_type.
 
 #### Outlets
 
 The `outlets` key is _currently_ a single Outlet object, which can have the
 following keys:
 
-Key             | Type    | Description
-:---------------|---------|:------------
-data_type       | string  | Specify the output data_type.
-data_unit       | string  | Optionally specify the output data_unit.
+Key             | Type    | Required | Description
+:---------------|---------|----------|:------------
+data_type       | string  | true     | Specify the output data_type.
+data_unit       | string  | false    | Optionally specify the output data_unit.
 
 #### Constants
 
@@ -218,13 +218,13 @@ file
 When an Insight Function receives Signal Data, the object the Function receives
 has three to five top-level keys:
 
-Key                   | Type    | Description
-:---------------------|---------|:------------
-id                    | string  | The ID of the Linkage this Signal Datapoint was sent from.
-data                  | array   | List of Signal Datapoints.
-args                  | object  | Information about the specific Insight including values for user-provided Constants.
-history               | object  | If requested, history of Signals. Each Signal ID is the key, with an array of (timestamp, value) pairs.
-cbi                   | object  | If requested, an object containing the `url` to POST the results to, and a `token` to use in the authorization header.
+Key                   | Type    | Required | Description
+:---------------------|---------|----------|:------------
+id                    | string  | true     | The ID of the Linkage this Signal Datapoint was sent from.
+data                  | array   | true     | List of Signal Datapoints.
+args                  | object  | true     | Information about the specific Insight including values for user-provided Constants.
+history               | object  | false    | If requested, history of Signals. Each Signal ID is the key, with an array of (timestamp, value) pairs.
+cbi                   | object  | false    | If requested, an object containing the `url` to POST the results to, and a `token` to use in the authorization header.
 
 #### ID
 
@@ -257,15 +257,15 @@ Signal Data passed around ExoSense to and from an Insight has a common schema.
 
 Signal Data objects have the following keys:
 
-Key                   | Type    | Description
-:---------------------|---------|:------------
-tags                  | object  | Tags helpful in identifying the original source of the data.
-ts                    | integer | Unix timestamp in microseconds of when the data originated in Murano.
-gts                   | integer | Unix timestamp in microseconds of when this Signal Datapoint was generated.
-value                 | --      | Value for this instance of data.
-origin                | string  | Publishing ID.
-generated             | string  | Publishing ID that created this Signal Datapoint.
-ttl                   | integer | Time to live for Signal Datapoint.
+Key                   | Type    | Required | Description
+:---------------------|---------|----------|:------------
+origin                | string  | true     | Publishing ID.
+generated             | string  | true     | Publishing ID that created this Signal Datapoint.
+ts                    | integer | true     | Unix timestamp in microseconds of when the data originated in Murano.
+value                 | --      | true     | Value for this instance of data.
+tags                  | object  | false    | Tags helpful in identifying the original source of the data.
+gts                   | integer | false    | Unix timestamp in microseconds of when this Signal Datapoint was generated.
+ttl                   | integer | false    | Time to live for Signal Datapoint.
 
 ##### Tags
 
@@ -306,11 +306,11 @@ For most situations in ExoSense, the `<RESOURCE_ID>` is `data_in`.
 
 The Args block in Signal Data contains the following keys:
 
-Key                     | Type    | Description
-:-----------------------|---------|:------------
-function_id             | string  | ID of the Function.
-group_id                | string  | Group ID if one exists.
-constants               | object  | Constant parameters.
+Key                     | Type    | Required | Description
+:-----------------------|---------|----------|:------------
+function_id             | string  | true     | ID of the Function.
+group_id                | string  | false    | Group ID if one exists.
+constants               | object  | false    | Constant parameters.
 
 ## API Paths
 
@@ -333,12 +333,12 @@ Optionally, an Insight can support the following paths:
 The `GET /info` endpoint serves to retrieve information about an Insight and
 is expected to return the following payload keys:
 
-Key                     | Type    | Description
-:-----------------------|---------|:------------
-name                    | string  | The friendly name for the Insight, which will be presented in the ExoSense UI.
-description             | string  | High-level description of the Insight.
-group_id_required       | boolean | Whether or not the result of `POST /insights` should be filtered based on a user-provided Group ID.
-wants_lifecycle_events  | boolean | Whether or not the Insight requires lifecycle events to be sent.
+Key                     | Type    | Required | Description
+:-----------------------|---------|----------|:------------
+name                    | string  | true     | The friendly name for the Insight, which will be presented in the ExoSense UI.
+description             | string  | true     | High-level description of the Insight.
+group_id_required       | boolean | true     | Whether or not the result of `POST /insights` should be filtered based on a user-provided Group ID.
+wants_lifecycle_events  | boolean | false    | Whether or not the Insight requires lifecycle events to be sent.
 
 Example:
 
