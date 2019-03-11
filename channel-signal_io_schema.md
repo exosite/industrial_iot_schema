@@ -1084,19 +1084,21 @@ Notes: --
 ### URL 
 Key (`data_type`): URL<br>
 Accepted Units (`data_unit`): _Not Used_<br>
-Primitive Type (`primitive_type`): STRING<br>
+Primitive Type (`primitive_type`): JSON<br>
 UI Unit Abbreviation: na<br>
-Notes: A string with proper URL scheme starting with `https`, etc.  Uses 'Markdown' format to provide a Title that would be displayed in the UI. Application will define what URL types are actually supported.
+Notes: A JSON object that contains at minimum a key `url`.  The url value must be a string that consists of a proper URL address scheme starting with `https`, etc.  Optional `title` key to provide a title that would be displayed in the UI instead of the full URL address. The application (example ExoSense) will define what URL types are actually supported (click-able in the UI).
 **_Validation and security checks are not provided by the platform or application.  Recommend only for use of encrypted and password protocted URLs.  OEMs implmenting device or custom Insight support to generate URL values, do so at their own risk to their users._**
 
-**Example with Title:**  
+**refrence:**
+```json
+{"url": "{proper_url_value_here}","title":"{optional_title_value_here}"}
 ```
-"[Title Here](https://exosite.com)"
+
+**example:**
+```json
+{"url": "https://exosite.com","title":"Device Link"}
 ```
-**Example without Title:**
-```  
-"https://exosite.com"
-```
+
 
 #### Velocity
 Key (`data_type`): VELOCITY<br>
