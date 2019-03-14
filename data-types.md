@@ -51,7 +51,7 @@ A primitive type describes the actual underlying encoding / format used for valu
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
 ## Generic Data Types
-For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.  Generic types do not support a measureable unit or one that can be trusted, so standard conversions from one unit to another is not supported in the application.
+For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types.  Generic types do not support a measureable unit and therefore standard unit conversions are not supported in the application for generic data types.
 
 #### String (unit-less)
 Key (`data_type`): STRING<br>
@@ -347,7 +347,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `MILLIPASCAL_SEC`: mPa·s
 * `POISE`: P
 
-Notes: **Not Supported**
+Notes: --
 
 #### Kinematic Viscosity
 Key (`data_type`): KINEMATIC_VISCOSITY<br>
@@ -357,7 +357,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `STOKES`: St
 * `METERS2_PER_SEC`: m2/s
 
-Notes: **Not Supported**
+Notes: --
 
 
 #### Electric Current
@@ -376,7 +376,7 @@ Key (`data_type`): ELEC_CONDUCTANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `SIEMENS`: S
-Notes: **not supported**
+Notes: --
 
 #### Electrical Potential (Voltage)
 Key (`data_type`): ELEC_POTENTIAL<br>
@@ -532,7 +532,7 @@ Key (`data_type`): INDUCTANCE<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `HENRY`: H
-Notes: **not supported**
+Notes: --
 
 #### Jerk
 Key (`data_type`): JERK<br>
@@ -563,7 +563,7 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `KILOGRAM_PER_METER`: kg/m
 
-Notes: **not supported**
+Notes: --
 
 #### Luminance
 Key (`data_type`): LUMINANCE<br>
@@ -700,7 +700,7 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `STERADIAN`: sr
 
-Notes: **not supported**
+Notes: --
 
 #### Speed
 Key (`data_type`): SPEED<br>
