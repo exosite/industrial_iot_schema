@@ -267,6 +267,11 @@ definitions:
       minimum:
         type: number
         description: For number type, the smallest it can be
+      multiple:
+        type: boolean
+        description: |
+          When this is true, this constant will be an array of values instead of a single value.
+          The UI will present the user a way to enter this constant multiple times.
       translations:
         type: object
         description: Translations of the name and description fields
