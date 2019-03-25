@@ -818,3 +818,14 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `FOOT_POUND`: ft⋅lb
 
 Notes: --
+
+
+## Change log
+### v3.0
+* Created this document as seperate from "ExoSense™️ Channel and Signal Data Schema", using v3.0 since the other document is also moving to 3.0.  Will track version history seperately moving forward. 
+* Added many new Numeric measurement types and units
+* Changed format to show the accepted units and the abbreviations used in the application
+* Added BOOLEAN type
+* Added URL type
+* Added a new inheritied element `primitive_type` to specify the format for each data type
+* Removed non-supported data types

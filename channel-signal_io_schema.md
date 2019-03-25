@@ -597,3 +597,14 @@ Hardware application developers may support custom protocols by specifying their
 }
 
 ```
+
+## Change log
+### v3.0
+* Cleaned up formatting of examples and descriptions 
+* Moved data types and units to seperate document "ExoSense™️ Channel and Signal Data Types"
+* Updated "Specific Protocol Application Interface Configuration" (config_applications) interface information 
+* Added support for 'locked' Channels
+* Add iot_properties description for advanced Usage
+* Cleaned up options for protocol parameters 
+* Added primitive type field
+* Added graphics to help with description of interface
