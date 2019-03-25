@@ -238,7 +238,7 @@ Signals inherit channel properites once created in the application.  Once a sign
 Advanced use only for allowing for server side conversion of data.  Not supported for normal ExoSense application use.  Not recommended.  Must not be used by the device.
 
 
-## Device Data Transport Schema
+## Device Data Transport Schema 
 Having a common shared channel configuration (a contract essentially) between the device and the cloud/application allows us to keep the actual data sent between devices and the cloud to a minimum - focusing only on the sending of values for channels rather than unnecessary configuration information that rarely changes.  
 
 The resource used for writing channel values from devices to the cloud/application is “data_in”, as mentioned in the resource section.
@@ -249,19 +249,28 @@ There are 3 different scenarios of how we might want to send data - each one sho
 
 This is a very simple signal_id = value approach, but encoded in JSON.
 
-```
+```json
 { "${device_channel_id1}" : "${current_channel_value}" }
 ```
 
 
 **Multiple signals written in a single payload**
 
-```
+```json
 {
   "${device_channel_id1}" : "${current_channel_value1}",
   "${device_channel_id2}" : "${current_channel_value2}",
   "${device_channel_id3}" : "${current_channel_value3}",
   "${device_channel_id7}" : "${current_channel_value7}"
+}
+```
+*Example with real data*
+```json
+{
+  "001" : true,
+  "002" : 78.233,
+  "003" : {"lat":43.650883,"lng":-96.201642},
+  "007" : "good"
 }
 ```
 
