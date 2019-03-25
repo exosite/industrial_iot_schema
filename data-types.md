@@ -1,7 +1,7 @@
 # ExoSense™️ Channel and Signal Data Types
 
 
-**Document Status:** Version 3.0 _Draft_
+**Document Status:** Version 3.0
 
 _Note: Originally this information was a part of the ["ExoSense™️ Channel and Signal Data Schema"](channel-signal_io_schema.md) document._
 

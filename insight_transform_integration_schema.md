@@ -1,6 +1,6 @@
 # ExoSense™ Insight Transform Schema
 
-**Document Status:** Draft
+**Document Status:** V1.0 Draft
 
 ## Core Payload Objects
 

@@ -1,13 +1,10 @@
 # Over-The-Air (OTA) Update Process Schema
 
+**Document Status:** Version 1.0 Draft
+
+## Introduction
 This document defines the information required to list, issue (send), and communicate the status of an **Over The Air Update** or OTAU of device software packages. This is from the “first mile” perspective of the gateway or smart sensors.
 **OTA** and **OTAU** is a way of describing a remote device software update using a network connection.
-
-### Document Status
-
-Working Draft
-
-
 
 # Device Software Package Update Process
 The device software update process or "Over-The-Aiar Update" (OTAU) is defined in reference to the Murano IoT Platform and ExoSense application.
