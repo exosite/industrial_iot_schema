@@ -143,7 +143,7 @@ channels: # "device channel" as opposed to an "asset signal"
   "locked": false,
   "channels": {
     "001": {
-      "display_name": "Valve Open",
+      "display_name": "Valve Open Status",
       "description": "Machine Valve Open State Information",
       "properties": {
         "data_type": "BOOLEAN",
@@ -162,23 +162,19 @@ channels: # "device channel" as opposed to an "asset signal"
       "properties": {
         "data_type": "TEMPERATURE",
         "primitive_type": "NUMERIC",
+        "data_unit": "DEG_CELSIUS",
+        "precision": 2,
         "min": 16,
         "max": 35,
-        "precision": 2,
-        "data_unit": "DEG_CELSIUS",
         "device_diagnostic": false,
         "locked": true
       },
-      "iot_properties": {
-        "conversion_name": "CelsiusToFahrenheit",
-        "data_type": "TEMPERATURE",
-        "primitive_type": "NUMERIC",
-        "min": 60.8,
-        "max": 95,
-        "precision": 2,
-        "data_unit": "DEG_FAHRENHEIT"
-      },
       "protocol_config": {
+        "sample_rate": 2000,
+        "report_rate": 10000,
+        "down_sample": "AVG",
+        "report_on_change": false,
+        "timeout": 300000,
         "application": "Modbus_RTU",
         "interface": "/dev/tty0/",
         "app_specific_config": {},
@@ -186,12 +182,20 @@ channels: # "device channel" as opposed to an "asset signal"
           "max": 0,
           "min": 20,
           "unit": "mA"
-        },
-        "sample_rate": 2000,
-        "report_rate": 10000,
-        "down_sample": "AVG",
-        "report_on_change": false,
-        "timeout": 300000
+        }
+      }
+    },
+    "003": {
+      "display_name": "Location",
+      "description": "Location",
+      "properties": {
+        "data_type": "LOCATION",
+        "primitive_type": "JSON",
+        "data_unit": "LAT_LONG"
+      },
+      "protocol_config": {
+        "report_rate": 60000,
+        "timeout": 360000
       }
     }
   }
@@ -239,8 +243,6 @@ Having a common shared channel configuration (a contract essentially) between th
 
 The resource used for writing channel values from devices to the cloud/application is “data_in”, as mentioned in the resource section.
 
-> _Note: A future consideration moving beyond “monitoring” to control - we would add a second resource in Murano called “data_out” when the cloud UI writes a value to the gateway to change an actuator value._
-
 There are 3 different scenarios of how we might want to send data - each one should build on the other, and they are:
 
 **Single Data Value**
@@ -257,11 +259,15 @@ This is a very simple signal_id = value approach, but encoded in JSON.
 ```
 {
   "${device_channel_id1}" : "${current_channel_value1}",
-  "${device_channel_id2}" : "${current_channel_value2}"
+  "${device_channel_id2}" : "${current_channel_value2}",
+  "${device_channel_id3}" : "${current_channel_value3}",
+  "${device_channel_id7}" : "${current_channel_value7}"
 }
 ```
 
 This payload assumes each datapoint is to be recorded in the time series database at the time it is received.
+
+*Note: Each channel is not required to send a value in each payload.  Some payloads may have a few channels, some may just have one, others may have all channels*
 
 **Multiple signals, with some repeating, with different timestamps in a single payload:**
 
@@ -283,6 +289,7 @@ When an error occurs for a signal, the payload will change by adding the protect
 {
   "${channel_id1}" : "${current_channel_value1}",
   "${channel_id2}" : "${current_channel_value2}",
+  "${channel_id7}" : "${current_channel_value7}",
   "__error" : {
     "${channel_id1}" : "${error_message_or_code}",
     "${channel_id3}" : "${error_message_or_code}" 
