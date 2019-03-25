@@ -71,65 +71,68 @@ The configuration below wraps a user-defined value with a ${...}, and other name
 **Channel Configuration Definition Description**
 ```yaml
 # config_io channel definition 
-last_edited: "{$date_timestamp}" # e.g. 2018-03-28T13:27:39+00:00 
-last_editor" : "${edited_by}" # Person user name, "user", or "device"
-meta : 
-    #This is an open section for manufacturers to include useful meta info about the channels if they see fit
-locked: ${locked_config_state} #NOT SUPPORTED YET, optional - Boolean, marks config as not editable by UI, assume false if not present
+last_edited: "${date_timestamp}" # *required* -  e.g. 2018-03-28T13:27:39+00:00 
+last_editor" : "${edited_by}" # optional but recommended - String to mark as last editor, Person user name, "user", or "device"
+meta : "${meta_string_information}" # optional - This is an open section for manufacturers to include useful meta info about the channels if they see fit
+locked: ${locked_config_state} # optional - Boolean, marks config as not editable by UI, assume false if not present
 channels: # "device channel" as opposed to an "asset signal"
-  ######### Example channel config 1 ############
-  ${device_channel_id1}: # unique channel identifier
-    display_name: "Human readable channel name" 
-    description: "One-liner description (optional)"
-    properties:
-      data_type: ${defined_type_name}  #See "types" section - in this case it could be "BOOLEAN" or "TEMPERATURE"
-      primitive_type: "${defined_primitive_type_name}" #Optional, See "types" section - in this case it would be "BOOLEAN" or "NUMERIC"
-      data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
-      locked: ${locked_config_state} #optional - Boolean, marks as not editable by UI, defaults to false if not present
-    protocol_config" : 
-      sample_rate : "${sample_time_in_ms}" # required
-      report_rate : "${report_time_in_ms}" # required - defaults to sample_rate
-      report_on_change : "${true|false}" # optional - default false (always report on start-up)
-      timeout : "${timeout_period_time_in_ms}" # optional - used by application to provide timeout indication, typically several times expected report rate
-  ######### Example channel config 2 ############
-  ${device_channel_id2}:   # real number type channel
-    display_name: "e.g. Temperature Setting"
-    description: "e.g. Temperature setting for a thing I have."
+  ######### Example channel config 1 - Basic Usage Options ############
+  ${device_channel_id1}: # unique channel identifier string
+    display_name: "${channel_name_string}" # *required* - Human readable channel name
+    description: "${channel_description_string}" # optional - One-liner description 
     properties: 
-      data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
-      primitive_type: "${defined_primitive_type_name}" # Optional, See "types" section - in this case it would be "NUMERIC"
-      min: 16  # channel value min
-      max: 35  # channel value max
-      precision: 2 
-      data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
-      device_diagnostic: false # Tells RCM that this is a “meta” signal that describes an attribute of the devices health
-      locked: ${locked_config_state} #optional - Boolean, marks as not editable by UI, defaults to false if not present
-    iot_properties: ## Advanced use only / for use by server side only (not device)
+      data_type: "${defined_type_enum}"  # *required* - See "types" section - in this case it could be "BOOLEAN" or "TEMPERATURE"
+      primitive_type: "${defined_primitive_type_enum}" # optional - See "types" section - in this case it would be "BOOLEAN" or "NUMERIC"
+      data_unit: "${unit_enum}" # *required* - Enumerated lookup to unit types for the given type
+      precision: ${precision_number_of decimal_places} # optional but recommended, example value is 2 
+      locked: ${locked_config_state} # optional but recommended - Boolean, marks as not editable by UI, defaults to false if not present
+    protocol_config" : # optional - if used by device client
+      sample_rate : "${sample_time_in_ms}" # optional - device client's sample rate for sensor
+      report_rate : "${report_time_in_ms}" # optional but recommended - rate at which data sent to platform
+      timeout : "${timeout_period_time_in_ms}" # optional but recommended - used by application to provide timeout indication, typically several times expected report rate
+  ######### Example channel config 2 - Expanded Options - Remote Device Configuration Usage ############
+  ${device_channel_id2}:   # unique channel identifier string
+    display_name: "${channel_name_string}" # *required* - Human readable channel name
+    description: "${channel_description_string}" # optional - One-liner description 
+    properties: 
+      data_type: "${defined_type_enum}" # *required* - See "types" section - in this case it would be "TEMPERATURE"
+      primitive_type: "${defined_primitive_type_enum}" # optional - See "types" section - in this case it would be "NUMERIC"
+      data_unit: "${unit_enum}" # *required* - Enumerated lookup to unit types for the given type
+      precision: ${precision_number_of decimal_places}  # optional but recommended
+      locked: ${locked_config_state} # optional but recommended - Boolean, marks as not editable by UI, defaults to false if not present
+      ## Additional Channel Properties
+      min: ${channel_min_number}  # optional - channel expected value min, applies to numberic type only
+      max: ${channel_max_number}  # optional - channel expected value max, applies to numberic type only
+      device_diagnostic: false # optional - Tells ExoSense that this is a “meta” signal that describes an attribute of the devices health
+    protocol_config :  # optional - if used by device client 
+      sample_rate : ${sample_time_in_ms} # optional - device client's sample rate for sensor
+      report_rate : ${report_time_in_ms} # optional but recommended - rate at which data sent to platform
+      timeout : "${timeout_period_time_in_ms}" # optional but recommended - used by application to provide timeout indication, typically several times expected report rate
+      ## Addtional Channel Protocol Configuration Properties
+      report_on_change : "${true|false}" # optional - default false (always report on start-up)
+      down_sample : "${MIN|MAX|AVG|ACT}" # optional - Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
+      application : "${fieldbus_logger_application_name}" # optional - e.g. "Modbus_RTU"
+      interface : "${path_to_interface}" # optional but required if using "application" e.g. "/dev/tty0/"
+      app_specific_config : # optional but maybe be required depending on "application"
+        ${app_specific_config_item1} : "${app_config_item1_value}"
+        ${app_specific_config_item2} : "${config_item2_value}"
+      ## Addtional Channel Protocol properties to transform raw data to the channel type / unit before reporting
+      input_raw : # optional, used to pre-transform data type/unit from raw sensor to channel type, example voltage or bits (ADC) to Pressure 
+        max : ${raw_input_max} # optional - above this puts the channel in error
+        min : ${raw_input_max} # optional - above this puts the channel in error
+        unit : "${raw_input_units}" # optional - e.g. "mA", reference only
+      multiplier : ${number_to_be_multiplied_into_the_raw_value}" # optional used to pre-transform data type/unit from raw sensor to channel type, example 4-20 mA to Temperature 
+      offset : ${offset} # optional used to pre-transform data type/unit from raw sensor to channel type, example 4-20 mA to Temperature 
+    ## Advanced Usage / Not Available by Default - Used on Platform side only (Not Device)
+    iot_properties: ## Advanced use only / for use by server side only (not device) - Not available by default
       multiplier: ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
       offset: ${offset} # if not present assume 0
       data_type: "${defined_type_name}" # See "types" section - in this case it would be "TEMPERATURE"
       primitive_type: "${defined_primitive_type_name}" # Optional, See "types" section - in this case it would be "NUMERIC"
       data_unit: "${unit_enum}" # Enumerated lookup to unit types for the given type
       conversion_name: "${name}" # Name of conversion use to fill the multiplier and offset fields.
-      min: 60.8 # minimum after conversion
-      max: 95 # maximum after conversion
-    protocol_config : 
-      application : "${fieldbus_logger_application_name}" # e.g. "Modbus_RTU"
-      interface : "${path_to_interface}" # e.g. "/dev/tty0/"
-      app_specific_config :
-        ${app_specific_config_item1} : "${app_config_item1_value}"
-        ${app_specific_config_item2} : "${config_item2_value}"
-      input_raw : 
-        max : ${raw_input_max} # (future) optional - above this puts the channel in error
-        min : ${raw_input_max} # (future) optional - above this puts the channel in error
-        unit : "${raw_input_units}" # (future) optional - e.g. "mA", reference only
-      multiplier : ${number_to_be_multiplied_into_the_raw_value}" # If not present set to 1
-      offset : ${offset} # if not present assume 0
-      sample_rate : ${sample_time_in_ms} #required
-      report_rate : ${report_time_in_ms} # required - defaults to sample_rate
-      down_sample : "${MIN|MAX|AVG|ACT}" # Minimum in window, Maximum in window, running average in window, or actual value (assume report rate = sample rate)
-      report_on_change : "${true|false}" # optional - default false (always report on start-up)
-      timeout : "${timeout_period_time_in_ms}" # optional - used by application to provide timeout indication, typically several times expected report rate
+      min: ${converted_channel_min_number}  # optional - channel expected min after conversion
+      max: ${converted_channel_max_number}  # optional - channel expected max after conversion
 ```
 **Example config_io (JSON format)**
 ```json
@@ -271,7 +274,7 @@ Utilize the Record API from Murano, and apply the array of signals to each times
 
 This requires that the clock be synced on the gateway to the global network time via ntp which is used by our servers in our cluster. Our recommendation will be that the ntp server syncs with the gateway at least once every time the power is cycled on the gateway, and once per 12-24 hours of continuous operation time.
 
-### Channel Error Handling
+### Channel Error Handling (Optional)
 *Special Considerations for Errors*
 
 When an error occurs for a signal, the payload will change by adding the protected keyword property `__error` to the JSON root object like so:
@@ -292,12 +295,14 @@ The error object is a list of keys of the channel ids with an error, and then th
 _Note: the device can report a channel data payload, even if the data is erroneous, but that is optional.  We will accept a chanel value and an error, just an error for a channel, or just a value.  All combinations are supported._
 
 
-## Device Channel Protocol Interfaces
-This section defines the supported protocol interfaces and parameters.
+## Device Channel Protocol Interfaces (Optional)
+This section defines the supported out of the box protocol interfaces and parameters.  OEMs can use their own application and interface parameters also but may not be supported in the application user interface (ExoSense).  
+
+*Note: Only applicable to devices that are remotely configurable and use a fieldbus or fieldbus like configurable protocol for interacting with data / inputs / sensors.*
 
 ### Modbus TCP
 
-Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
+Parameters for a channel's protocol configuration 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
     ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
     port : "INTEGER" # port to make the request on
@@ -313,7 +318,7 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 
 ### Modbus RTU
 
-Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
+Parameters for a channel's protocol configuration 'app_specific_config' field when using Modbus_TCP.
 ```yaml 
     slave_id : "INTEGER" 
     register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
@@ -327,7 +332,7 @@ Parameters for a channel's 'app_specific_config' field when using Modbus_TCP.
 
 ### CANopen
 
-Parameters for a channel's 'app_specific_config' field when using CANopen.
+Parameters for a channel's protocol configuration 'app_specific_config' field when using CANopen.
 ```yaml
     node_id : "HEXADECIMAL" # e.g. "0x01"
     msg_index : "HEXADECIMAL"  # "PDO" starts at 0x180,"SDO" starts at 0x580, required
@@ -336,7 +341,9 @@ Parameters for a channel's 'app_specific_config' field when using CANopen.
     evaluation_mode : [“REAL32”, “INT8”, “INT16”, “UINT16”, “UINT32”, “STRING”, “BOOLEAN”]
 ```
 
-## Protocol Interface Application Configuration
+## Protocol Interface Application Configuration (Optional)
+*Note: Optional use for remotely configurable devices.*
+
 The gateway / device applications that handle reading/writing for channels may have properties that need to be set that are useful for all channels using that protocol / interface.  For example, 10 channels may be set up to use Modbus_RTU at interface /dev/tty0.  The application that handles the modbus communication needs to know the interface details such as baud rate, etc.  
 
 The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`.  This resource is used by the device to know what interfaces and other application configuration parameters the user has selected.  These are not specific to the channel, but to the entire protocol application.  
