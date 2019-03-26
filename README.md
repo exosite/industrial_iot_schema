@@ -1,6 +1,5 @@
-# Industrial IoT Schemas
-
-Exosite's vertical industrial IoT schemas are documented here. 
+# ExoSense™️ Industrial IoT Schemas
+This repository provides specification documents for the ExoSense™️ application and related technologies as a part of Exosite's Industrial IoT product offering.  These documents are meant as as reference details for those groups of people including OEMs building connected devices / gateways to work with ExoSense, OEMs and integrators creating custom insight transforms / rules / integrations, and for Exosite's developers building and improving ExoSense.  These specifications are not developer guides but schemas and reference material that allow for standardization. For those looking for developer guide information, this can be found on Exosite's [ExoSense documentation site](https://exosense.readme.io/). 
 
 
 ## Schemas
