@@ -13,6 +13,9 @@ info:
 
 host: a.real.host # Set this to the host your function is on
 basePath: / # Set this or the path according to your function
+tags:
+  - name: insight
+    description: Insight Module
 schemes:
   - https  # Only https is supported.
 consumes:
@@ -41,11 +44,11 @@ paths:
   /insights:
     post:
       operationId: listInsights
-      description: Get a list of availible Insight Functions and info about them
+      description: Get a list of available Insight Functions and info about them
       parameters:
       - name: body
         in: body
-        description: Get a list of availible insight functions
+        description: Get a list of available insight functions
         required: true
         schema:
           $ref: '#/definitions/InsightsFilterParams'
@@ -89,7 +92,7 @@ paths:
         default:
           description: The response to this is ignored.
 
-  /process: # The acutal path can be anything.
+  /process: # The actual path can be anything.
     post:
       operationId: process
       description: |
@@ -131,12 +134,25 @@ definitions:
         description: Presented name
       description:
         type: string
-        description: Additional text about this insight
+        description: Additional text about this insight. Markdown can be used.
       wants_lifecycle_events:
         type: boolean
         description: |
           True if this insight wants to be notified when linkages using it are created and deleted.
           Defaults to false.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight. Markdown can be used.
     required: [group_id_required]
 
   InsightsFilterParams:
@@ -158,39 +174,72 @@ definitions:
 
   SignalTypeInputInfo:
     type: object
-    description: What data type the incoming Signal must have. If omitted, than allows any type.
-    required: [data_type, name]
+    description: |
+      What data type the incoming Signal must have.  One of `primitive_type`, `data_type` or `data_unit`
+      should be specified.
+    required: [name]
     properties:
-      data_type:
+      primitive_type:
         type: string
-        description: The type that the connecting signal must have
+        enum: [NUMERIC, STRING, BOOLEAN, JSON]
+        description: If present, the primitive type that the connecting signal must have
+      data_type:
+        type: array
+        description: If present, the type that the connecting signal must have
+        items:
+          type: string
+          description: A required data type
       data_unit:
         type: array
-        description: The units that the connecting signal must have
+        description: If present, the units that the connecting signal must have
         items:
           type: string
           description: A required unit.
       tag:
         type: string
-        description: Optional tag to add to the SingalData for inlet matching
+        description: Optional tag to add to the SignalData for inlet matching
       name:
         type: string
         description: Name of this signal
       description:
         type: string
         description: Optional text to help users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight.
 
   SignalTypeOutputInfo:
     type: object
-    description: What data type the incoming Signal must have. If omitted, than allows any type.
+    description: |
+      What data type the incoming Signal must have.  One of `primitive_type`, `data_type` or `data_unit`
+      should be specified.
     properties:
+      primitive_type:
+        type: string
+        enum: [NUMERIC, STRING, BOOLEAN, JSON]
+        description: If present, the primitive type that the connecting signal must have
       data_type:
-        type: string
-        description: The type that the connecting signal must have
+        type: array
+        description: If present, the type that the connecting signal must have
+        items:
+          type: string
+          description: A required data type.
       data_unit:
-        type: string
-        description: The unit that the connecting signal must have
-    required: [data_type]
+        type: array
+        description: If present, the unit that the connecting signal must have
+        items:
+          type: string
+          description: A required unit.
 
   ConstantInfo:
     type: object
@@ -201,13 +250,13 @@ definitions:
         description: The name of this constant 
       type:
         type: string
-        enum: [string, number]
+        enum: [string, number, boolean]
         description: What kind of value this constant accepts
       description:
         type: string
         description: Some words for the user about this constant
       default:
-        type: [string, number]
+        type: [string, number, boolean]
         description: Optional value to use if user doesn't specify one.
       enum:
         type: array
@@ -218,6 +267,24 @@ definitions:
       minimum:
         type: number
         description: For number type, the smallest it can be
+      multiple:
+        type: boolean
+        description: |
+          When this is true, this constant will be an array of values instead of a single value.
+          The UI will present the user a way to enter this constant multiple times.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight.
     required: [name, type]
 
   InsightInfo:
@@ -233,6 +300,19 @@ definitions:
       description:
         type: string
         description: A description of this insight function to display to users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additional_properties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight.
       type:
         type: string
         enum: [transform, rule, action]
@@ -263,7 +343,7 @@ definitions:
             template:
               type: string
               description: |
-                Which of this function's constants to use the value of here, fitted into a templeate
+                Which of this function's constants to use the value of here, fitted into a template
                 string.  The constants must be surrounded with '{{}}'.  For example '-{{days}}d'
       constants:
         type: array
@@ -277,7 +357,11 @@ definitions:
         items:
           $ref: '#/definitions/SignalTypeInputInfo'
       outlets:
-        $ref: '#/definitions/SignalTypeOutputInfo'
+        type: array
+        description: What kind of data each output will produce. (This is an ordered array)
+        maxItems: 5
+        items:
+          $ref: '#/definitions/SignalTypeOutputInfo'
     required:
       - id
       - name

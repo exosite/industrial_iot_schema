@@ -1,0 +1,31 @@
+{
+    "cSpell.words": [
+        "ACCEL",
+        "ARCMINUTE",
+        "ARCSECOND",
+        "CANDELA",
+        "CANOpen",
+        "CENTISTOKES",
+        "ELEC",
+        "Fieldbus",
+        "Irradiance",
+        "KILOOHM",
+        "MBAR",
+        "MEGAOHM",
+        "MICROAMP",
+        "MICROOHM",
+        "MILLIAMP",
+        "MILLIOHM",
+        "MILLIWATT",
+        "Modbus",
+        "OEMs",
+        "PDOs",
+        "Permittivity",
+        "SCFM",
+        "TORR",
+        "UINT",
+        "bitmask",
+        "datapoint",
+        "endianness"
+    ]
+}
