@@ -1,7 +1,7 @@
 # ExoSense™️ Channel and Signal Data Types
 
 
-**Document Status:** Version 3.0
+**Document Status:** Version 3.1 Draft
 
 _Note: Originally this information was a part of the ["ExoSense™️ Channel and Signal Data Schema"](channel-signal_io_schema.md) document._
 
@@ -821,6 +821,8 @@ Notes: --
 
 
 ## Change log
+### v3.1 - In progress (DRAFT)
+
 ### v3.0
 * Created this document as seperate from "ExoSense™️ Channel and Signal Data Schema", using v3.0 since the other document is also moving to 3.0.  Will track version history seperately moving forward. 
 * Added many new Numeric measurement types and units

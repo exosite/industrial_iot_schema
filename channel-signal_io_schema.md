@@ -1,7 +1,7 @@
 # ExoSense™️ Channel and Signal Data Schema
 
 
-**Document Status:** Version 3.0
+**Document Status:** Version 3.1 Draft
 
 ## Introduction
 This document defines the information required to interface with ExoSense™️ from the “first mile” perspective of the connected device or gateway, as well as describing how this information is carried on into the “last mile” or client-side Application.
@@ -599,6 +599,8 @@ Hardware application developers may support custom protocols by specifying their
 ```
 
 ## Change log
+### v3.1 - In progress (DRAFT)
+
 ### v3.0
 * Cleaned up formatting of examples and descriptions 
 * Moved data types and units to seperate document "ExoSense™️ Channel and Signal Data Types"

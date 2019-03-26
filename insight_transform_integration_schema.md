@@ -445,3 +445,9 @@ Insight             | Module of analytic Functions to perform calculations on As
 Function            | Member of an Insight.
 Datapoint           | Single instance of a Signal Data stream.
 Linkage             | ExoSense Pipeline term for non-Signal blocks on the Asset Config page of the UI.
+
+
+
+## Change log
+### v1.0 - In progress (DRAFT)
+* New document to detail insight transform and rule interface with ExoSense
