@@ -1,9 +1,9 @@
 # Contributing
 Exosite maintains the schema, specifications, and examples in this repository.  We welcome contributions from others, the process generally followed is as defined:
 
-1. Requests and problems can be submitted through the GitHub 'Issues' functionality.  
+1. Requests and problems can be submitted through the GitHub '[issues](https://github.com/exosite/industrial_iot_schema/issues)' functionality.  
 2. Anyone can create a pull-request for improvements and requests for new updates.
-3. The Exosite Industrial IoT Schema team will evaluate and review all pull-requests.  These will be reviewed critically and may be adapted if they are approved.  
+3. The Exosite Industrial IoT Schema team will evaluate and review all pull-requests.  These will be reviewed *critically* and may be edited if they are approved.  
 
 ### Pull Requests
 
