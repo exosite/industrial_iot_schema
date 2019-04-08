@@ -66,6 +66,11 @@ paths:
     get:
       operationId: infoInsight
       description: Get info about one Insight Function
+      parameters:
+        - name: function_id
+          type: string
+          in: path
+          description: Identifier of function
       responses:
         "200":
           description: Insight Functions successfully listed
