@@ -283,7 +283,7 @@ xxxxx
 
 
 
-## Device Data Transport Schema 
+## Channel Data Schema 
 Having a common shared channel configuration (a contract essentially) between the device and the cloud/application allows us to keep the actual data sent between devices and the cloud to a minimum - focusing only on the sending of values for channels rather than unnecessary configuration information that rarely changes.  
 
 The resource used for writing channel values from devices to the cloud/application is “data_in”, as mentioned in the resource section.
@@ -361,7 +361,7 @@ _Note: the device can report a channel data payload, even if the data is erroneo
 
 
 
-## Device Channel Protocol Interfaces (Optional)
+## Device Protocol Interfaces (Optional)
 This section defines the supported out of the box protocol interfaces and parameters.  OEMs can use their own application and interface parameters also but may not be supported in the application user interface (ExoSense).  
 
 *Note: Only applicable to devices that are remotely configurable and use a fieldbus or fieldbus like configurable protocol for interacting with data / inputs / sensors.*
