@@ -119,7 +119,7 @@ paths:
             $ref: "#/definitions/SignalDataArrayArray"
         default:
           description: Error that stops the pipeline.
-            Non-fatal errors should produce new signals on a seperate outlet.
+            Non-fatal errors should produce new signals on a separate outlet.
           schema:
             $ref: '#/definitions/ErrorResponse'
 
@@ -221,7 +221,7 @@ definitions:
               description: Presented name
             description:
               type: string
-              description: Additional text about this insight.
+              description: Optional text to help users.
 
   SignalTypeOutputInfo:
     type: object
@@ -252,7 +252,7 @@ definitions:
     properties:
       name:
         type: string
-        description: The name of this constant 
+        description: The name of this constant; This is not shown to users and is the code identifier for this constant.
       type:
         type: string
         enum: [string, number, boolean]
@@ -284,12 +284,10 @@ definitions:
           type: object
           description: Keyed by each translated language code 
           properties:
-            name:
-              type: string
-              description: Presented name
             description:
               type: string
-              description: Additional text about this insight.
+              description: Some words for the user about this constant
+              type: string
     required: [name, type]
 
   InsightInfo:
@@ -314,10 +312,10 @@ definitions:
           properties:
             name:
               type: string
-              description: Presented name
+              description: A human friendly name for this insight function
             description:
               type: string
-              description: Additional text about this insight.
+              description: A description of this insight function to display to users.
       type:
         type: string
         enum: [transform, rule, action]
