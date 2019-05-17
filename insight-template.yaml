@@ -266,6 +266,12 @@ definitions:
       enum:
         type: array
         description: An array of allowed values.
+      enum_presented:
+        type: array
+        description: If present, the strings to display instead of the values in `enum`.  The length of this must match `enum`.
+        items:
+          type: string
+          description: Presentable name for one value
       maximum:
         type: number
         description: For number type, the largest it can be
@@ -287,7 +293,11 @@ definitions:
             description:
               type: string
               description: Some words for the user about this constant
-              type: string
+            enum_presented:
+              type: array
+              description: If present, the strings to display instead of the values in `enum`.
+              items:
+                type: string
     required: [name, type]
 
   InsightInfo:
