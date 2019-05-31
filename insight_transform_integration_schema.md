@@ -32,10 +32,9 @@ asynchronous  | boolean | false    | Whether or not the Function requires callba
 
 #### Type
 
-Insight Functions can be one of three types: transform, rule, or action. Their
+Insight Functions can be one of two types: transform, or rule. Their
 classification into one of these buckets determines how ExoSense and the
-Pipeline treats them. At time of writing, only transforms and rules are supported
-throughout the full stack.
+Pipeline treats them.
 
 #### Inlets
 
