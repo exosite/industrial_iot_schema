@@ -436,9 +436,15 @@ In this situation, ExoSense and device are aware that only the provided options 
 }
 ```
 
-### Device Control Flow
+### Device Control Interface
+![Device Channel Control Flow](control_flow_diagram.png)
+Devices that will use control channels must begin subscribing ('mqtt') or polling ('http') the `data_out` resource.  The data format is the same as `data_in` and any new data_out value will contain one or more new control channel requests.  The device must acknowledge it received the value by writing the same back to `data_out` (Murano Device API requirement) which tells the platform the value was received.  After taking action on the control requests, the device must write the new channel states back to data_in to close the loop so ExoSense knows the request finished.
 
-
+**Device Steps:**
+1. Subscribe or Poll `data_out`
+2. On new `data_out` value, acknowledge received by writing back to `data_out`
+3. Device takes control actions.
+4. Device writes the channel states that were requested in `data_out` back to `data_in`
 
 
 
