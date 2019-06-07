@@ -66,6 +66,11 @@ paths:
     get:
       operationId: infoInsight
       description: Get info about one Insight Function
+      parameters:
+        - name: function_id
+          type: string
+          in: path
+          description: Identifier of function
       responses:
         "200":
           description: Insight Functions successfully listed
@@ -114,7 +119,7 @@ paths:
             $ref: "#/definitions/SignalDataArrayArray"
         default:
           description: Error that stops the pipeline.
-            Non-fatal errors should produce new signals on a seperate outlet.
+            Non-fatal errors should produce new signals on a separate outlet.
           schema:
             $ref: '#/definitions/ErrorResponse'
 
@@ -216,7 +221,7 @@ definitions:
               description: Presented name
             description:
               type: string
-              description: Additional text about this insight.
+              description: Optional text to help users.
 
   SignalTypeOutputInfo:
     type: object
@@ -247,7 +252,7 @@ definitions:
     properties:
       name:
         type: string
-        description: The name of this constant 
+        description: The name of this constant; This is not shown to users and is the code identifier for this constant.
       type:
         type: string
         enum: [string, number, boolean]
@@ -261,6 +266,12 @@ definitions:
       enum:
         type: array
         description: An array of allowed values.
+      enum_presented:
+        type: array
+        description: If present, the strings to display instead of the values in `enum`.  The length of this must match `enum`.
+        items:
+          type: string
+          description: Presentable name for one value
       maximum:
         type: number
         description: For number type, the largest it can be
@@ -279,12 +290,14 @@ definitions:
           type: object
           description: Keyed by each translated language code 
           properties:
-            name:
-              type: string
-              description: Presented name
             description:
               type: string
-              description: Additional text about this insight.
+              description: Some words for the user about this constant
+            enum_presented:
+              type: array
+              description: If present, the strings to display instead of the values in `enum`.
+              items:
+                type: string
     required: [name, type]
 
   InsightInfo:
@@ -309,10 +322,10 @@ definitions:
           properties:
             name:
               type: string
-              description: Presented name
+              description: A human friendly name for this insight function
             description:
               type: string
-              description: Additional text about this insight.
+              description: A description of this insight function to display to users.
       type:
         type: string
         enum: [transform, rule, action]
