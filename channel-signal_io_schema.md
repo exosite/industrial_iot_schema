@@ -272,7 +272,7 @@ The interval that is considered a timeout for a channel.  Can be the same as rep
 ### Control Channels
 Channels can also be used to 'control' a device.  A simple example of this is to turn on/off a valve.  By default channels are not enabled to be controlled, but by setting the `control` property to `true`, ExoSense and the device will allow for sending commands from the application to the device.
 A control channel uses all of the same schema in this document and devices must write the last state to the `data_in` resource, but the use of control channels requires the additional use of `data_out` resource.
-[More details below](device_control_interface) on the proper use and flow of control data.  
+[More details below](#device-control-interface) on the proper use and flow of control data.  
 
 
 ### Protocol configuration
@@ -739,7 +739,7 @@ Hardware application developers may support custom protocols by specifying their
 
 ## Change log
 ### v3.1 - In progress (DRAFT)
-* Adding device control request support
+* Adding device control support
 
 ### v3.0
 * Cleaned up formatting of examples and descriptions 
