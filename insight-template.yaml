@@ -363,6 +363,12 @@ definitions:
         description: Additional user specified values to pass to this insight function
         items:
           $ref: '#/definitions/ConstantInfo'
+      constants_multiple_maximum:
+        type: number
+        description: |
+          If there are constants with multiple set to true, this states the maximum number of times the
+          constants can be repeated. (The maximum size of the arrays.)
+          If unspecified then the UI can apply any limit, including none.
       inlets:
         type: array
         description: The kinds of data that can be connected. (This is an unordered set)
