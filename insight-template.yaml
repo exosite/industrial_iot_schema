@@ -343,6 +343,11 @@ definitions:
           When this object is present, a timeseries query will be called and the results sent along
           to the function call.  The properties here will be used to augment the query.  Only the
           Signals connected to the calling of this function will be queried.
+        properties:
+          include_from:
+            type: string
+            enum: [INLETS, OUTLETS, BOTH]
+            description: When fetching history, which connected signals to fetch from.  Defaults to BOTH.
         additionalProperties:
           type: object
           description: An additional parameter to the query.  Use only one property. (value, constant, template)
