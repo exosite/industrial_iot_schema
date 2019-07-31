@@ -166,7 +166,7 @@ INSTALL_SUCCESS|Installation complete.
 INSTALLED_VERSION|Explicitly reflects current state of application. This should be set following a successful update or device bootup.
 
 ### Examples of OTAU Status Updates
-THe following are examples of messages from the device.  Reminder, must be sent as a string via the Murano API.
+The following are examples of messages from the device.  Reminder, must be sent as a string via the Murano API.
 
 ```json
 {
