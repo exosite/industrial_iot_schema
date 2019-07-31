@@ -7,10 +7,10 @@ This document defines the information required to list, issue (send), and commun
 **OTA** and **OTAU** is a way of describing a remote device software update using a network connection.
 
 # Device Software Package Update Process
-The device software update process or "Over-The-Aiar Update" (OTAU) is defined in reference to the Murano IoT Platform and ExoSense application.
+The device software update process or "Over-The-Air Update" (OTAU) is defined in reference to the Murano IoT Platform and ExoSense application.
 
 **Basic Flow Summary**
-1. The OEM specifies a OTAU software package manifest file as content in a Murano product
+1. The OEM specifies an OTAU software package manifest file as content in a Murano product
 2. A user application (such as ExoSense) will display this and any previous OTAU software package manifest files as available for a device (or set of devices) of that Murano Product type.
 3. A user chooses a the OTAU software package and applies it in the application user interface.
 4. The application will write to `config_otau` resource with the new otau state information (aka tell the device what state it should be in and instructions on how to do that)
@@ -77,8 +77,8 @@ The following is an example of how an OEM would make a new package available.
 
 
 
-# Applying a OTAU Package State Change to Devices
-The following information details the process in which a OTAU package is applied to one or more devices by specifying a new `state` for the device to be in.  
+# Applying an OTAU Package State Change to Devices
+The following information details the process in which an OTAU package is applied to one or more devices by specifying a new `state` for the device to be in.  
 
 ## Murano Product Resource Configuration Requirements
 To support OTAU functionality, ExoSense expects that Murano products are configured with two specific resources regardless of the connection type: config_otau and otau_in.
@@ -166,7 +166,7 @@ INSTALL_SUCCESS|Installation complete.
 INSTALLED_VERSION|Explicitly reflects current state of application. This should be set following a successful update or device bootup.
 
 ### Examples of OTAU Status Updates
-THe following are examples of messages from the device.  Reminder, must be sent as a string via the Murano API.
+The following are examples of messages from the device.  Reminder, must be sent as a string via the Murano API.
 
 ```json
 {
