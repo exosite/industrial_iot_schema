@@ -738,8 +738,10 @@ Hardware application developers may support custom protocols by specifying their
 ```
 
 ## Change log
-### v3.1 - In progress (DRAFT)
+### v3.1
 * Adding device control support
+* Changed Modbus RTU & Modbus TCP protocol configuration 'app_specific_config' key 'register_offset' to 'register'.
+  
 
 ### v3.0
 * Cleaned up formatting of examples and descriptions 
