@@ -462,7 +462,7 @@ Parameters for a channel's protocol configuration 'app_specific_config' field wh
     ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
     port : "INTEGER" # port to make the request on
     register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_number : "INTEGER" # [1-4]0001-[1-4]9999
+    register : "INTEGER" # 0001-9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
@@ -477,7 +477,7 @@ Parameters for a channel's protocol configuration 'app_specific_config' field wh
 ```yaml 
     slave_id : "INTEGER" 
     register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_number : "INTEGER" # [1-4]0001-[1-4]9999
+    register : "INTEGER" # 0001-9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
