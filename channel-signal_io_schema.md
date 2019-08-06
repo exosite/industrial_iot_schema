@@ -421,7 +421,7 @@ In this situation, ExoSense and device are aware that only the provided options 
   "display_name": "Garage Door Control",
   "description": "Control Options",
   "properties": {
-    "data_type": "Number",
+    "data_type": "STRING",
     "control": true
   },
   "control_properties": {

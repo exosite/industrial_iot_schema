@@ -60,7 +60,7 @@ Primitive Type (`primitive_type`): STRING<br>
 UI Unit Abbreviation: na<br>
 Notes: Any string
 
-**Example JSON Channel**
+**Example String Channel**
 ```json
 {
   "channels": {
@@ -112,7 +112,7 @@ Notes: Any JSON blob
   }
 }
 ```
-**Example Number Channel Data (data_in) Packet**
+**Example JSON Channel Data (data_in) Packet**
 ```json
 {
   "017":{"network_errors":0,"RAM":"45 MB"}
@@ -126,7 +126,7 @@ Primitive Type (`primitive_type`): NUMERIC<br>
 UI Unit Abbreviation: na<br>
 Notes: Any Real Number
 
-**Example JSON Channel**
+**Example Number Channel**
 ```json
 {
   "channels": {
