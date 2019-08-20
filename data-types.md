@@ -574,7 +574,7 @@ Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 Notes: --
 
 #### Luminous Flux
-Key (`data_type`): LUMINANCE_FLUX<br>
+Key (`data_type`): LUMINOUS_FLUX<br>
 Primitive Type (`primitive_type`): NUMERIC<br>
 Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 * `LUMENS`: lm
