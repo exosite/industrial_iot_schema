@@ -46,7 +46,7 @@ Key             | Type    | Required | Description
 :---------------|---------|----------|:------------
 tag             | string  | true     | Tag to use to identify the Inlet. Shows up in Signal Datapoint tags.
 name            | string  | true     | Friendly name for the Inlet.
-description     | string  | true     | Useful descriptino for this Inlet.
+description     | string  | true     | Useful description for this Inlet.
 data_type       | string  | false    | Optionally require specific data_type.
 data_unit       | string  | false    | Optionally require specific data_unit.
 primitive_type  | string  | false    | Optionally require specific primitive_type.
