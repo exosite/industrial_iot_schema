@@ -202,6 +202,27 @@ Values can be injected by the Pipeline via one of three methods:
 1. template: format one or more constants, where the constant is specified
   betwixt two sets of brackets (`{{$constant}}`). e.g. `-{{days}}d`
 
+##### Inlet Outlet Selection
+
+Normally, history is fetch for all inlets and outlets.  If the function doesn't
+need both, the `include_from` key can be added. The value is `INLETS`,
+`OUTLETS`, or `BOTH`.  When absent, it defaults to `BOTH`.
+
+For example the snippet below will only get history for the inlet signals.
+```
+{
+  "history": {
+    "include_from": "INLETS",
+    "relative_start": {
+      "template": "-{{days}}d"
+    },
+    "aggregate": {
+      "constant": "aggregation_function"
+    }
+  }
+}
+```
+
 #### Asynchronous
 
 If `asynchronous` is `true`, callback info will be sent along with Signal Data
