@@ -1,4 +1,4 @@
-# ExoSense™️ Channel and Signal Data Schema
+# Channel and Signal Data Schema
 
 **Document Status:** Version 3.0
 
