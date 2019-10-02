@@ -14,7 +14,7 @@ It is not required for regular use of the ExoSense application itself, although 
 
 The data schema and inteface information can be found here: [ExoSense™️ Channel and Signal Data Schema](channel-signal_io_schema.md)
 
-![ExoSense Channel / Signal Simple Diagram](.gitbook/assets/simple_channel_signal_diagram.png)
+![ExoSense Channel / Signal Simple Diagram](.gitbook/assets/simple_channel_signal_diagram%20%282%29.png)
 
 ### Definitions
 

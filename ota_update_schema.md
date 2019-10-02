@@ -198,5 +198,5 @@ The following are examples of messages from the device. Reminder, must be sent a
 
 ### Status Sequence Diagram
 
-![state\_sequence](.gitbook/assets/otau_sequence.png)
+![state\_sequence](.gitbook/assets/otau_sequence%20%281%29.png)
 

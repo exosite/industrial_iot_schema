@@ -12,7 +12,7 @@ This document is meant for device developers building native support into the de
 
 It is not required for regular use of the ExoSense application itself, although may be helpful for creating end-user documentation.
 
-![ExoSense Channel / Signal Simple Diagram](.gitbook/assets/simple_channel_signal_diagram.png)
+![ExoSense Channel / Signal Simple Diagram](.gitbook/assets/simple_channel_signal_diagram%20%282%29.png)
 
 ### Definitions
 
