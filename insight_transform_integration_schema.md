@@ -38,7 +38,7 @@ The `inlets` key is an array of Inlet objects, each of which can have the follow
 | :--- | :--- | :--- | :--- |
 | tag | string | true | Tag to use to identify the Inlet. Shows up in Signal Datapoint tags. |
 | name | string | true | Friendly name for the Inlet. |
-| description | string | true | Useful descriptino for this Inlet. |
+| description | string | true | Useful description for this Inlet. |
 | data\_type | string | false | Optionally require specific data\_type. |
 | data\_unit | string | false | Optionally require specific data\_unit. |
 | primitive\_type | string | false | Optionally require specific primitive\_type. |
@@ -180,6 +180,27 @@ Values can be injected by the Pipeline via one of three methods:
 3. template: format one or more constants, where the constant is specified
 
    betwixt two sets of brackets \(`{{$constant}}`\). e.g. `-{{days}}d`
+
+##### Inlet Outlet Selection
+
+Normally, history is fetch for all inlets and outlets.  If the function doesn't
+need both, the `include_from` key can be added. The value is `INLETS`,
+`OUTLETS`, or `BOTH`.  When absent, it defaults to `BOTH`.
+
+For example the snippet below will only get history for the inlet signals.
+```
+{
+  "history": {
+    "include_from": "INLETS",
+    "relative_start": {
+      "template": "-{{days}}d"
+    },
+    "aggregate": {
+      "constant": "aggregation_function"
+    }
+  }
+}
+```
 
 #### Asynchronous
 

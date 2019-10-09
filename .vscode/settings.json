@@ -23,6 +23,7 @@
         "Permittivity",
         "SCFM",
         "TORR",
+        "TSDB",
         "UINT",
         "bitmask",
         "datapoint",
