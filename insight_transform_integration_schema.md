@@ -180,6 +180,27 @@ Values can be injected by the Pipeline via one of three methods:
 
    betwixt two sets of brackets \(`{{$constant}}`\). e.g. `-{{days}}d`
 
+##### Inlet Outlet Selection
+
+Normally, history is fetch for all inlets and outlets.  If the function doesn't
+need both, the `include_from` key can be added. The value is `INLETS`,
+`OUTLETS`, or `BOTH`.  When absent, it defaults to `BOTH`.
+
+For example the snippet below will only get history for the inlet signals.
+```
+{
+  "history": {
+    "include_from": "INLETS",
+    "relative_start": {
+      "template": "-{{days}}d"
+    },
+    "aggregate": {
+      "constant": "aggregation_function"
+    }
+  }
+}
+```
+
 ### Signal Data
 
 > Reference [SignalDataObjectArray](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L408) in the Swagger file
