@@ -332,11 +332,6 @@ definitions:
         description: |
           What kind of insight this function is.  Determines how it gets used and how the UI
           presents it.  If omitted, then 'transform' is used.
-      asynchronous:
-        type: boolean
-        description: |
-          When true, this function requires the Callback Info block since it will respond
-          with some or all of its results asynchronously.
       history:
         type: object
         description: |

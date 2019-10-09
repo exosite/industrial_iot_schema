@@ -1,4 +1,4 @@
-# ExoSense™ Insight Transform Schema
+# ExoSense® Insight Transform Schema
 
 **Document Status:** V1.0 Draft
 
@@ -24,7 +24,6 @@ The object has the following keys:
 | outlets | object | true | Specify the Output Signal. |
 | constants | array | false | Specify parameters for users to provide when adding this Function. |
 | history | object | false | Optionally attach timeseries data to `POST /process` calls. |
-| asynchronous | boolean | false | Whether or not the Function requires callback info so that it can operate asynchronously. |
 
 #### Type
 
@@ -38,7 +37,7 @@ The `inlets` key is an array of Inlet objects, each of which can have the follow
 | :--- | :--- | :--- | :--- |
 | tag | string | true | Tag to use to identify the Inlet. Shows up in Signal Datapoint tags. |
 | name | string | true | Friendly name for the Inlet. |
-| description | string | true | Useful descriptino for this Inlet. |
+| description | string | true | Useful description for this Inlet. |
 | data\_type | string | false | Optionally require specific data\_type. |
 | data\_unit | string | false | Optionally require specific data\_unit. |
 | primitive\_type | string | false | Optionally require specific primitive\_type. |
@@ -180,12 +179,6 @@ Values can be injected by the Pipeline via one of three methods:
 3. template: format one or more constants, where the constant is specified
 
    betwixt two sets of brackets \(`{{$constant}}`\). e.g. `-{{days}}d`
-
-#### Asynchronous
-
-If `asynchronous` is `true`, callback info will be sent along with Signal Data to the `/process` endpoint of your Insight under the key `cbi`.
-
-> Note: if your Insight Function is asynchronous, it should still respond back from calls to `POST /process` with an empty array of arrays `[[]]`.
 
 ### Signal Data
 
@@ -373,7 +366,7 @@ The `POST /process` endpoint will be called with the Signal Data as specified in
 
 The inner array is for output [Signal Datapoints](insight_transform_integration_schema.md#data) for a specific Outlet. In the future, the outer array will be used to hold different Outlets' inner arrays.
 
-A Function that returns nothing or is asynchronous will respond with an empty array of arrays: `[[]]`.
+A Function that returns nothing will respond with an empty array of arrays: `[[]]`.
 
 ### Specific Function
 
