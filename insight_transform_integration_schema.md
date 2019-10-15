@@ -27,7 +27,9 @@ The object has the following keys:
 
 #### Type
 
-Insight Functions can be one of three types: transform, rule, or action. Their classification into one of these buckets determines how ExoSense and the Pipeline treats them. At time of writing, only transforms are supported throughout the full stack.
+Insight Functions can be one of two types: transform, or rule. Their
+classification into one of these buckets determines how ExoSense and the
+Pipeline treats them.
 
 #### Inlets
 
@@ -292,6 +294,60 @@ The Args block in Signal Data contains the following keys:
 | function\_id | string | true | ID of the Function. |
 | group\_id | string | false | Group ID if one exists. |
 | constants | object | false | Constant parameters. |
+
+
+### Rules
+
+* The value for `type` in the [Insight Function Info](#insight-function-info) is `rule`.
+* The [outlet data type](#outlets) is `STATUS`
+
+#### Example of Rule Insight Function Info
+
+ ```
+{
+    name: "SomeRule",
+    description: "SomeRule description",
+    type: "rule",
+    constants: [
+      {
+        name: "const1",
+        description: "desc for const1",
+        type: "string"
+      },
+      {
+        name: "level",
+        description: "The alert level if the substring is found",
+        type: "number",
+        enum: [1, 2, 3, 4],
+        default: 1
+      }
+    ],
+    outlets: {
+      primitive_type: "JSON",
+      data_type: "STATUS",
+    }
+}
+```
+
+#### Status Data Type
+
+The output of a rule insight is a JSON string.
+
+ Key           | Type    | Required | Description
+:-------------|---------|----------|:------------
+level         | integer | true     | Alert severity
+type          | string  | false    | 
+value         | string  | false    | 
+
+#### Levels
+
+ Level         | Value   
+:-------------|---------
+Normal        | 0       
+Info          | 1       
+Warning       | 2       
+Critical      | 3       
+Error         | 4   
 
 ## API Paths
 
