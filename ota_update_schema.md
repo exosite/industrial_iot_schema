@@ -1,4 +1,8 @@
-# ota\_update\_schema
+---
+description: Over the Air update process schema
+---
+
+# Device OTA Update Schema
 
 ## Over-The-Air \(OTA\) Update Process Schema
 
