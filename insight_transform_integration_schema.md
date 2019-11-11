@@ -1,4 +1,4 @@
-# ExoSense® Insight Transform Schema
+# ExoSense™ Insight Transform Schema
 
 **Document Status:** V1.0 Draft
 
@@ -27,9 +27,7 @@ The object has the following keys:
 
 #### Type
 
-Insight Functions can be one of two types: transform, or rule. Their
-classification into one of these buckets determines how ExoSense and the
-Pipeline treats them.
+Insight Functions can be one of two types: transform, or rule. Their classification into one of these buckets determines how ExoSense and the Pipeline treats them.
 
 #### Inlets
 
@@ -182,14 +180,13 @@ Values can be injected by the Pipeline via one of three methods:
 
    betwixt two sets of brackets \(`{{$constant}}`\). e.g. `-{{days}}d`
 
-##### Inlet Outlet Selection
+**Inlet Outlet Selection**
 
-Normally, history is fetch for all inlets and outlets.  If the function doesn't
-need both, the `include_from` key can be added. The value is `INLETS`,
-`OUTLETS`, or `BOTH`.  When absent, it defaults to `BOTH`.
+Normally, history is fetch for all inlets and outlets. If the function doesn't need both, the `include_from` key can be added. The value is `INLETS`, `OUTLETS`, or `BOTH`. When absent, it defaults to `BOTH`.
 
 For example the snippet below will only get history for the inlet signals.
-```
+
+```text
 {
   "history": {
     "include_from": "INLETS",
@@ -295,15 +292,14 @@ The Args block in Signal Data contains the following keys:
 | group\_id | string | false | Group ID if one exists. |
 | constants | object | false | Constant parameters. |
 
-
 ### Rules
 
-* The value for `type` in the [Insight Function Info](#insight-function-info) is `rule`.
-* The [outlet data type](#outlets) is `STATUS`
+* The value for `type` in the [Insight Function Info](insight_transform_integration_schema.md#insight-function-info) is `rule`.
+* The [outlet data type](insight_transform_integration_schema.md#outlets) is `STATUS`
 
 #### Example of Rule Insight Function Info
 
- ```
+```text
 {
     name: "SomeRule",
     description: "SomeRule description",
@@ -333,21 +329,21 @@ The Args block in Signal Data contains the following keys:
 
 The output of a rule insight is a JSON string.
 
- Key           | Type    | Required | Description
-:-------------|---------|----------|:------------
-level         | integer | true     | Alert severity
-type          | string  | false    | 
-value         | string  | false    | 
+| Key | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| level | integer | true | Alert severity |
+| type | string | false |  |
+| value | string | false |  |
 
 #### Levels
 
- Level         | Value   
-:-------------|---------
-Normal        | 0       
-Info          | 1       
-Warning       | 2       
-Critical      | 3       
-Error         | 4   
+| Level | Value |
+| :--- | :--- |
+| Normal | 0 |
+| Info | 1 |
+| Warning | 2 |
+| Critical | 3 |
+| Error | 4 |
 
 ## API Paths
 
