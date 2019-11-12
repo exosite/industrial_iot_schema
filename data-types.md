@@ -49,6 +49,9 @@ A primitive type describes the actual underlying encoding / format used for valu
 
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
+### Numeric Channel Value Size 
+Number values are stored and processed in IEEE Double format.  Numbers sent above 17 digits (52 bits) can not be stored exact and treated as a floating point value which will be stored and visualized as a rounded number.  
+
 ## Generic Data Types
 
 For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types. Generic types do not support a measureable unit and therefore standard unit conversions are not supported in the application for generic data types.
