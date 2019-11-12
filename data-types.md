@@ -49,8 +49,8 @@ A primitive type describes the actual underlying encoding / format used for valu
 
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
-### Numeric Channel Value Size 
-Number values are stored and processed in IEEE Double format.  Numbers sent above 17 digits (52 bits) can not be stored exact and treated as a floating point value which will be stored and visualized as a rounded number.  
+### Numeric Value Size and Format
+Number values are stored and processed in IEEE Double format.  Numbers sent above 17 digits (52 bits) can not be stored exact and are treated as a floating point value which will be stored and visualized as a rounded number.  For more information on this topic: https://en.wikipedia.org/wiki/IEEE_754 
 
 ## Generic Data Types
 
@@ -951,7 +951,8 @@ Notes: --
 
 ## Change log
 
-### v3.1 - In progress \(DRAFT\)
+### In progress \(DRAFT\)
+* Added a note about Numeric primitve type value size and format
 
 ### v3.0
 
@@ -962,4 +963,3 @@ Notes: --
 * Added URL type
 * Added a new inheritied element `primitive_type` to specify the format for each data type
 * Removed non-supported data types
-
