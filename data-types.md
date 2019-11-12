@@ -240,6 +240,7 @@ Key \(`data_type`\): ACCELERATION
 * `STANDARD_GRAVITY` : g₀
 * `FEET_PER_SEC2`: ft/s²
 * `INCH_PER_SEC2` : in/s²
+* `MILLMETERS_PER_SEC2`: mm/s²
 
 Notes: --
 
