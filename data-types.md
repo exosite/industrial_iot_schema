@@ -2,7 +2,10 @@
 
 **Document Status:** Version 3.1 Draft
 
-_Note: Originally this information was a part of the_ [_"ExoSense™️ Channel and Signal Data Schema"_](channel-signal_io_schema.md) _document._
+
+**Document Status:** Version 3.0.1
+
+_Note: Originally this information was a part of the ["ExoSense™️ Channel and Signal Data Schema"](channel-signal_io_schema.md) document._
 
 ## Introduction
 
@@ -662,9 +665,9 @@ Notes: --
 
 #### Luminous Flux
 
-Key \(`data_type`\): LUMINANCE\_FLUX  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+Key (`data_type`): LUMINOUS_FLUX<br>
+Primitive Type (`primitive_type`): NUMERIC<br>
+Accepted Units (`data_unit`) with UI unit abbreviation: <br>
 
 * `LUMENS`: lm
 
@@ -953,6 +956,9 @@ Notes: --
 
 ### In progress \(DRAFT\)
 * Added a note about Numeric primitve type value size and format
+
+### v3.0.1
+* Fixed Luminous Flux data type 'data_type' value to LUMINOUS_FLUX, was LUMINANCE_FLUX.
 
 ### v3.0
 
