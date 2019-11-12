@@ -120,8 +120,8 @@ channels: # "device channel" as opposed to an "asset signal"
         ${app_specific_config_item2} : "${config_item2_value}"
       ## Addtional Channel Protocol properties to transform raw data to the channel type / unit before reporting
       input_raw : # optional, used to pre-transform data type/unit from raw sensor to channel type, example voltage or bits (ADC) to Pressure 
-        max : ${raw_input_max} # optional - above this puts the channel in error
-        min : ${raw_input_max} # optional - above this puts the channel in error
+        max : ${raw_input_max} # optional - use with max property to convert data format on edge
+        min : ${raw_input_max} # optional - use with min property to convert data format on edge
         unit : "${raw_input_units}" # optional - e.g. "mA", reference only
       multiplier : ${number_to_be_multiplied_into_the_raw_value}" # optional used to pre-transform data type/unit from raw sensor to channel type, example 4-20 mA to Temperature 
       offset : ${offset} # optional used to pre-transform data type/unit from raw sensor to channel type, example 4-20 mA to Temperature 
@@ -282,6 +282,33 @@ Channels can also be used to 'control' a device. A simple example of this is to 
 Optionally used by the device to determine what application \(protocol / interface\) will be used and the specific details to get / set the information for the channel. Used for fieldbus protocols \(e.g. Modbus RTU\) or custom applications such as a custom wireless handler or one that gathers data from local I/O on the hardware. The protocol configuration parameters are optional to use, devices that are not configurable may not use this at all and therefore would not be specified.
 
 Devices that are configurable should use the protocol configuration properties to get / set data, convert it, and determine how often to sample \(read locally\) and report \(to cloud\).
+
+#### Additional Channel Edge Conversion Handling
+The following parameters are available for device firmware to use to do edge side processing of the data from a sensor or input before sending up to ExoSense.   These are all optional and require the device to support.  
+
+##### Report on Change
+The `report_on_change` parameter, if used and set to True, device firmware should only report channel values if different than the last time it received a value.  Typically devices would also send on boot-up and may have more advanced algorithm for when it chooses to report a value.
+
+##### Down Sample
+If used, the `down_sample` parameter provides the device with information about how to handle the situation where a channel input is sampled many times over a given time period before (sample vs report rates) reported.  This allows a user to decide how to down sample the values before reporting.  Options are: Min, Max, Average, or Actual which would require the device to choose a value to send (last, first, etc).  
+
+##### app_specific_config
+Is an object that can contain custom parameters (key/value pairs) defined by the device firmware developer to be used by the protocol application.
+
+```JSON
+${app_specific_config_item1} : "${app_config_item1_value}"
+${app_specific_config_item2} : "${app_config_item2_value}"
+```
+##### Edge Raw Input Conversion Parameters
+`min`, `max`, and `unit` under the `input_raw` object should be used for applications where the device converts raw sampled data before reporting.  
+**For edge mapping conversion:**
+`protocol_config.input_raw.min` and `protocol_config.input_raw.max` should be combined with the `properties.min` and `properties.max` for mapping conversion.
+**For edge unit conversion**
+`protocol_config.input_raw.unit` can be used with `properties.data_unit` for edge side unit conversion. 
+**For edge scale and offset conversion**
+The `protocol_config.multiplier` and `protocol_config.offset` parameters can be used by the device firmware for edge sample conversion.  
+
+
 
 ### IoT Properties
 
@@ -748,10 +775,11 @@ Hardware application developers may support custom protocols by specifying their
 
 ## Change log
 
-### v3.1 - DRAFT
+### In progress \(DRAFT\)
 
 * Adding device control support
 * Changed Modbus RTU & Modbus TCP protocol configuration 'app\_specific\_config' key 'register\_offset' to 'register'.
+* Adding details for the parameters used for device edge input conversion and sampling
 
 ### v3.0
 
@@ -763,4 +791,3 @@ Hardware application developers may support custom protocols by specifying their
 * Cleaned up options for protocol parameters 
 * Added primitive type field
 * Added graphics to help with description of interface
-
