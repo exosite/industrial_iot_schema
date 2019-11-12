@@ -239,7 +239,7 @@ Key \(`data_type`\): ACCELERATION
 * `METER_PER_SEC2`: m/s²
 * `STANDARD_GRAVITY` : g₀
 * `FEET_PER_SEC2`: ft/s²
-* `IN_PER_SEC2` : in/s²
+* `INCH_PER_SEC2` : in/s²
 
 Notes: --
 
