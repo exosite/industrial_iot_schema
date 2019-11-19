@@ -345,6 +345,23 @@ The output of a rule insight is a JSON string.
 | Critical | 3 |
 | Error | 4 |
 
+#### User defined addendum messages
+The notifications and rule result logs have support for additional details from the users on rule creation.  This
+is done by adding specifically named constants.
+
+```
+  {
+    name: "messageMatch",
+    description: "Extra details for when value does match",
+    type: "string",
+  },
+  {
+    name: "messageElse",
+    description: "Extra details for when value does not match",
+    type: "string",
+  },
+```
+
 ## API Paths
 
 There are three required paths that an Insight must support:
