@@ -346,8 +346,7 @@ The output of a rule insight is a JSON string.
 | Error | 4 |
 
 #### User defined addendum messages
-The notifications and rule result logs have support for additional details from the users on rule creation.  This
-is done by adding specifically named constants.
+The notifications and rule event logs may include an extension message that can be added by an end user. To enable this per Rule function, the function must include the following reserved named constants.
 
 ```
   {
@@ -359,8 +358,11 @@ is done by adding specifically named constants.
     name: "messageElse",
     description: "Extra details for when value does not match",
     type: "string",
+    default: "The value didn't match",
   },
 ```
+
+Refer to [Constants](insight_transform_integration_schema.md#constants) for details on properties.
 
 ## API Paths
 
