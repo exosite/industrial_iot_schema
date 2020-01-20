@@ -1,4 +1,4 @@
-# Channel and Signal Data Schema
+# ExoSense Data IO Schema
 
 **Document Status:** Version 3.0
 

@@ -1,4 +1,4 @@
-# Channel and Signal Data Types
+# ExoSense Data Types
 
 **Document Status:** Version 3.0.1
 

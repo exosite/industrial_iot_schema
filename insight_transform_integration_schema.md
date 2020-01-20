@@ -1,4 +1,4 @@
-# ExoSense™ Insight Transform Schema
+# ExoSense Insights Schema
 
 **Document Status:** V1.0 Draft
 
