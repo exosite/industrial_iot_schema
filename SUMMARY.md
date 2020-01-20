@@ -7,3 +7,8 @@
 * [Device OTA Update Schema](ota_update_schema.md)
 * [Contributing](contributing.md)
 
+## Links
+
+* [Exosite Documentation Home](https://docs.exosite.io)
+* [ExoSense User Guide](https://docs.exosite.io/exosense)
+
