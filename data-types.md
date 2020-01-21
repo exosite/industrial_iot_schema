@@ -473,6 +473,7 @@ Primitive Type \(`primitive_type`\): NUMERIC
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 * `JOULE`: J
+* `KILOWATT_HOUR`: kWh
 
 Notes:
 
