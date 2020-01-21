@@ -1,6 +1,10 @@
-# ExoSense Data IO Schema
+---
+description: >-
+  This document defines the data interface for channels and signals for the
+  ExoSense solution.
+---
 
-**Document Status:** Version 3.0
+# ExoSense Data IO Schema
 
 ## Introduction
 

@@ -1,6 +1,10 @@
-# ExoSense Data Types
+---
+description: >-
+  This document defines the data types and units supported by the ExoSense™️
+  solution and related technologies.
+---
 
-This document defines the **data types and units** supported by the ExoSense™️ solution and related technologies.
+# ExoSense Data Types
 
 ## Introduction
 
@@ -664,8 +668,8 @@ Notes: --
 ### Luminous Flux
 
 Key \(`data_type`\): LUMINOUS\_FLUX  
- Primitive Type \(`primitive_type`\): NUMERIC  
- Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+Primitive Type \(`primitive_type`\): NUMERIC  
+Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 * `LUMENS`: lm
 
