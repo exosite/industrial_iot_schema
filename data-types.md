@@ -667,7 +667,6 @@ Key \(`data_type`\): LUMINOUS\_FLUX
  Primitive Type \(`primitive_type`\): NUMERIC  
  Accepted Units \(`data_unit`\) with UI unit abbreviation:   
 
-
 * `LUMENS`: lm
 
 Notes: --
