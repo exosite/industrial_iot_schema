@@ -39,9 +39,9 @@ _Note: This document does not cover most details of how to interact with Murano�
 
 | Resource Name | ExoSense Status | Who Can Write To | Description |
 | :--- | :--- | :--- | :--- |
-| `data_in` | supported | Device | Used to send data from device to cloud in the format defined in Section 4 |
+| `data_in` | supported | Device | Used to send data from device to cloud in the format defined in [Device Data Transport Schema](channel-signal_io_schema.md#device-data-transport-schema) section below |
 | `config_io` | supported | Device / App | Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally. |
-| `data_out` | _planned_ | App | To be defined in the future - used for writing commands to devices |
+| `data_out` | supported | App | Used to send control requests from cloud to device in format defined in [Device Data Transport Schema](channel-signal_io_schema.md#device-data-transport-schema) section below |
 | `config_applications` | supported | Device / App | Specifies configuration for the interfaces used by gateway protocol/fieldbus applications \(i.e. “interface = /dev/tty0”\) |
 | `config_oem` | _reserved_ | tbd | Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements |
 | `config_interfaces` | _reserved_ | tbd |  |
@@ -54,11 +54,14 @@ _Note: Generally do not recommend using custom resources with prefix of `config_
 
 ## Device / Gateway Channel Configuration Schema
 
-This section defines the Channel Configuration object \(sometimes called a device or gateway template\). This is the 'contract' for each individual device as to what channels of data it will be sending. The idea is data used by ExoSense flows as 'Channels' to and from devices. These device channel sources can then be mapped as sources to Asset signals in the ExoSense application.
+### Configuration Overview
+
+This section defines the Channel Configuration object \(sometimes called a device or gateway template\). This is the 'contract' for each individual device as to what channels of data it will be sending and optionally be controlling. The concept is data used by ExoSense flows as **Channels** to and from devices. These device channel sources can then be mapped to digital twin Asset signals in the ExoSense application.
 
 A gateway or device will require some level of configuration in order to do several things:
 
-1. Know what information to read off of a fieldbus or IO
+1. Know what information to read off of / write to a fieldbus or IO
+
 2. Translate that information from machine-readable and terse input to Murano, back into contextual and human readable data ready to be taken into ExoSense - i.e. a signal object
 3. Provides a consistent way for standardizing interfaces so that analytic apps downstream are able to consume this common data type.
 
@@ -100,6 +103,7 @@ channels: # "device channel" as opposed to an "asset signal"
       precision: ${precision_number_of decimal_places}  # optional but recommended
       locked: ${locked_config_state} # optional but recommended - Boolean, marks as not editable by UI, defaults to false if not present
       ## Additional Channel Properties
+      control: ${true|false}" # optional - defaults to false, whether channel is used for device control
       min: ${channel_min_number}  # optional - channel expected value min, applies to numberic type only
       max: ${channel_max_number}  # optional - channel expected value max, applies to numberic type only
       device_diagnostic: false # optional - Tells ExoSense that this is a “meta” signal that describes an attribute of the devices health
@@ -117,8 +121,8 @@ channels: # "device channel" as opposed to an "asset signal"
         ${app_specific_config_item2} : "${config_item2_value}"
       ## Addtional Channel Protocol properties to transform raw data to the channel type / unit before reporting
       input_raw : # optional, used to pre-transform data type/unit from raw sensor to channel type, example voltage or bits (ADC) to Pressure 
-        max : ${raw_input_max} # optional - above this puts the channel in error
-        min : ${raw_input_max} # optional - above this puts the channel in error
+        max : ${raw_input_max} # optional - use with max property to convert data format on edge
+        min : ${raw_input_max} # optional - use with min property to convert data format on edge
         unit : "${raw_input_units}" # optional - e.g. "mA", reference only
       multiplier : ${number_to_be_multiplied_into_the_raw_value}" # optional used to pre-transform data type/unit from raw sensor to channel type, example 4-20 mA to Temperature 
       offset : ${offset} # optional used to pre-transform data type/unit from raw sensor to channel type, example 4-20 mA to Temperature 
@@ -132,6 +136,14 @@ channels: # "device channel" as opposed to an "asset signal"
       conversion_name: "${name}" # Name of conversion use to fill the multiplier and offset fields.
       min: ${converted_channel_min_number}  # optional - channel expected min after conversion
       max: ${converted_channel_max_number}  # optional - channel expected max after conversion
+    control_properties: ## Optional - used to specify control parameters 
+      range: # optional - for Numeric types only
+        min: ${expected_minimum_value} # optional
+        max: ${expected_maximum_value} # optional
+      enum: # optional - provide a list of acceptable values 
+        - ${accepted_value_1}
+        - ${accepted_value_2}
+        - ${accepted_value_n}
 ```
 
 **Example config\_io \(JSON format\)**
@@ -198,6 +210,37 @@ channels: # "device channel" as opposed to an "asset signal"
         "report_rate": 60000,
         "timeout": 360000
       }
+    },
+    "004": {
+      "display_name": "Valve Control",
+      "description": "On / Off control",
+      "properties": {
+        "data_type": "BOOLEAN",
+        "control": true
+      },
+      "protocol_config": {
+        "report_rate": 60000,
+        "timeout": 360000
+      }
+    },
+    "005": {
+      "display_name": "Temperature Threshold",
+      "description": "On / Off control",
+      "properties": {
+        "data_type": "TEMPERATURE",
+        "data_unit": "DEG_CELSIUS",
+        "control": true
+      },
+      "protocol_config": {
+        "report_rate": 60000,
+        "timeout": 360000
+      },
+      "control_properties": {
+        "range": {
+          "min": 30,
+          "max": 100
+        }
+      }
     }
   }
 }
@@ -223,29 +266,61 @@ The 'locked' property is not required and is optional for use. The entire config
 
 Locked channels and full configurations generally are used by devices that have a hard coded configuration, the channels are all defined and the config\_io is uploaded by the device. Devices can use a combination of locked and configurable channels, thus why the locked field can be found at both the full config level and per channel.
 
+### Report Rate
+
+The interval for the device to report values to the cloud \(ExoSense\). May be used in the application to determine gaps in data.
+
+### Timeout
+
+The interval that is considered a timeout for a channel. Can be the same as report rate but typically set at a larger interval to provide room for network slowness and reconnections. Typically not used by the device but used by an Asset signal in the application to generate timeout events for the asset / device UI's, timeout events in the asset logs, and future possibilities. _E.g. The device reports a channel every 1 minute but if it hasn't reported for 5 minutes, this is an event that may need to have a call to action for._ 
+
+### Control Channels
+
+Channels can also be used to 'control' a device. A simple example of this is to turn on/off a valve. By default channels are not enabled to be controlled, but by setting the `control` property to `true`, ExoSense and the device will allow for sending commands from the application to the device. A control channel uses all of the same schema in this document and devices must write the last state to the `data_in` resource, but the use of control channels requires the additional use of `data_out` resource. [More details below](channel-signal_io_schema.md#device-control-interface) on the proper use and flow of control data.
+
 ### Protocol configuration
 
 Optionally used by the device to determine what application \(protocol / interface\) will be used and the specific details to get / set the information for the channel. Used for fieldbus protocols \(e.g. Modbus RTU\) or custom applications such as a custom wireless handler or one that gathers data from local I/O on the hardware. The protocol configuration parameters are optional to use, devices that are not configurable may not use this at all and therefore would not be specified.
 
 Devices that are configurable should use the protocol configuration properties to get / set data, convert it, and determine how often to sample \(read locally\) and report \(to cloud\).
 
-#### Report Rate
+#### Additional Channel Edge Conversion Handling
+The following parameters are available for device firmware to use to do edge side processing of the data from a sensor or input before sending up to ExoSense.   These are all optional and require the device to support.  
 
-The interval for the device to report values to the cloud \(ExoSense\). May be used in the application to determine gaps in data.
+##### Report on Change
+The `report_on_change` parameter, if used and set to True, device firmware should only report channel values if different than the last time it received a value.  Typically devices would also send on boot-up and may have more advanced algorithm for when it chooses to report a value.
 
-#### Timeout
+##### Down Sample
+If used, the `down_sample` parameter provides the device with information about how to handle the situation where a channel input is sampled many times over a given time period before (sample vs report rates) reported.  This allows a user to decide how to down sample the values before reporting.  Options are: Min, Max, Average, or Actual which would require the device to choose a value to send (last, first, etc).  
 
-The interval that is considered a timeout for a channel. Can be the same as report rate but typically set at a larger interval to provide room for network slowness and reconnections. Typically not used by the device but used by an Asset signal in the application to generate timeout events for the asset / device UI's, timeout events in the asset logs, and future possibilities. _E.g. The device reports a channel every 1 minute but if it hasn't reported for 5 minutes, this is an event that may need to have a call to action for._ 
+##### app_specific_config
+Is an object that can contain custom parameters (key/value pairs) defined by the device firmware developer to be used by the protocol application.
 
-### Channel to Signal Configuration relationship
+```JSON
+${app_specific_config_item1} : "${app_config_item1_value}"
+${app_specific_config_item2} : "${app_config_item2_value}"
+```
+##### Edge Raw Input Conversion Parameters
+`min`, `max`, and `unit` under the `input_raw` object should be used for applications where the device converts raw sampled data before reporting.  
+**For edge mapping conversion:**
+`protocol_config.input_raw.min` and `protocol_config.input_raw.max` should be combined with the `properties.min` and `properties.max` for mapping conversion.
+**For edge unit conversion**
+`protocol_config.input_raw.unit` can be used with `properties.data_unit` for edge side unit conversion. 
+**For edge scale and offset conversion**
+The `protocol_config.multiplier` and `protocol_config.offset` parameters can be used by the device firmware for edge sample conversion.  
 
-Signals inherit channel properites once created in the application. Once a signal has been created through, changes to the channel's configuration do not automatically get applied to the signal's properties. A signals properties, such as 'timeout', can be changed \(if the application allows for it\), but will not result in a change back down to the device channel.
-
-#### IoT Properties
 
 Advanced use only for allowing for server side conversion of data. Not supported for normal ExoSense application use. Not recommended. Must not be used by the device.
 
-## Device Data Transport Schema
+### IoT Properties
+
+Advanced use only for allowing for server side conversion of data. Not supported for normal ExoSense application use. Not recommended. Must not be used by the device.
+
+### Device Channel to Asset Signal Configuration relationship
+
+Signals inherit channel properites once created in the application. Once a signal has been created through, changes to the channel's configuration do not automatically get applied to the signal's properties. A signals properties, such as 'timeout', can be changed \(if the application allows for it\), but will not result in a change back down to the device channel.
+
+## Channel Data Schema
 
 Having a common shared channel configuration \(a contract essentially\) between the device and the cloud/application allows us to keep the actual data sent between devices and the cloud to a minimum - focusing only on the sending of values for channels rather than unnecessary configuration information that rarely changes.
 
@@ -297,9 +372,11 @@ Utilize the Record API from Murano, and apply the array of signals to each times
 
 This requires that the clock be synced on the gateway to the global network time via ntp which is used by our servers in our cluster. Our recommendation will be that the ntp server syncs with the gateway at least once every time the power is cycled on the gateway, and once per 12-24 hours of continuous operation time.
 
-### Channel Error Handling \(Optional\)
+### Channel Error Handling
 
-_Special Considerations for Errors_
+_Optional use, not required_
+
+_Not Currently Used by ExoSense_
 
 When an error occurs for a signal, the payload will change by adding the protected keyword property `__error` to the JSON root object like so:
 
@@ -319,7 +396,94 @@ The error object is a list of keys of the channel ids with an error, and then th
 
 _Note: the device can report a channel data payload, even if the data is erroneous, but that is optional. We will accept a chanel value and an error, just an error for a channel, or just a value. All combinations are supported._
 
-## Device Channel Protocol Interfaces \(Optional\)
+## Device Control Interface
+
+_Optional use, not required_
+
+Application use cases that require ExoSense to control device actions, such as turning on/off a valve can use control channels. A control channel works and uses the same schema / format as regular channels. Data types, units, and other properties are all used exactly the same.
+
+**Important Disclaimer**: _Device control from a remote server application requires common sense on what functionality and if a machine should actually be remotely controlled. It is assumed that those building devices and systems that support remote control will provide local override capabilties and safety measures. For example, if a device allows remote control of a garage door that there are physical sensors to sense and not allow a door to close if someone is in the way and ways to override the closing of the door at the physical location._
+
+![Device Control](.gitbook/assets/control_interface_overview.png)
+
+### Example channel configuration for control
+
+In this example, there is a valve that the device will open / close based on the channel `004`.
+
+```javascript
+"004": {
+  "display_name": "Valve Control",
+  "description": "On / Off control",
+  "properties": {
+    "data_type": "BOOLEAN",
+    "control": true
+  },
+  "protocol_config": {
+    "report_rate": 60000,
+    "timeout": 360000
+  }
+}
+```
+
+### Predefined control ranges and options
+
+For channels that have a defined range of settings \(assuming a numeric type of channel\) or a set list of options, the configuration allows setting these ranges or options.
+
+**Example Control Range** In this example for a thermostat type application, a range is provided of acceptable values. ExoSense will enforce allowing users to only set a value in this range.
+
+```javascript
+"009": {
+  "display_name": "Thermostat Set Point",
+  "description": "Set Point",
+  "properties": {
+    "data_type": "TEMPERATURE",
+    "data_unit": "DEG_CELSIUS",
+    "control": true
+  },
+  "control_properties": {
+    "range": {
+      "min": 20,
+      "max": 40
+    }
+  },
+  "protocol_config": {
+    "report_rate": 60000,
+    "timeout": 360000
+  }
+}
+```
+
+**Example Control Value Predefined Options** In this situation, ExoSense and device are aware that only the provided options are available.
+
+```javascript
+"009": {
+  "display_name": "Garage Door Control",
+  "description": "Control Options",
+  "properties": {
+    "data_type": "STRING",
+    "control": true
+  },
+  "control_properties": {
+    "enum": [
+      "open","close","half","auto"
+    ]
+  },
+  "protocol_config": {
+    "report_rate": 60000,
+    "timeout": 360000
+  }
+}
+```
+
+### Device Control Interface
+
+![Device Channel Control Flow](.gitbook/assets/control_flow_diagram.png) Devices that will use control channels must begin subscribing \('mqtt'\) or polling \('http'\) the `data_out` resource. The data format is the same as `data_in` and any new data\_out value will contain one or more new control channel requests. The device must acknowledge it received the value by writing the same back to `data_out` \(Murano Device API requirement\) which tells the platform the value was received. After taking action on the control requests, the device must write the new channel states back to data\_in to close the loop so ExoSense knows the request finished.
+
+**Device Steps:** 1. Subscribe or Poll `data_out` 2. On new `data_out` value, acknowledge received by writing back to `data_out` 3. Device takes control actions. 4. Device writes the channel states that were requested in `data_out` back to `data_in`
+
+## Device Protocol Interfaces
+
+_Optional use, not required_
 
 This section defines the supported out of the box protocol interfaces and parameters. OEMs can use their own application and interface parameters also but may not be supported in the application user interface \(ExoSense\).
 
@@ -333,7 +497,7 @@ Parameters for a channel's protocol configuration 'app\_specific\_config' field 
     ip_address : "IP_ADDRESS" # ip where the channel is being read as a string
     port : "INTEGER" # port to make the request on
     register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]0001-[1-4]9999
+    register : "INTEGER" # 0001-9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
@@ -348,7 +512,7 @@ Parameters for a channel's protocol configuration 'app\_specific\_config' field 
 ```yaml
     slave_id : "INTEGER" 
     register_range : ["HOLDING_COIL", "INPUT_COIL", "INPUT_REGISTER", "HOLDING_REGISTER"]
-    register_offset : "INTEGER" # [1-4]0001-[1-4]9999
+    register : "INTEGER" # 0001-9999
     register_count : "INTEGER" # 1, 2, 4, 8, ...
     byte_endianness" : [ "little", "big" ]
     register_endianness" : [ "little", "big" ]
@@ -612,9 +776,9 @@ Hardware application developers may support custom protocols by specifying their
 ```
 
 ## Change log
-
-### v3.0
-
+* Adding device control support
+* Changed Modbus RTU & Modbus TCP protocol configuration 'app\_specific\_config' key 'register\_offset' to 'register'.
+* Adding details for the parameters used for device edge input conversion and sampling
 * Cleaned up formatting of examples and descriptions 
 * Moved data types and units to seperate document "ExoSense™️ Channel and Signal Data Types"
 * Updated "Specific Protocol Application Interface Configuration" \(config\_applications\) interface information 

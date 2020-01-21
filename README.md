@@ -20,4 +20,3 @@ _Note: These specifications are not meant to be developer guides but instead pro
 ## Versioning / Contributing
 
 This repository is managed by Exosite. [How contributions are managed are detailed here](contributing.md).
-

@@ -12,4 +12,3 @@
 * [Developers: ExoSense Device Interface Guide](https://docs.exosite.io/account/exosense)
 * [Developers: Home](https://docs.exosite.io)
 * [ExoSense User Guide](https://docs.exosite.io/exosense)
-

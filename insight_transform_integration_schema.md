@@ -1,14 +1,13 @@
 # ExoSense Insights Schema
 
-**Document Status:** V1.0 Draft
-
 ## Core Payload Objects
 
 The two primary payloads encountered with Insights, the [Insight Function Info](insight_transform_integration_schema.md#insight-function-info) and [Signal Data](insight_transform_integration_schema.md#signal-data) objects, are described here in detail.
 
 ### Insight Function Info
 
-> Reference [InsightInfo](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/insight-template.yaml#L223) in the Swagger file
+> Reference [InsightInfo](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L223) in the Swagger file
+
 
 Insight Function Info is used to generate the ExoSense UI when adding a Function to a Signal and to inform the ExoSense Pipeline on what information the Function needs to calculate a result.
 
@@ -24,11 +23,10 @@ The object has the following keys:
 | outlets | object | true | Specify the Output Signal. |
 | constants | array | false | Specify parameters for users to provide when adding this Function. |
 | history | object | false | Optionally attach timeseries data to `POST /process` calls. |
-| asynchronous | boolean | false | Whether or not the Function requires callback info so that it can operate asynchronously. |
 
 #### Type
 
-Insight Functions can be one of three types: transform, rule, or action. Their classification into one of these buckets determines how ExoSense and the Pipeline treats them. At time of writing, only transforms are supported throughout the full stack.
+Insight Functions can be one of two types: transform, or rule. Their classification into one of these buckets determines how ExoSense and the Pipeline treats them.
 
 #### Inlets
 
@@ -38,7 +36,7 @@ The `inlets` key is an array of Inlet objects, each of which can have the follow
 | :--- | :--- | :--- | :--- |
 | tag | string | true | Tag to use to identify the Inlet. Shows up in Signal Datapoint tags. |
 | name | string | true | Friendly name for the Inlet. |
-| description | string | true | Useful descriptino for this Inlet. |
+| description | string | true | Useful description for this Inlet. |
 | data\_type | string | false | Optionally require specific data\_type. |
 | data\_unit | string | false | Optionally require specific data\_unit. |
 | primitive\_type | string | false | Optionally require specific primitive\_type. |
@@ -181,15 +179,29 @@ Values can be injected by the Pipeline via one of three methods:
 
    betwixt two sets of brackets \(`{{$constant}}`\). e.g. `-{{days}}d`
 
-#### Asynchronous
+**Inlet Outlet Selection**
 
-If `asynchronous` is `true`, callback info will be sent along with Signal Data to the `/process` endpoint of your Insight under the key `cbi`.
+Normally, history is fetch for all inlets and outlets. If the function doesn't need both, the `include_from` key can be added. The value is `INLETS`, `OUTLETS`, or `BOTH`. When absent, it defaults to `BOTH`.
 
-> Note: if your Insight Function is asynchronous, it should still respond back from calls to `POST /process` with an empty array of arrays `[[]]`.
+For example the snippet below will only get history for the inlet signals.
+
+```text
+{
+  "history": {
+    "include_from": "INLETS",
+    "relative_start": {
+      "template": "-{{days}}d"
+    },
+    "aggregate": {
+      "constant": "aggregation_function"
+    }
+  }
+}
+```
 
 ### Signal Data
 
-> Reference [SignalDataObjectArray](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/insight-template.yaml#L408) in the Swagger file
+> Reference [SignalDataObjectArray](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L408) in the Swagger file
 
 When an Insight Function receives Signal Data, the object the Function receives has three to five top-level keys:
 
@@ -221,7 +233,7 @@ The ID field is critical for multiple-Inlet Insight Functions that do not use a 
 
 #### Data
 
-> Reference [SignalData](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/insight-template.yaml#L321) in the Swagger file
+> Reference [SignalData](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L321) in the Swagger file
 
 Signal Data passed around ExoSense to and from an Insight has a common schema.
 
@@ -279,6 +291,78 @@ The Args block in Signal Data contains the following keys:
 | group\_id | string | false | Group ID if one exists. |
 | constants | object | false | Constant parameters. |
 
+### Rules
+
+* The value for `type` in the [Insight Function Info](insight_transform_integration_schema.md#insight-function-info) is `rule`.
+* The [outlet data type](insight_transform_integration_schema.md#outlets) is `STATUS`
+
+#### Example of Rule Insight Function Info
+
+```text
+{
+    name: "SomeRule",
+    description: "SomeRule description",
+    type: "rule",
+    constants: [
+      {
+        name: "const1",
+        description: "desc for const1",
+        type: "string"
+      },
+      {
+        name: "level",
+        description: "The alert level if the substring is found",
+        type: "number",
+        enum: [1, 2, 3, 4],
+        default: 1
+      }
+    ],
+    outlets: {
+      primitive_type: "JSON",
+      data_type: "STATUS",
+    }
+}
+```
+
+#### Status Data Type
+
+The output of a rule insight is a JSON string.
+
+| Key | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| level | integer | true | Alert severity |
+| type | string | false |  |
+| value | string | false |  |
+
+#### Levels
+
+| Level | Value |
+| :--- | :--- |
+| Normal | 0 |
+| Info | 1 |
+| Warning | 2 |
+| Critical | 3 |
+| Error | 4 |
+
+#### User defined addendum messages
+The notifications and rule event logs may include an extension message that can be added by an end user. To enable this per Rule function, the function must include the following reserved named constants.
+
+```
+  {
+    name: "messageMatch",
+    description: "Extra details for when value does match",
+    type: "string",
+  },
+  {
+    name: "messageElse",
+    description: "Extra details for when value does not match",
+    type: "string",
+    default: "The value didn't match",
+  },
+```
+
+Refer to [Constants](insight_transform_integration_schema.md#constants) for details on properties.
+
 ## API Paths
 
 There are three required paths that an Insight must support:
@@ -294,7 +378,7 @@ Optionally, an Insight can support the following paths:
 
 ### Insight Module Info
 
-> Reference [InsightInfoResults](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/insight-template.yaml#L122) in the Swagger file
+> Reference [InsightInfoResults](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L122) in the Swagger file
 
 The `GET /info` endpoint serves to retrieve information about an Insight and is expected to return the following payload keys:
 
@@ -318,7 +402,7 @@ Example:
 
 ### Function List
 
-> Reference [InsightListResults](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/insight-template.yaml#L286) in the Swagger file
+> Reference [InsightListResults](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L286) in the Swagger file
 
 The `POST /insights` endpoint returns a list of applicable Functions exposed by the Insight and information about those Functions.
 
@@ -373,7 +457,7 @@ The `POST /process` endpoint will be called with the Signal Data as specified in
 
 The inner array is for output [Signal Datapoints](insight_transform_integration_schema.md#data) for a specific Outlet. In the future, the outer array will be used to hold different Outlets' inner arrays.
 
-A Function that returns nothing or is asynchronous will respond with an empty array of arrays: `[[]]`.
+A Function that returns nothing will respond with an empty array of arrays: `[[]]`.
 
 ### Specific Function
 
@@ -383,7 +467,7 @@ The `GET /insight/{function_id}` endpoint returns a single Function Info block c
 
 ### Lifecycle Events
 
-> Reference [LifecycleEvent](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/insight-template.yaml#L306) in the Swagger file.
+> Reference [LifecycleEvent](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L306) in the Swagger file.
 
 The `POST /lifecycle` endpoint is optional and serves to inform the Insight about creation and deletion events.
 
@@ -404,3 +488,6 @@ This endpoint will receive a body with the following keys:
 | Datapoint | Single instance of a Signal Data stream. |
 | Linkage | ExoSense Pipeline term for non-Signal blocks on the Asset Config page of the UI. |
 
+
+## Change log
+* New document to detail insight transform and rule interface with ExoSense
