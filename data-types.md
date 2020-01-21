@@ -242,6 +242,7 @@ Primitive Type \(`primitive_type`\): NUMERIC
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 * `METER_PER_SEC2`: m/s²
+* `MILLMETERS_PER_SEC2`: mm/s²
 * `STANDARD_GRAVITY` : g₀
 * `FEET_PER_SEC2`: ft/s²
 * `IN_PER_SEC2` : in/s²
@@ -901,7 +902,7 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `METER_PER_SEC`: m/s
 * `MILLMETERS_PER_SEC`: mm/s
 * `MPH`: mph
-* `INCH_PER_SEC`: ips
+* `INCH_PER_SEC`: in/s
 * `FEET_PER_SEC`: fps
 
 Notes: --
@@ -956,6 +957,8 @@ Notes: --
 ## Change log
 
 ### In progress \(DRAFT\)
+* Change VELOCITY unit INCH_PER_SEC  abbrevation to in/s (was ips)
+* Add ACCELERATION unit MILLMETERS_PER_SEC2 (abreviation: mm/s²)
 * Added a note about Numeric primitve type value size and format
 
 ### v3.0.1
