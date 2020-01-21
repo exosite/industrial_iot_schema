@@ -201,3 +201,4 @@ The following are examples of messages from the device. Reminder, must be sent a
 ![state\_sequence](.gitbook/assets/otau_sequence%20%281%29.png)
 
 ## Change log
+

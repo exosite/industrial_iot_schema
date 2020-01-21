@@ -9,10 +9,11 @@ _Note: These specifications are not meant to be developer guides but instead pro
 | Schema | Current Version | Working Drafts |
 | :--- | :---: | :---: |
 | ExoSense™️ Channel and Signal Interface | [Current](https://github.com/exosite/industrial_iot_schema/blob/master/channel-signal_io_schema.md) | [Working Draft](https://github.com/exosite/industrial_iot_schema/blob/working_draft/channel-signal_io_schema.md) |
-| ExoSense™️ Channel and Signal Data Types| [Current](https://github.com/exosite/industrial_iot_schema/blob/master/data-types.md) | [Working Draft](https://github.com/exosite/industrial_iot_schema/blob/working_draft/data-types.md) |
+| ExoSense™️ Channel and Signal Data Types | [Current](https://github.com/exosite/industrial_iot_schema/blob/master/data-types.md) | [Working Draft](https://github.com/exosite/industrial_iot_schema/blob/working_draft/data-types.md) |
 | ExoSense™️ Insight Integration | - | [Working Draft](https://github.com/exosite/industrial_iot_schema/blob/working_draft/insight_transform_integration_schema.md) |
 | Device Management OTA Package Update | - | [Working Draft](https://github.com/exosite/industrial_iot_schema/blob/working_draft/ota_update_schema.md) |
 
 ## Versioning / Contributing
 
 This repository is managed by Exosite. [How contributions are managed are detailed here](contributing.md).
+

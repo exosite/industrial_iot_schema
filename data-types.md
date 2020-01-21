@@ -46,7 +46,8 @@ A primitive type describes the actual underlying encoding / format used for valu
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
 ### Numeric Value Size and Format
-Number values are stored and processed in IEEE Double format.  Numbers sent above 17 digits (52 bits) can not be stored exact and are treated as a floating point value which will be stored and visualized as a rounded number.  For more information on this topic: https://en.wikipedia.org/wiki/IEEE_754 
+
+Number values are stored and processed in IEEE Double format. Numbers sent above 17 digits \(52 bits\) can not be stored exact and are treated as a floating point value which will be stored and visualized as a rounded number. For more information on this topic: [https://en.wikipedia.org/wiki/IEEE\_754](https://en.wikipedia.org/wiki/IEEE_754)
 
 ## Generic Data Types
 
@@ -660,9 +661,10 @@ Notes: --
 
 #### Luminous Flux
 
-Key (`data_type`): LUMINOUS_FLUX<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-Accepted Units (`data_unit`) with UI unit abbreviation: <br>
+Key \(`data_type`\): LUMINOUS\_FLUX  
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `LUMENS`: lm
 
@@ -948,10 +950,11 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 Notes: --
 
 ## Change log
-* Change VELOCITY unit INCH_PER_SEC  abbrevation to in/s (was ips)
-* Add ACCELERATION unit MILLMETERS_PER_SEC2 (abreviation: mm/s²)
+
+* Change VELOCITY unit INCH\_PER\_SEC  abbrevation to in/s \(was ips\)
+* Add ACCELERATION unit MILLMETERS\_PER\_SEC2 \(abreviation: mm/s²\)
 * Added a note about Numeric primitve type value size and format
-* Fixed Luminous Flux data type 'data_type' value to LUMINOUS_FLUX, was LUMINANCE_FLUX.
+* Fixed Luminous Flux data type 'data\_type' value to LUMINOUS\_FLUX, was LUMINANCE\_FLUX.
 * Created this document as seperate from "ExoSense™️ Channel and Signal Data Schema", using v3.0 since the other document is also moving to 3.0.  Will track version history seperately moving forward. 
 * Added many new Numeric measurement types and units
 * Changed format to show the accepted units and the abbreviations used in the application
@@ -959,3 +962,4 @@ Notes: --
 * Added URL type
 * Added a new inheritied element `primitive_type` to specify the format for each data type
 * Removed non-supported data types
+

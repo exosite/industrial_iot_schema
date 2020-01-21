@@ -344,9 +344,10 @@ The output of a rule insight is a JSON string.
 | Error | 4 |
 
 #### User defined addendum messages
+
 The notifications and rule event logs may include an extension message that can be added by an end user. To enable this per Rule function, the function must include the following reserved named constants.
 
-```
+```text
   {
     name: "messageMatch",
     description: "Extra details for when value does match",
@@ -490,3 +491,4 @@ This endpoint will receive a body with the following keys:
 ## Change log
 
 * New document to detail insight transform and rule interface with ExoSense
+

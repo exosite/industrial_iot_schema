@@ -46,7 +46,7 @@ _Note: This document does not cover most details of how to interact with Muranoâ
 | `config_rules` | _reserved_ | tbd |  |
 | `config_network` | _reserved_ | tbd |  |
 
-_Note: Generally do not recommend using custom resources with prefix of `config_`._
+_Note: Generally do not recommend using custom resources with prefix of \`config_\`.\_
 
 ![Device Interface Diagram](.gitbook/assets/device_interface_diagram.png)
 
@@ -269,7 +269,7 @@ The interval for the device to report values to the cloud \(ExoSense\). May be u
 
 ### Timeout
 
-The interval that is considered a timeout for a channel. Can be the same as report rate but typically set at a larger interval to provide room for network slowness and reconnections. Typically not used by the device but used by an Asset signal in the application to generate timeout events for the asset / device UI's, timeout events in the asset logs, and future possibilities. _E.g. The device reports a channel every 1 minute but if it hasn't reported for 5 minutes, this is an event that may need to have a call to action for._ 
+The interval that is considered a timeout for a channel. Can be the same as report rate but typically set at a larger interval to provide room for network slowness and reconnections. Typically not used by the device but used by an Asset signal in the application to generate timeout events for the asset / device UI's, timeout events in the asset logs, and future possibilities. _E.g. The device reports a channel every 1 minute but if it hasn't reported for 5 minutes, this is an event that may need to have a call to action for._
 
 ### Control Channels
 
@@ -282,31 +282,30 @@ Optionally used by the device to determine what application \(protocol / interfa
 Devices that are configurable should use the protocol configuration properties to get / set data, convert it, and determine how often to sample \(read locally\) and report \(to cloud\).
 
 #### Additional Channel Edge Conversion Handling
-The following parameters are available for device firmware to use to do edge side processing of the data from a sensor or input before sending up to ExoSense.   These are all optional and require the device to support.  
 
-##### Report on Change
-The `report_on_change` parameter, if used and set to True, device firmware should only report channel values if different than the last time it received a value.  Typically devices would also send on boot-up and may have more advanced algorithm for when it chooses to report a value.
+The following parameters are available for device firmware to use to do edge side processing of the data from a sensor or input before sending up to ExoSense. These are all optional and require the device to support.
 
-##### Down Sample
-If used, the `down_sample` parameter provides the device with information about how to handle the situation where a channel input is sampled many times over a given time period before (sample vs report rates) reported.  This allows a user to decide how to down sample the values before reporting.  Options are: Min, Max, Average, or Actual which would require the device to choose a value to send (last, first, etc).  
+**Report on Change**
 
-##### app_specific_config
-Is an object that can contain custom parameters (key/value pairs) defined by the device firmware developer to be used by the protocol application.
+The `report_on_change` parameter, if used and set to True, device firmware should only report channel values if different than the last time it received a value. Typically devices would also send on boot-up and may have more advanced algorithm for when it chooses to report a value.
 
-```JSON
+**Down Sample**
+
+If used, the `down_sample` parameter provides the device with information about how to handle the situation where a channel input is sampled many times over a given time period before \(sample vs report rates\) reported. This allows a user to decide how to down sample the values before reporting. Options are: Min, Max, Average, or Actual which would require the device to choose a value to send \(last, first, etc\).
+
+**app\_specific\_config**
+
+Is an object that can contain custom parameters \(key/value pairs\) defined by the device firmware developer to be used by the protocol application.
+
+```javascript
 ${app_specific_config_item1} : "${app_config_item1_value}"
 ${app_specific_config_item2} : "${app_config_item2_value}"
 ```
-##### Edge Raw Input Conversion Parameters
+
+**Edge Raw Input Conversion Parameters**
+
 `min`, `max`, and `unit` under the `input_raw` object should be used for applications where the device converts raw sampled data before reporting.  
-**For edge mapping conversion:**
-`protocol_config.input_raw.min` and `protocol_config.input_raw.max` should be combined with the `properties.min` and `properties.max` for mapping conversion.
-**For edge unit conversion**
-`protocol_config.input_raw.unit` can be used with `properties.data_unit` for edge side unit conversion. 
-**For edge scale and offset conversion**
-The `protocol_config.multiplier` and `protocol_config.offset` parameters can be used by the device firmware for edge sample conversion.  
-
-
+**For edge mapping conversion:** `protocol_config.input_raw.min` and `protocol_config.input_raw.max` should be combined with the `properties.min` and `properties.max` for mapping conversion. **For edge unit conversion** `protocol_config.input_raw.unit` can be used with `properties.data_unit` for edge side unit conversion. **For edge scale and offset conversion** The `protocol_config.multiplier` and `protocol_config.offset` parameters can be used by the device firmware for edge sample conversion.
 
 ### IoT Properties
 
@@ -772,6 +771,7 @@ Hardware application developers may support custom protocols by specifying their
 ```
 
 ## Change log
+
 * Adding device control support
 * Changed Modbus RTU & Modbus TCP protocol configuration 'app\_specific\_config' key 'register\_offset' to 'register'.
 * Adding details for the parameters used for device edge input conversion and sampling
@@ -783,3 +783,4 @@ Hardware application developers may support custom protocols by specifying their
 * Cleaned up options for protocol parameters 
 * Added primitive type field
 * Added graphics to help with description of interface
+
