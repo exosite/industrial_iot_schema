@@ -16,4 +16,3 @@ _Branches_
 _Making Pull Requests_ 1. Create a Fork of the repository 2. Submit PR against the `working_draft` branch 3. Exosite will review all pull rquests _critically_ while thinking about how it will affect the ExoSense roadmap and code-base.
 
 _Notes_ 1. Exosite manages merging and versioning of the `working_draft` into the `master` branch for new versioning of these specification documents. 2. Assume updates to these specification documents do not coincide with immediate updates to ExoSense. ExoSense release notes will indicate when updates are made in reference to these specifications.
-
