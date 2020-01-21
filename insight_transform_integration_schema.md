@@ -1,4 +1,4 @@
-# ExoSense™ Insight Transform Schema
+# ExoSense Insights Schema
 
 ## Core Payload Objects
 
