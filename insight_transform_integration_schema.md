@@ -1,4 +1,4 @@
-# ExoSense™ Insight Transform Schema
+# ExoSense Insights Schema
 
 ## Core Payload Objects
 
@@ -7,6 +7,7 @@ The two primary payloads encountered with Insights, the [Insight Function Info](
 ### Insight Function Info
 
 > Reference [InsightInfo](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L223) in the Swagger file
+
 
 Insight Function Info is used to generate the ExoSense UI when adding a Function to a Signal and to inform the ExoSense Pipeline on what information the Function needs to calculate a result.
 
@@ -487,6 +488,6 @@ This endpoint will receive a body with the following keys:
 | Datapoint | Single instance of a Signal Data stream. |
 | Linkage | ExoSense Pipeline term for non-Signal blocks on the Asset Config page of the UI. |
 
-## Change log
 
+## Change log
 * New document to detail insight transform and rule interface with ExoSense

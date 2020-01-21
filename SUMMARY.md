@@ -1,9 +1,14 @@
 # Table of contents
 
-* [ExoSense™️ Industrial IoT Schemas](README.md)
-* [ExoSense™️ Channel and Signal Data Types](data-types.md)
-* [ota\_update\_schema](ota_update_schema.md)
-* [ExoSense™️ Channel and Signal Data Schema](channel-signal_io_schema.md)
+* [Schema Overview](README.md)
+* [ExoSense Data IO Schema](channel-signal_io_schema.md)
+* [ExoSense Data Types](data-types.md)
+* [ExoSense Insights Schema](insight_transform_integration_schema.md)
+* [Device OTA Update Schema](ota_update_schema.md)
 * [Contributing](contributing.md)
-* [ExoSense™ Insight Transform Schema](insight_transform_integration_schema.md)
 
+## Links
+
+* [Developers: ExoSense Device Interface Guide](https://docs.exosite.io/account/exosense)
+* [Developers: Home](https://docs.exosite.io)
+* [ExoSense User Guide](https://docs.exosite.io/exosense)

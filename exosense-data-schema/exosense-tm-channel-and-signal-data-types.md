@@ -1,7 +1,4 @@
-
-# ExoSense Data Types
-
-This document defines the **data types and units** supported by the ExoSense™️ solution and related technologies.
+# Channel & Signal Data Types
 
 ## Introduction
 
@@ -13,21 +10,7 @@ It is not required for regular use of the ExoSense application itself, although 
 
 The data schema and inteface information can be found here: [ExoSense™️ Channel and Signal Data Schema](channel-signal_io_schema.md)
 
-![ExoSense Channel / Signal Simple Diagram](.gitbook/assets/simple_channel_signal_diagram%20%281%29.png)
-
-### Definitions
-
-The reader of this document should have a grasp on the following items or will need to for this document to make sense.
-
-| Term | Description | More Information |
-| :--- | :--- | :--- |
-| ExoSense™️ | Industrial IoT Application solution created and offered by [Exosite](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/exosite.com) |  |
-| Device/Gateway | An electronic device with an IP Connection sending data to a platform.  In this case is interacing with directly connected sensors, custom protocol connected sensors, or fieldbus connected equipment |  |
-| Sensors | Physical sensors connected to a Device/Gateway via wired or wireless protocol or IO \(onboard\).  Sensors are typically specific to a unit of measure - e.g. temperature, pressure, etc. |  |
-| Channel | An ExoSense concept to identify an **individual stream** of information sent to ExoSense by an **unique device** that is specific to a type and with a specific unit of measure from that local physical environment \(e.g. Temperature or Valve 1 status\).  Can also be information such as memory on the device, status information, etc. | Typically a device is sending many channels of data for all of the sensors that are connected. |
-| Signal | An ExoSense concept similiar to channel but is the part of a virtual Asset object that describes and stores the data.  Signals can be transformed, exported, visualzied, and have rules ran on them.  The source for a signal is typically a device channel but doesn't have to be.  The signal essentially subscribes to it's source. |  |
-| Asset | An ExoSense concept for digitizing an Asset \(a machine, system, equipment, etc\) |  |
-| Fieldbus | Industrial protocols like Modbus TCP or RTU, J1939, CANOpen, etc that allow machines, controls, equipment to have a standard way to talk to each other. |  |
+![ExoSense Channel / Signal Simple Diagram](simple_channel_signal_diagram.png)
 
 ## Data Type Definition
 
@@ -42,28 +25,25 @@ There are two type categories for Data Types
 
 **Primitive Types** are used to describe the format of the data type and allows visualizations, transforms, and rules to accept multiple types based on the format.
 
-### Primitive Types
+#### Primitive Types
 
 A primitive type describes the actual underlying encoding / format used for values. Declaring the primitive type in a channel is optional as the primitive type can be derived from the data type. There are four primitive types: `NUMERIC`, `STRING`, `JSON`, `BOOLEAN`.
 
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
-### Numeric Value Size and Format
-Number values are stored and processed in IEEE Double format.  Numbers sent above 17 digits (52 bits) can not be stored exact and are treated as a floating point value which will be stored and visualized as a rounded number.  For more information on this topic: https://en.wikipedia.org/wiki/IEEE_754 
-
 ## Generic Data Types
 
 For data that may not have units, anything that is dimensionless, or no supported unit types exist. Includes numeric, string, and structured data generic types. Generic types do not support a measureable unit and therefore standard unit conversions are not supported in the application for generic data types.
 
-### String \(unit-less\)
+### **String \(unit-less\)**
 
- Key \(`data_type`\): STRING  
+Key \(`data_type`\): STRING  
  Accepted Units \(`data_unit`\): Not Used  
  Primitive Type \(`primitive_type`\): STRING  
  UI Unit Abbreviation: na  
  Notes: Any string
 
-**Example String Channel**
+**Example JSON Channel**
 
 ```javascript
 {
@@ -92,10 +72,9 @@ For data that may not have units, anything that is dimensionless, or no supporte
 }
 ```
 
+### **JSON \(unit-less\)**
 
-### JSON \(unit-less\)
-
- Key \(`data_type`\): JSON  
+Key \(`data_type`\): JSON  
  Accepted Units \(`data_unit`\): Not Used  
  Primitive Type \(`primitive_type`\): JSON  
  UI Unit Abbreviation: na  
@@ -130,7 +109,7 @@ For data that may not have units, anything that is dimensionless, or no supporte
 }
 ```
 
-### Number \(unit-less\)
+### **Number \(unit-less\)**
 
 Key \(`data_type`\): NUMBER  
  Accepted Units \(`data_unit`\): Not Used  
@@ -167,7 +146,8 @@ Key \(`data_type`\): NUMBER
   "134":43
 }
 ```
-### BOOLEAN \(unit-less\)
+
+### **BOOLEAN \(unit-less\)**
 
 Key \(`data_type`\): BOOLEAN  
  Accepted Units \(`data_unit`\): Not Used  
@@ -231,37 +211,37 @@ The following data types require a fixed unit type that is specified as a part o
 
 Many of these types will represent base physical measurements \(temperature, length, etc\), or derived measurements \(velocity\), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities). The list is assumed to never be complete and future types / units could be added. Some physical quantities have simply been left off the list for simplicity and assumed lack of need for Industrial IoT applications.
 
-
-### Acceleration
+### **Acceleration**
 
 Key \(`data_type`\): ACCELERATION  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METER_PER_SEC2`: m/s²
-* `MILLMETERS_PER_SEC2`: mm/s²
 * `STANDARD_GRAVITY` : g₀
 * `FEET_PER_SEC2`: ft/s²
 * `IN_PER_SEC2` : in/s²
 
 Notes: --
 
-### Amount of Substance
+### **Amount of Substance**
 
 Key \(`data_type`\): AMOUNT  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `MOLE`: mol
 
 Notes: --
 
-
-### Angular acceleration
+### **Angular acceleration**
 
 Key \(`data_type`\): ANGULAR\_ACCEL  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `RAD_PER_SEC2`: rad/s²
 * `ROTATIONS_PER_MIN2`: r/min²
@@ -269,12 +249,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-
-### Angular Velocity / Speed
+### **Angular Velocity / Speed**
 
 Key \(`data_type`\): ANGULAR\_VEL  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `RAD_PER_SEC`: rad/s
 * `RAD_PER_MIN`: rad/m
@@ -286,12 +266,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-
-### Area
+### **Area**
 
 Key \(`data_type`\): AREA  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METER2`: m²
 * `KILOMETER2`: km²
@@ -303,21 +283,23 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Battery Percentage
+### **Battery Percentage**
 
 Key \(`data_type`\): BATTERY\_PERCENTAGE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PERCENT`: %
 
 Notes: Device diagnostic
 
-### Capacitance
+### **Capacitance**
 
 Key \(`data_type`\): CAPACITANCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `FARAD`: F
 * `MILLIFARAD`: mF
@@ -327,12 +309,13 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Currency
+### **Currency**
 
 Key \(`data_type`\): CURRENCY  
-Accepted Units \(`data_unit`\): Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:  
-`AFN`, `ALL`, `DZD`, `USD`, `EUR`, `AOA`, `XCD`, `ARS`, `AMD`, `AWG`, `AUD`, `AZN`, `BSD`, `BHD`, `BDT`, `BBD`, `BYR`, `BZD`, `XOF`, `BMD`, `BTN`, `INR`, `BOB`, `BOV`, `BAM`, `BWP`, `NOK`, `BRL`, `BND`, `BGN`, `BIF`, `CVE`, `KHR`, `XAF`, `CAD`, `KYD`, `CLF`, `CLP`, `CNY`, `COP`, `COU`, `KMF`, `CDF`, `NZD`, `CRC`, `HRK`, `CUC`, `CUP`, `ANG`, `CZK`, `DKK`, `DJF`, `DOP`, `EGP`, `SVC`, `ERN`, `ETB`, `FKP`, `FJD`, `XPF`, `GMD`, `GEL`, `GHS`, `GIP`, `GTQ`, `GBP`, `GNF`, `GYD`, `HTG`, `HNL`, `HKD`, `HUF`, `ISK`, `IDR`, `XDR`, `IRR`, `IQD`, `ILS`, `JMD`, `JPY`, `JOD`, `KZT`, `KES`, `KPW`, `KRW`, `KWD`, `KGS`, `LAK`, `LBP`, `LSL`, `ZAR`, `LRD`, `LYD`, `CHF`, `MOP`, `MKD`, `MGA`, `MWK`, `MYR`, `MVR`, `MRU`, `MUR`, `XUA`, `MXN`, `MXV`, `MDL`, `MNT`, `MAD`, `MZN`, `MMK`, `NAD`, `NPR`, `NIO`, `NGN`, `OMR`, `PKR`, `PAB`, `PGK`, `PYG`, `PEN`, `PHP`, `PLN`, `QAR`, `RON`, `RUB`, `RWF`, `SHP`, `WST`, `STN`, `SAR`, `RSD`, `SCR`, `SLL`, `SGD`, `XSU`, `SBD`, `SOS`, `SSP`, `LKR`, `SDG`, `SRD`, `SZL`, `SEK`, `CHE`, `CHW`, `SYP`, `TWD`, `TJS`, `TZS`, `THB`, `TOP`, `TTD`, `TND`, `TRY`, `TMT`, `UGX`, `UAH`, `AED`, `USN`, `UYI`, `UYU`, `UZS`, `VUV`, `VEF`, `VND`, `YER`, `ZMW`, `ZWL`
+ Accepted Units \(`data_unit`\): Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+ `AFN`, `ALL`, `DZD`, `USD`, `EUR`, `AOA`, `XCD`, `ARS`, `AMD`, `AWG`, `AUD`, `AZN`, `BSD`, `BHD`, `BDT`, `BBD`, `BYR`, `BZD`, `XOF`, `BMD`, `BTN`, `INR`, `BOB`, `BOV`, `BAM`, `BWP`, `NOK`, `BRL`, `BND`, `BGN`, `BIF`, `CVE`, `KHR`, `XAF`, `CAD`, `KYD`, `CLF`, `CLP`, `CNY`, `COP`, `COU`, `KMF`, `CDF`, `NZD`, `CRC`, `HRK`, `CUC`, `CUP`, `ANG`, `CZK`, `DKK`, `DJF`, `DOP`, `EGP`, `SVC`, `ERN`, `ETB`, `FKP`, `FJD`, `XPF`, `GMD`, `GEL`, `GHS`, `GIP`, `GTQ`, `GBP`, `GNF`, `GYD`, `HTG`, `HNL`, `HKD`, `HUF`, `ISK`, `IDR`, `XDR`, `IRR`, `IQD`, `ILS`, `JMD`, `JPY`, `JOD`, `KZT`, `KES`, `KPW`, `KRW`, `KWD`, `KGS`, `LAK`, `LBP`, `LSL`, `ZAR`, `LRD`, `LYD`, `CHF`, `MOP`, `MKD`, `MGA`, `MWK`, `MYR`, `MVR`, `MRU`, `MUR`, `XUA`, `MXN`, `MXV`, `MDL`, `MNT`, `MAD`, `MZN`, `MMK`, `NAD`, `NPR`, `NIO`, `NGN`, `OMR`, `PKR`, `PAB`, `PGK`, `PYG`, `PEN`, `PHP`, `PLN`, `QAR`, `RON`, `RUB`, `RWF`, `SHP`, `WST`, `STN`, `SAR`, `RSD`, `SCR`, `SLL`, `SGD`, `XSU`, `SBD`, `SOS`, `SSP`, `LKR`, `SDG`, `SRD`, `SZL`, `SEK`, `CHE`, `CHW`, `SYP`, `TWD`, `TJS`, `TZS`, `THB`, `TOP`, `TTD`, `TND`, `TRY`, `TMT`, `UGX`, `UAH`, `AED`, `USN`, `UYI`, `UYU`, `UZS`, `VUV`, `VEF`, `VND`, `YER`, `ZMW`, `ZWL`  
+
 
 Notes:
 
@@ -340,11 +323,12 @@ Notes:
 * No Unit Abbreviations
 * Conversions between currency is complicated and always changing based on world-wide markets.  ExoSense and related technology **will not support currency conversions**.  
 
-### Data
+**Data**
 
 Key \(`data_type`\): DATA  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `BYTE`: B
 * `KILOBYTE`: KB
@@ -354,21 +338,23 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Density
+### **Density**
 
 Key \(`data_type`\): DENSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `KG_PER_M3`: kg/m³
 
 Notes: --
 
-### Displacement
+### **Displacement**
 
 Key \(`data_type`\): DISPLACEMENT  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METERS`: m
 * `CENTIMETERS`: cm
@@ -382,11 +368,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Dynamic Viscosity
+### **Dynamic Viscosity**
 
 Key \(`data_type`\): DYNAMIC\_VISCOSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PASCAL_SEC`: Pa·s
 * `MILLIPASCAL_SEC`: mPa·s
@@ -394,12 +381,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-
-### Kinematic Viscosity
+### **Kinematic Viscosity**
 
 Key \(`data_type`\): KINEMATIC\_VISCOSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `CENTISTOKES`: cSt
 * `STOKES`: St
@@ -407,12 +394,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-
-### Electric Current
+### **Electric Current**
 
 Key \(`data_type`\): ELEC\_CURRENT  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `AMPERE`: A
 * `MILLIAMP`: mA
@@ -421,22 +408,23 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Electrical Conductance
+### **Electrical Conductance**
 
 Key \(`data_type`\): ELEC\_CONDUCTANCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `SIEMENS`: S
 
   Notes: --
 
-
-### Electrical Potential \(Voltage\)
+### **Electrical Potential \(Voltage\)**
 
 Key \(`data_type`\): ELEC\_POTENTIAL  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `VOLT`: V
 * `MILLIVOLT`: mV
@@ -446,11 +434,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Electrical Resistance
+### **Electrical Resistance**
 
 Key \(`data_type`\): ELEC\_RESISTANCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `OHM`: Ω
 * `MILLIOHM`: mΩ
@@ -460,43 +449,45 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Electrical Resistivity
+### **Electrical Resistivity**
 
 Key \(`data_type`\): ELEC\_RESISTIVITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `OHM_METER`: Ω⋅m
 
 Notes: --
 
-
-### Energy
+### **Energy**
 
 Key \(`data_type`\): ENERGY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `JOULE`: J
-* `KILOWATT_HOUR`: kWh
 
 Notes:
 
-### Field Level
+### **Field Level**
 
 Key \(`data_type`\): FIELD\_LEVEL  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `DECIBEL`: dB
 
 Notes: Used for logarithmic measures. Reference: \[[https://en.wikipedia.org/wiki/Level\_\(logarithmic\_quantity](https://en.wikipedia.org/wiki/Level_%28logarithmic_quantity)\)\]
 
-### Flow \(Volumetric\)
+### **Flow \(Volumetric\)**
 
 Key \(`data_type`\): FLOW  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METERS3_PER_SEC`: m³/s
 * `METERS3_PER_HOUR`: m³/h
@@ -520,32 +511,34 @@ Notes:
 
 * Flow as PERCENT will not support conversions
 
-### Flow \(Mass\)
+### **Flow \(Mass\)**
 
 Key \(`data_type`\): FLOW\_MASS  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `KG_PER_SEC`: kg/s
 * `LBS_PER_SEC`: lb/s
 
 Notes:
 
-### Force
+### **Force**
 
 Key \(`data_type`\): FORCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `NEWTON`: N
 
 Notes: --
 
-### Frequency
+### **Frequency**
 
 Key \(`data_type`\): FREQUENCY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
 
 
 * `HERTZ`: Hz
@@ -554,11 +547,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### GPS / Location
+### **GPS / Location**
 
 Key \(`data_type`\): LOCATION  
-Primitive Type \(`primitive_type`\): JSON  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): JSON  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `LAT_LONG`
 * `LAT_LONG_ALT`
@@ -578,11 +572,12 @@ Notes:
 {"lat": "{value}","lng":"{value}","alt":"{value}","acc":"{value}"}
 ```
 
-### Heat
+### **Heat**
 
 Key \(`data_type`\): HEAT  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `JOULE`: J
 * `BTU`: Btu
@@ -591,52 +586,57 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes:
 
-### Humidity
+### **Humidity**
 
 Key \(`data_type`\): HUMIDITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PERCENT`: %
 
   Notes: --
 
-### Illuminance
+### **Illuminance**
 
 Key \(`data_type`\): ILLUMINANCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `LUX`: lx
 * `FOOT_CANDLES`: fc
 
 Notes:
 
-### Inductance
+### **Inductance**
 
 Key \(`data_type`\): INDUCTANCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `HENRY`: H
 
   Notes: --
 
-### Jerk
+### **Jerk**
 
 Key \(`data_type`\): JERK  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METER_PER_SEC3`: m/s³
 
   Notes: --
 
-### Length
+### **Length**
 
 Key \(`data_type`\): LENGTH  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METERS`: m
 * `CENTIMETERS`: cm
@@ -650,51 +650,56 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Linear density
+### **Linear density**
 
 Key \(`data_type`\): LINEAR\_DENSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `KILOGRAM_PER_METER`: kg/m
 
 Notes: --
 
-### Luminance
+### **Luminance**
 
 Key \(`data_type`\): LUMINANCE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `CANDELA_PER_METER2`: cd/m2
 
 Notes: --
 
-### Luminous Flux
+### **Luminous Flux**
 
-Key (`data_type`): LUMINOUS_FLUX<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-Accepted Units (`data_unit`) with UI unit abbreviation: <br>
+Key \(`data_type`\): LUMINOUS\_FLUX  
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `LUMENS`: lm
 
 Notes: --
 
-### Luminous Intensity
+### **Luminous Intensity**
 
 Key \(`data_type`\): LUMINOUS\_INTENSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `CANDELA`: cd
 
 Notes: --
 
-### Mass
+### **Mass**
 
 Key \(`data_type`\): MASS  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `MILLIGRAM`: mg
 * `GRAM`: g
@@ -709,43 +714,47 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Particles
+### **Particles**
 
 Key \(`data_type`\): PARTICLES  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PPM`: ppm
 * `PPB`: ppb
 * `PPT`: ppt
 
-  Notes: Psuedo-units to describe particles as a quantity of quantity.
+  Notes: Psuedo-units to describe particles as a quantity of quantity. 
 
-### Percentage
+### **Percentage**
 
 Key \(`data_type`\): PERCENTAGE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PERCENT: %`
 
 Notes: --
 
-### pH
+### **pH**
 
 Key \(`data_type`\): PH  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PH`: pH
 
 Notes: --
 
-### Plane angle
+### **Plane angle**
 
 Key \(`data_type`\): ANGLE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `RADIAN`: rad
 * `DEGREE`: °
@@ -754,11 +763,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Power
+### **Power**
 
 Key \(`data_type`\): POWER  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `WATT`: W
 * `MILLIWATT`: mW
@@ -773,21 +783,23 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Power Level
+### **Power Level**
 
 Key \(`data_type`\): POWER\_LEVEL  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `DECIBEL`: dB
 
 Notes: Used for logarithmic measures. Reference: \[[https://en.wikipedia.org/wiki/Level\_\(logarithmic\_quantity](https://en.wikipedia.org/wiki/Level_%28logarithmic_quantity)\)\]
 
-### Pressure
+### **Pressure**
 
 Key \(`data_type`\): PRESSURE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PASCAL`: Pa
 * `KILOPASCAL`: kPa
@@ -803,31 +815,34 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Signal Strength as Percent
+### **Signal Strength as Percent**
 
 Key \(`data_type`\): SIGNAL\_STRENGTH\_PERCENTAGE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `PERCENT`: %
 
 Notes: Device diagnostic
 
-### Solid angle
+### **Solid angle**
 
 Key \(`data_type`\): SOLID\_ANGLE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `STERADIAN`: sr
 
 Notes: --
 
-### Speed
+### **Speed**
 
 Key \(`data_type`\): SPEED  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METER_PER_SEC`: m/s
 * `KPH`: km/h
@@ -838,11 +853,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Temperature
+### **Temperature**
 
 Key \(`data_type`\): TEMPERATURE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `KELVIN`: K
 * `DEG_CELSIUS`: °C
@@ -851,11 +867,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Time
+### **Time**
 
 Key \(`data_type`\): TIME  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `SECONDS`: s
 * `MILLISECOND`: msec
@@ -866,11 +883,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Torque
+### **Torque**
 
 Key \(`data_type`\): TORQUE  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `NEWTON_METER`:  N⋅m
 * `FOOT_POUNDS`: lbf⋅ft
@@ -878,11 +896,12 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### URL
+### **URL**
 
 Key \(`data_type`\): URL  
-Primitive Type \(`primitive_type`\): JSON  
-Accepted Units \(`data_unit`\) with UI unit abbreviation: _Not Used_
+ Primitive Type \(`primitive_type`\): JSON  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation: _Not Used_  
+
 
 Notes: A JSON object that contains at minimum a key `url`. The url value must be a string that consists of a proper URL address scheme starting with `https`, etc. Optional `title` key to provide a title that would be displayed in the UI instead of the full URL address. The application \(example ExoSense\) will define what URL types are actually supported \(click-able in the UI\). _**Validation and security checks are not provided by the platform or application. Recommend only for use of encrypted and password protected URLs. OEMs implementing device or custom Insight support to generate URL values, do so at their own risk to their users.**_
 
@@ -898,25 +917,27 @@ Notes: A JSON object that contains at minimum a key `url`. The url value must be
 {"url": "https://exosite.com","title":"Device Link"}
 ```
 
-### Velocity
+### **Velocity**
 
 Key \(`data_type`\): VELOCITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METER_PER_SEC`: m/s
 * `MILLMETERS_PER_SEC`: mm/s
 * `MPH`: mph
-* `INCH_PER_SEC`: in/s
+* `INCH_PER_SEC`: ips
 * `FEET_PER_SEC`: fps
 
 Notes: --
 
-### Volume
+### **Volume**
 
 Key \(`data_type`\): VOLUME  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `METER3`: m³
 * `LITRE`: L
@@ -930,15 +951,15 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `MILLIMETERS3`: mm³
 * `IMPERIAL_GALLONS`: Igal
 * `FLUID_OZ`: fl oz
-* `YARD3`: yd³
 
 Notes: --
 
-### Weight
+### **Weight**
 
 Key \(`data_type`\): WEIGHT  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `NEWTON`: N
 * `POUND`: lb
@@ -948,22 +969,26 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Work
+### **Work**
 
 Key \(`data_type`\): WORK  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `JOULE`: J
 * `FOOT_POUND`: ft⋅lb
 
 Notes: --
 
-## Change log
-* Change VELOCITY unit INCH_PER_SEC  abbrevation to in/s (was ips)
-* Add ACCELERATION unit MILLMETERS_PER_SEC2 (abreviation: mm/s²)
-* Added a note about Numeric primitve type value size and format
-* Fixed Luminous Flux data type 'data_type' value to LUMINOUS_FLUX, was LUMINANCE_FLUX.
+### Change log
+
+#### v3.0.1
+
+* Fixed Luminous Flux data type 'data\_type' value to LUMINOUS\_FLUX, was LUMINANCE\_FLUX.
+
+#### v3.0
+
 * Created this document as seperate from "ExoSense™️ Channel and Signal Data Schema", using v3.0 since the other document is also moving to 3.0.  Will track version history seperately moving forward. 
 * Added many new Numeric measurement types and units
 * Changed format to show the accepted units and the abbreviations used in the application
