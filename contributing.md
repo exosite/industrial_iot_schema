@@ -8,12 +8,19 @@ Exosite maintains the schema, specifications, and examples in this repository. W
 
 ## Pull Requests
 
-_Branches_
+### Branches
 
 * [`master` branch](https://github.com/exosite/industrial_iot_schema) - final releases are merged from `working_draft` branch and tagged here
 * [`working_draft` branch](https://github.com/exosite/industrial_iot_schema/tree/working_draft) - Used managing all updates via pull-requests, draft versions
 
-_Making Pull Requests_ 1. Create a Fork of the repository 2. Submit PR against the `working_draft` branch 3. Exosite will review all pull rquests _critically_ while thinking about how it will affect the ExoSense roadmap and code-base.
+### Making Pull Requests 
 
-_Notes_ 1. Exosite manages merging and versioning of the `working_draft` into the `master` branch for new versioning of these specification documents. 2. Assume updates to these specification documents do not coincide with immediate updates to ExoSense. ExoSense release notes will indicate when updates are made in reference to these specifications.
+1. Create a Fork of the repository 
+2. Submit PR against the `working_draft` branch 
+3. Exosite will review all pull requests _critically_ while thinking about how it will affect the ExoSense roadmap and code-base.
+
+## Notes 
+
+1. Exosite manages merging and versioning of the `working_draft` into the `master` branch for new versioning of these specification documents. 
+2. Assume updates to these specification documents do not coincide with immediate updates to ExoSense. ExoSense release notes will indicate when updates are made in reference to these specifications.
 
