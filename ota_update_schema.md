@@ -174,7 +174,6 @@ These are the currently defined enumerations to represent OTAU installation stat
 
 The following are examples of messages from the device. Reminder, must be sent as a string via the Murano API.
 
-
 ```javascript
 {
     "version": "1.2.4",
@@ -204,3 +203,4 @@ The following are examples of messages from the device. Reminder, must be sent a
 ![state\_sequence](.gitbook/assets/otau_sequence.png)
 
 ## Change log
+

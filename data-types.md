@@ -1,4 +1,3 @@
-
 # ExoSense Data Types
 
 This document defines the **data types and units** supported by the ExoSense™️ solution and related technologies.
@@ -49,7 +48,8 @@ A primitive type describes the actual underlying encoding / format used for valu
 _NOTE: Any type that isn’t given a “Type Key Name”, or a table of properties and their related values, is considered to be a future consideration for inclusion._
 
 ### Numeric Value Size and Format
-Number values are stored and processed in IEEE Double format.  Numbers sent above 17 digits (52 bits) can not be stored exact and are treated as a floating point value which will be stored and visualized as a rounded number.  For more information on this topic: https://en.wikipedia.org/wiki/IEEE_754 
+
+Number values are stored and processed in IEEE Double format. Numbers sent above 17 digits \(52 bits\) can not be stored exact and are treated as a floating point value which will be stored and visualized as a rounded number. For more information on this topic: [https://en.wikipedia.org/wiki/IEEE\_754](https://en.wikipedia.org/wiki/IEEE_754)
 
 ## Generic Data Types
 
@@ -57,11 +57,11 @@ For data that may not have units, anything that is dimensionless, or no supporte
 
 ### String \(unit-less\)
 
- Key \(`data_type`\): STRING  
- Accepted Units \(`data_unit`\): Not Used  
- Primitive Type \(`primitive_type`\): STRING  
- UI Unit Abbreviation: na  
- Notes: Any string
+Key \(`data_type`\): STRING  
+Accepted Units \(`data_unit`\): Not Used  
+Primitive Type \(`primitive_type`\): STRING  
+UI Unit Abbreviation: na  
+Notes: Any string
 
 **Example String Channel**
 
@@ -92,14 +92,13 @@ For data that may not have units, anything that is dimensionless, or no supporte
 }
 ```
 
-
 ### JSON \(unit-less\)
 
- Key \(`data_type`\): JSON  
- Accepted Units \(`data_unit`\): Not Used  
- Primitive Type \(`primitive_type`\): JSON  
- UI Unit Abbreviation: na  
- Notes: Any JSON blob
+Key \(`data_type`\): JSON  
+Accepted Units \(`data_unit`\): Not Used  
+Primitive Type \(`primitive_type`\): JSON  
+UI Unit Abbreviation: na  
+Notes: Any JSON blob
 
 **Example JSON Channel**
 
@@ -133,10 +132,10 @@ For data that may not have units, anything that is dimensionless, or no supporte
 ### Number \(unit-less\)
 
 Key \(`data_type`\): NUMBER  
- Accepted Units \(`data_unit`\): Not Used  
- Primitive Type \(`primitive_type`\): NUMERIC  
- UI Unit Abbreviation: na  
- Notes: Any Real Number
+Accepted Units \(`data_unit`\): Not Used  
+Primitive Type \(`primitive_type`\): NUMERIC  
+UI Unit Abbreviation: na  
+Notes: Any Real Number
 
 **Example Number Channel**
 
@@ -167,13 +166,14 @@ Key \(`data_type`\): NUMBER
   "134":43
 }
 ```
+
 ### BOOLEAN \(unit-less\)
 
 Key \(`data_type`\): BOOLEAN  
- Accepted Units \(`data_unit`\): Not Used  
- Primitive Type \(`primitive_type`\): BOOLEAN  
- UI Unit Abbreviation: na  
- Notes:
+Accepted Units \(`data_unit`\): Not Used  
+Primitive Type \(`primitive_type`\): BOOLEAN  
+UI Unit Abbreviation: na  
+Notes:
 
 * True \("Truthy"\) accepted values: \[`true`, `"on"`, `1`, `"yes"`, any  number that is not `0`\]
 * False \("Falsy"\) accepted values: \[`false`, `"off"`, `0`, `"no"`\]
@@ -231,7 +231,6 @@ The following data types require a fixed unit type that is specified as a part o
 
 Many of these types will represent base physical measurements \(temperature, length, etc\), or derived measurements \(velocity\), as noted in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_physical_quantities). The list is assumed to never be complete and future types / units could be added. Some physical quantities have simply been left off the list for simplicity and assumed lack of need for Industrial IoT applications.
 
-
 ### Acceleration
 
 Key \(`data_type`\): ACCELERATION  
@@ -256,7 +255,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-
 ### Angular acceleration
 
 Key \(`data_type`\): ANGULAR\_ACCEL  
@@ -268,7 +266,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `DEG_PER_SEC2`: deg/s²
 
 Notes: --
-
 
 ### Angular Velocity / Speed
 
@@ -285,7 +282,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `DEG_PER_HOUR`: deg/hr
 
 Notes: --
-
 
 ### Area
 
@@ -394,7 +390,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-
 ### Kinematic Viscosity
 
 Key \(`data_type`\): KINEMATIC\_VISCOSITY  
@@ -406,7 +401,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `METERS2_PER_SEC`: m2/s
 
 Notes: --
-
 
 ### Electric Current
 
@@ -430,7 +424,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `SIEMENS`: S
 
   Notes: --
-
 
 ### Electrical Potential \(Voltage\)
 
@@ -469,7 +462,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `OHM_METER`: Ω⋅m
 
 Notes: --
-
 
 ### Energy
 
@@ -546,7 +538,6 @@ Notes: --
 Key \(`data_type`\): FREQUENCY  
 Primitive Type \(`primitive_type`\): NUMERIC  
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
-
 
 * `HERTZ`: Hz
 * `KHZ`:KHz
@@ -672,9 +663,10 @@ Notes: --
 
 ### Luminous Flux
 
-Key (`data_type`): LUMINOUS_FLUX<br>
-Primitive Type (`primitive_type`): NUMERIC<br>
-Accepted Units (`data_unit`) with UI unit abbreviation: <br>
+Key \(`data_type`\): LUMINOUS\_FLUX  
+ Primitive Type \(`primitive_type`\): NUMERIC  
+ Accepted Units \(`data_unit`\) with UI unit abbreviation:   
+
 
 * `LUMENS`: lm
 
@@ -960,10 +952,11 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 Notes: --
 
 ## Change log
-* Change VELOCITY unit INCH_PER_SEC  abbrevation to in/s (was ips)
-* Add ACCELERATION unit MILLMETERS_PER_SEC2 (abreviation: mm/s²)
+
+* Change VELOCITY unit INCH\_PER\_SEC  abbrevation to in/s \(was ips\)
+* Add ACCELERATION unit MILLMETERS\_PER\_SEC2 \(abreviation: mm/s²\)
 * Added a note about Numeric primitve type value size and format
-* Fixed Luminous Flux data type 'data_type' value to LUMINOUS_FLUX, was LUMINANCE_FLUX.
+* Fixed Luminous Flux data type 'data\_type' value to LUMINOUS\_FLUX, was LUMINANCE\_FLUX.
 * Created this document as seperate from "ExoSense™️ Channel and Signal Data Schema", using v3.0 since the other document is also moving to 3.0.  Will track version history seperately moving forward. 
 * Added many new Numeric measurement types and units
 * Changed format to show the accepted units and the abbreviations used in the application

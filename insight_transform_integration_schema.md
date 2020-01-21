@@ -8,7 +8,6 @@ The two primary payloads encountered with Insights, the [Insight Function Info](
 
 > Reference [InsightInfo](https://github.com/exosite/industrial_iot_schema/tree/2c23f7a5ddebc89a9869f9348154e4393adc9fbe/insight-template.yaml#L223) in the Swagger file
 
-
 Insight Function Info is used to generate the ExoSense UI when adding a Function to a Signal and to inform the ExoSense Pipeline on what information the Function needs to calculate a result.
 
 The object has the following keys:
@@ -345,9 +344,10 @@ The output of a rule insight is a JSON string.
 | Error | 4 |
 
 #### User defined addendum messages
+
 The notifications and rule event logs may include an extension message that can be added by an end user. To enable this per Rule function, the function must include the following reserved named constants.
 
-```
+```text
   {
     name: "messageMatch",
     description: "Extra details for when value does match",
@@ -488,6 +488,7 @@ This endpoint will receive a body with the following keys:
 | Datapoint | Single instance of a Signal Data stream. |
 | Linkage | ExoSense Pipeline term for non-Signal blocks on the Asset Config page of the UI. |
 
-
 ## Change log
+
 * New document to detail insight transform and rule interface with ExoSense
+
