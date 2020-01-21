@@ -1,7 +1,5 @@
 # ExoSense™ Insight Transform Schema
 
-**Document Status:** V1.0 Draft
-
 ## Core Payload Objects
 
 The two primary payloads encountered with Insights, the [Insight Function Info](insight_transform_integration_schema.md#insight-function-info) and [Signal Data](insight_transform_integration_schema.md#signal-data) objects, are described here in detail.
@@ -491,7 +489,4 @@ This endpoint will receive a body with the following keys:
 
 ## Change log
 
-### v1.0 - In progress \(DRAFT\)
-
 * New document to detail insight transform and rule interface with ExoSense
-

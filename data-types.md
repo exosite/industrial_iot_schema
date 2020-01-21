@@ -1,12 +1,5 @@
 # ExoSense™️ Channel and Signal Data Types
 
-**Document Status:** Version 3.1 Draft
-
-
-**Document Status:** Version 3.0.1
-
-_Note: Originally this information was a part of the ["ExoSense™️ Channel and Signal Data Schema"](channel-signal_io_schema.md) document._
-
 ## Introduction
 
 This document defines the **data types and units** supported by the ExoSense™️ solution and related technologies.
@@ -242,6 +235,7 @@ Primitive Type \(`primitive_type`\): NUMERIC
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 * `METER_PER_SEC2`: m/s²
+* `MILLMETERS_PER_SEC2`: mm/s²
 * `STANDARD_GRAVITY` : g₀
 * `FEET_PER_SEC2`: ft/s²
 * `IN_PER_SEC2` : in/s²
@@ -473,6 +467,7 @@ Primitive Type \(`primitive_type`\): NUMERIC
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 * `JOULE`: J
+* `KILOWATT_HOUR`: kWh
 
 Notes:
 
@@ -900,7 +895,7 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `METER_PER_SEC`: m/s
 * `MILLMETERS_PER_SEC`: mm/s
 * `MPH`: mph
-* `INCH_PER_SEC`: ips
+* `INCH_PER_SEC`: in/s
 * `FEET_PER_SEC`: fps
 
 Notes: --
@@ -953,15 +948,10 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 Notes: --
 
 ## Change log
-
-### In progress \(DRAFT\)
+* Change VELOCITY unit INCH_PER_SEC  abbrevation to in/s (was ips)
+* Add ACCELERATION unit MILLMETERS_PER_SEC2 (abreviation: mm/s²)
 * Added a note about Numeric primitve type value size and format
-
-### v3.0.1
 * Fixed Luminous Flux data type 'data_type' value to LUMINOUS_FLUX, was LUMINANCE_FLUX.
-
-### v3.0
-
 * Created this document as seperate from "ExoSense™️ Channel and Signal Data Schema", using v3.0 since the other document is also moving to 3.0.  Will track version history seperately moving forward. 
 * Added many new Numeric measurement types and units
 * Changed format to show the accepted units and the abbreviations used in the application

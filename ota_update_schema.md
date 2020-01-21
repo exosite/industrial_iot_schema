@@ -2,7 +2,7 @@
 
 ## Over-The-Air \(OTA\) Update Process Schema
 
-**Document Status:** Version 1.0 Draft
+**Document Status:** DRAFT
 
 ### Introduction
 
@@ -200,3 +200,4 @@ The following are examples of messages from the device. Reminder, must be sent a
 
 ![state\_sequence](.gitbook/assets/otau_sequence%20%281%29.png)
 
+## Change log
