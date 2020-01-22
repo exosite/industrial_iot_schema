@@ -148,7 +148,7 @@ definitions:
       translations:
         type: object
         description: Translations of the name and description fields
-        additional_properties:
+        additionalProperties:
           type: object
           description: Keyed by each translated language code 
           properties:
@@ -212,7 +212,7 @@ definitions:
       translations:
         type: object
         description: Translations of the name and description fields
-        additional_properties:
+        additionalProperties:
           type: object
           description: Keyed by each translated language code 
           properties:
@@ -286,7 +286,7 @@ definitions:
       translations:
         type: object
         description: Translations of the name and description fields
-        additional_properties:
+        additionalProperties:
           type: object
           description: Keyed by each translated language code 
           properties:
@@ -316,7 +316,7 @@ definitions:
       translations:
         type: object
         description: Translations of the name and description fields
-        additional_properties:
+        additionalProperties:
           type: object
           description: Keyed by each translated language code 
           properties:
