@@ -12,7 +12,7 @@ This document defines the information required to interface with ExoSense™️ 
 
 This document is meant for device developers building native support into the device or a proxy/gateway service for connection to ExoSense via an IoT service and for those looking to gain a deeper understanding of the architecture of channels and signals in the ExoSense environment. It is not required for typical regular use of the ExoSense application itself.
 
-**Who is this for:** This document is meant for developers building device software to interact with ExoSenseand/or contributing to the development of ExoSense and related technologies.
+**Who is this for:** This document is meant for developers building device software to interact with ExoSense and/or contributing to the development of ExoSense and related technologies.
 
 It is not required for regular use of the ExoSense application itself, although may be helpful for creating end-user documentation.
 
@@ -405,7 +405,7 @@ _Optional use, not required_
 
 Application use cases that require ExoSense to control device actions, such as turning on/off a valve can use control channels. A control channel works and uses the same schema / format as regular channels. Data types, units, and other properties are all used exactly the same.
 
-**Important Disclaimer**: _Device control from a remote server application requires common sense on what functionality and if a machine should actually be remotely controlled. It is assumed that those building devices and systems that support remote control will provide local override capabilties and safety measures. For example, if a device allows remote control of a garage door that there are physical sensors to sense and not allow a door to close if someone is in the way and ways to override the closing of the door at the physical location._
+**Important Disclaimer**: _Device control from a remote server application requires common sense on what functionality and if a machine should actually be remotely controlled. It is assumed that those building devices and systems that support remote control will provide local override capabilities and safety measures. For example, if a device allows remote control of a garage door that there are physical sensors to sense and not allow a door to close if someone is in the way and ways to override the closing of the door at the physical location._
 
 ![Device Control](.gitbook/assets/control_interface_overview.png)
 
@@ -480,7 +480,9 @@ For channels that have a defined range of settings \(assuming a numeric type of 
 
 ### Device Control Interface
 
-![Device Channel Control Flow](.gitbook/assets/control_flow_diagram.png) Devices that will use control channels must begin subscribing \('mqtt'\) or polling \('http'\) the `data_out` resource. The data format is the same as `data_in` and any new data\_out value will contain one or more new control channel requests. The device must acknowledge it received the value by writing the same back to `data_out` \(Murano Device API requirement\) which tells the platform the value was received. After taking action on the control requests, the device must write the new channel states back to data\_in to close the loop so ExoSense knows the request finished.
+![Device Channel Control Flow](.gitbook/assets/control_flow_diagram.png)
+
+Devices that will use control channels must begin subscribing \('mqtt'\) or polling \('http'\) the `data_out` resource. The data format is the same as `data_in` and any new data\_out value will contain one or more new control channel requests. The device must acknowledge it received the value by writing the same back to `data_out` \(Murano Device API requirement\) which tells the platform the value was received. After taking action on the control requests, the device must write the new channel states back to data\_in to close the loop so ExoSense knows the request finished.
 
 **Device Steps:** 1. Subscribe or Poll `data_out` 2. On new `data_out` value, acknowledge received by writing back to `data_out` 3. Device takes control actions. 4. Device writes the channel states that were requested in `data_out` back to `data_in`
 
@@ -539,7 +541,7 @@ Parameters for a channel's protocol configuration 'app\_specific\_config' field 
 
 _Note: Optional use for remotely configurable devices._
 
-The gateway / device applications that handle reading/writing for channels may have properties that need to be set that are useful for all channels using that protocol / interface. For example, 10 channels may be set up to use Modbus\_RTU at interface /dev/tty0. The application that handles the modbus communication needs to know the interface details such as baud rate, etc.
+The gateway / device applications that handle reading/writing for channels may have properties that need to be set that are useful for all channels using that protocol / interface. For example, 10 channels may be set up to use Modbus\_RTU at interface /dev/tty0. The application that handles the Modbus communication needs to know the interface details such as baud rate, etc.
 
 The resource used to hold this information that may then be communicated from cloud application to device is `config_applications`. This resource is used by the device to know what interfaces and other application configuration parameters the user has selected. These are not specific to the channel, but to the entire protocol application.
 
