@@ -553,11 +553,7 @@ Notes: --
 
 Key \(`data_type`\): LOCATION  
 Primitive Type \(`primitive_type`\): JSON  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
-
-* `LAT_LONG`
-* `LAT_LONG_ALT`
-
+Accepted Units \(`data_unit`\) with UI unit abbreviation: na
 Notes:
 
 * LAT\_LONG contains both latitude and longitude in a JSON structured
