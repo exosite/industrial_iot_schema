@@ -967,4 +967,3 @@ Notes: --
 * Added URL type
 * Added a new inheritied element `primitive_type` to specify the format for each data type
 * Removed non-supported data types
-
