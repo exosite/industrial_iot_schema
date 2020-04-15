@@ -125,6 +125,14 @@ Notes: Any JSON blob
 }
 ```
 
+**Example JSON Channel Data \(data\_in\) Packet**
+
+```javascript
+{
+  "017":{"network_errors":0,"RAM":"45 MB"}
+}
+```
+
 **Example JSON Signal type value that the JSON Table Panel will display**
 
 ```javascript
@@ -137,14 +145,6 @@ Notes: Any JSON blob
       ["stat 3", 0.32, "nothing to see here", 100.81]
     ]
   }
-}
-```
-
-**Example JSON Channel Data \(data\_in\) Packet**
-
-```javascript
-{
-  "017":{"network_errors":0,"RAM":"45 MB"}
 }
 ```
 
