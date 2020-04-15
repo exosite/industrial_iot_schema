@@ -128,14 +128,15 @@ Notes: Any JSON blob
 **Example JSON Signal type value that the JSON Table Panel will display**
 
 ```javascript
-
 {
-  "values" : 
-  [
-    ["stat 1", 23, "ok", 542.32],
-    ["stat 2", 103, "warning", 323.99],
-    ["stat 3", 0.32, "nothing to see here", 100.81]
-  ]
+  "017":{
+    "values" : 
+    [
+      ["stat 1", 23, "ok", 542.32],
+      ["stat 2", 103, "warning", 323.99],
+      ["stat 3", 0.32, "nothing to see here", 100.81]
+    ]
+  }
 }
 ```
 
