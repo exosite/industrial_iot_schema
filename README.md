@@ -12,8 +12,8 @@ _Note: These specifications are not meant to be developer guides but instead pro
 
 | Schema |
 | :--- |
-| [ExoSense™️ Channel and Signal Interface](data-types.md) |
-| [ExoSense™️ Channel and Signal Data Types](channel-signal_io_schema.md) |
+| [ExoSense™️ Channel and Signal Interface](channel-signal_io_schema.md) |
+| [ExoSense™️ Channel and Signal Data Types](data-types.md) |
 | [ExoSense™️ Insight Integration](insight_transform_integration_schema.md) |
 | [Device Management OTA Package Update](ota_update_schema.md) |
 
