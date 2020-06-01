@@ -327,6 +327,19 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
+### Concentration (Mass)
+
+Key \(`data_type`\): CONCENTRATION_MASS  
+Primitive Type \(`primitive_type`\): NUMERIC  
+Accepted Units \(`data_unit`\) with UI unit abbreviation:
+
+* ``: kg/m3
+* ``: g/cm3
+* ``: g/L
+* ``: mg/L
+
+Notes: --
+
 ### Currency
 
 Key \(`data_type`\): CURRENCY  
@@ -382,30 +395,6 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Dynamic Viscosity
-
-Key \(`data_type`\): DYNAMIC\_VISCOSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
-
-* `PASCAL_SEC`: Pa·s
-* `MILLIPASCAL_SEC`: mPa·s
-* `POISE`: P
-
-Notes: --
-
-### Kinematic Viscosity
-
-Key \(`data_type`\): KINEMATIC\_VISCOSITY  
-Primitive Type \(`primitive_type`\): NUMERIC  
-Accepted Units \(`data_unit`\) with UI unit abbreviation:
-
-* `CENTISTOKES`: cSt
-* `STOKES`: St
-* `METERS2_PER_SEC`: m2/s
-
-Notes: --
-
 ### Electric Current
 
 Key \(`data_type`\): ELEC\_CURRENT  
@@ -428,6 +417,21 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `SIEMENS`: S
 
   Notes: --
+
+  ### Electrical Conductivity
+
+  Key \(`data_type`\): ELEC\_CONDUCTIVITY  
+  Primitive Type \(`primitive_type`\): NUMERIC  
+  Accepted Units \(`data_unit`\) with UI unit abbreviation:
+
+  * `SIEMENS_PER_METER`: S/m
+  * `DECISIEMENS_PER_METER`: dS/m
+  * `MILLISIEMENS_PER_METER`: mS/m
+  * `MICROSIEMENS_PER_METER`: µS/m
+  * `MILLISIEMENS_PER_CENTIMETER`: mS/cm
+  * `MICROSIEMENS_PER_CENTIMETER`: µS/cm
+  
+    Notes: --
 
 ### Electrical Potential \(Voltage\)
 
@@ -736,7 +740,7 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Plane angle
+### Plane Angle
 
 Key \(`data_type`\): ANGLE  
 Primitive Type \(`primitive_type`\): NUMERIC  
@@ -873,6 +877,20 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
+### Turbidity
+
+Key \(`data_type`\): TURBIDITY  
+Primitive Type \(`primitive_type`\): NUMERIC  
+Accepted Units \(`data_unit`\) with UI unit abbreviation:
+
+* `FTU`: FTU
+* `FNU`: FNU
+* `FAU`: FAU
+* `JTU`: JTU
+* `NTU`: NTU
+
+Notes: Unit conversions are not supported in the ExoSense application for Turbidity.
+
 ### URL
 
 Key \(`data_type`\): URL  
@@ -904,6 +922,30 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 * `MPH`: mph
 * `INCH_PER_SEC`: in/s
 * `FEET_PER_SEC`: fps
+
+Notes: --
+
+### Viscosity, Dynamic
+
+Key \(`data_type`\): DYNAMIC\_VISCOSITY  
+Primitive Type \(`primitive_type`\): NUMERIC  
+Accepted Units \(`data_unit`\) with UI unit abbreviation:
+
+* `PASCAL_SEC`: Pa·s
+* `MILLIPASCAL_SEC`: mPa·s
+* `POISE`: P
+
+Notes: --
+
+### Viscosity, Kinematic
+
+Key \(`data_type`\): KINEMATIC\_VISCOSITY  
+Primitive Type \(`primitive_type`\): NUMERIC  
+Accepted Units \(`data_unit`\) with UI unit abbreviation:
+
+* `CENTISTOKES`: cSt
+* `STOKES`: St
+* `METERS2_PER_SEC`: m2/s
 
 Notes: --
 
