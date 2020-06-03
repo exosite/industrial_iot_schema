@@ -333,10 +333,10 @@ Key \(`data_type`\): CONCENTRATION_MASS
 Primitive Type \(`primitive_type`\): NUMERIC  
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
-* ``: kg/m3
-* ``: g/cm3
-* ``: g/L
-* ``: mg/L
+* `KILOGRAM_PER_METER3`: kg/m3
+* `GRAM_PER_CENTIMETER3`: g/cm3
+* `GRAM_PER_LITER`: g/L
+* `MILIGRAM_PER_LITER`: mg/L
 
 Notes: --
 
