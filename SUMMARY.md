@@ -6,7 +6,7 @@
 * [ExoSense Insights Schema](insight_transform_integration_schema.md)
 * [Device OTA Update Schema](ota_update_schema.md)
 * [Contributing](contributing.md)
-* [License](license.md)
+* [License](license)
 
 ## Links
 
