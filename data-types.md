@@ -327,9 +327,9 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 Notes: --
 
-### Concentration (Mass)
+### Concentration \(Mass\)
 
-Key \(`data_type`\): CONCENTRATION_MASS  
+Key \(`data_type`\): CONCENTRATION\_MASS  
 Primitive Type \(`primitive_type`\): NUMERIC  
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
@@ -418,7 +418,7 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
   Notes: --
 
-  ### Electrical Conductivity
+  **Electrical Conductivity**
 
   Key \(`data_type`\): ELEC\_CONDUCTIVITY  
   Primitive Type \(`primitive_type`\): NUMERIC  
@@ -430,7 +430,7 @@ Accepted Units \(`data_unit`\) with UI unit abbreviation:
   * `MICROSIEMENS_PER_METER`: µS/m
   * `MILLISIEMENS_PER_CENTIMETER`: mS/cm
   * `MICROSIEMENS_PER_CENTIMETER`: µS/cm
-  
+
     Notes: --
 
 ### Electrical Potential \(Voltage\)
@@ -1009,3 +1009,4 @@ Notes: --
 * Added URL type
 * Added a new inheritied element `primitive_type` to specify the format for each data type
 * Removed non-supported data types
+
