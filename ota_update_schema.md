@@ -12,7 +12,7 @@ This document defines the information required to list, issue \(send\), and comm
 
 ## Device Software Package Update Process
 
-The device software update process or "Over-The-Aiar Update" \(OTAU\) is defined in reference to the Murano IoT Platform and ExoSense application.
+The device software update process or "Over-The-Air Update" \(OTAU\) is defined in reference to the Murano IoT Platform and ExoSense application.
 
 **Basic Flow Summary** 1. The OEM specifies a OTAU software package manifest file as content in a Murano product 2. A user application \(such as ExoSense\) will display this and any previous OTAU software package manifest files as available for a device \(or set of devices\) of that Murano Product type. 3. A user chooses a the OTAU software package and applies it in the application user interface. 4. The application will write to `config_otau` resource with the new otau state information \(aka tell the device what state it should be in and instructions on how to do that\) 5. The device sends updates to `otau_in` resource so the application can keep track of status for the device in regards to the requested OTAU software package state.
 
