@@ -35,9 +35,11 @@ The reader of this document should have a grasp on the following items or will n
 
 ## IoT Platform Device Interface Configuration Requirements
 
-ExoSense uses the Murano IoT Platform device interface for it's device connectivity. The following information details the specific resources used \(HTTP resources / MQTT topics\) regardless of the transport protocol \(MQTT or HTTP\).
+ExoSense uses the Murano IoT Platform device interface for its device connectivity. The following information details the specific resources used \(HTTP resources / MQTT topics\) regardless of the transport protocol \(MQTT or HTTP\).
 
-_Note: This document does not cover most details of how to interact with Murano’s IoT product/device interfaces including how to provision a device inside of a product defined in Murano, how to communicate with the_ [_HTTP_](http://docs.exosite.com/reference/products/device-api/http/) _or_ [_MQTT_](http://docs.exosite.com/reference/products/device-api/mqtt/) _APIs or other topics covered in_ [_Murano’s public documentation_](https://docs.exosite.com)_._
+_Note: This document does not cover most details of how to interact with Murano’s IoT product/device interfaces including how to provision a device inside of a product defined in Murano, how to communicate with the_ _HTTP_ _or_ _MQTT_ _APIs or other topics covered in Exosite's Murano IoT Connector documentation._
+
+\_\_[_Murano IoT Connector Reference and API Information_](https://docs.exosite.io/account/iot-connectors/connected-products)\_\_
 
 **Device resource use is as follows:**
 
@@ -369,9 +371,9 @@ _Note: Each channel is not required to send a value in each payload. Some payloa
 
 Utilize the Record API from Murano, and apply the array of signals to each timestamps data.
 
-[Murano Device Record API - HTTP](http://docs.exosite.com/reference/products/device-api/http/#record)
+[Murano Device Record API - HTTP](https://docs.exosite.io/account/iot-connectors/connected-products/device-http-api#record)
 
-[Murano Device Record API - MQTT](http://docs.exosite.com/reference/products/device-api/mqtt/#report-data-to-historical-timestamps)
+[Murano Device Record API - MQTT](https://docs.exosite.io/account/iot-connectors/connected-products/device-mqtt-api#to-historical-timestamps)
 
 This requires that the clock be synced on the gateway to the global network time via ntp which is used by our servers in our cluster. Our recommendation will be that the ntp server syncs with the gateway at least once every time the power is cycled on the gateway, and once per 12-24 hours of continuous operation time.
 

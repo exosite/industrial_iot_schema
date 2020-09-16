@@ -24,7 +24,7 @@ The reader of this document should have a grasp on the following items or will n
 
 | Term | Description | More Information |
 | :--- | :--- | :--- |
-| ExoSense™️ | Industrial IoT Application solution created and offered by [Exosite](https://github.com/exosite/industrial_iot_schema/tree/a1c299fa81eb1cbfc81a8a91e58371fc91388b9b/exosite.com) |  |
+| ExoSense™️ | Industrial IoT Application solution created and offered by [Exosite](https://www.exosite.com) |  |
 | Device/Gateway | An electronic device with an IP Connection sending data to a platform.  In this case is interacing with directly connected sensors, custom protocol connected sensors, or fieldbus connected equipment |  |
 | Sensors | Physical sensors connected to a Device/Gateway via wired or wireless protocol or IO \(onboard\).  Sensors are typically specific to a unit of measure - e.g. temperature, pressure, etc. |  |
 | Channel | An ExoSense concept to identify an **individual stream** of information sent to ExoSense by an **unique device** that is specific to a type and with a specific unit of measure from that local physical environment \(e.g. Temperature or Valve 1 status\).  Can also be information such as memory on the device, status information, etc. | Typically a device is sending many channels of data for all of the sensors that are connected. |
