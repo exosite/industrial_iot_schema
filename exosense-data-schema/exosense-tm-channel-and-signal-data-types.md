@@ -845,7 +845,8 @@ Key \(`data_type`\): SPEED
 
 
 * `METER_PER_SEC`: m/s
-* `KPH`: km/h
+* `MILLMETERS_PER_SEC`: mm/s
+* `KILOMETER_PER_HOUR`: km/h
 * `MPH`: mph
 * `IN_PER_SEC`: ips
 * `FEET_PER_SEC`: fps
