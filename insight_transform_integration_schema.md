@@ -42,12 +42,15 @@ The `inlets` key is an array of Inlet objects, each of which can have the follow
 
 #### Outlets
 
-The `outlets` key is _currently_ a single Outlet object, which can have the following keys:
+The `outlets` key is an array of Outlet objects, which can have the following keys:
 
 | Key | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | data\_type | string | true | Specify the output data\_type. |
 | data\_unit | string | false | Optionally specify the output data\_unit. |
+| name | string | true | Friendly name for the Outlet. |
+| description | string | true | Useful description for this Outlet. |
+| suggested\_name | string | false | A suggestion for what to name signals that get created for this outlet. |
 
 #### Constants
 
