@@ -245,6 +245,35 @@ definitions:
         items:
           type: string
           description: A required unit.
+      name:
+        type: string
+        description: Name of this outlet
+      description:
+        type: string
+        description: Optional text to help users.
+      suggested_name:
+        type: string
+        description: |
+          A suggestion for what to name signals that get created for this outlet.
+          This may include `{}` to indicate where to place the function name.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additionalProperties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Optional text to help users.
+            suggested_name:
+              type: string
+              description: |
+                A suggestion for what to name signals that get created for this outlet.
+                This may include `{}` to indicate where to place the function name.
 
   ConstantInfo:
     type: object
