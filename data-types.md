@@ -559,8 +559,8 @@ Primitive Type \(`primitive_type`\): NUMERIC
 Accepted Units \(`data_unit`\) with UI unit abbreviation:
 
 * `HERTZ`: Hz
-* `KHZ`:KHz
-* `MHZ`: MHz
+* `KILOHERTZ`:KHz
+* `MEGAHERTZ`: MHz
 
 Notes: --
 
