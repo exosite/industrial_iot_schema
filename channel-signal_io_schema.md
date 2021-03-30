@@ -45,9 +45,9 @@ _Note: This document does not cover most details of how to interact with Murano�
 
 | Resource Name | ExoSense Status | Who Can Write To | Description |
 | :--- | :--- | :--- | :--- |
-| `data_in` | supported | Device | Used to send data from device to cloud in the format defined in [Device Data Transport Schema](channel-signal_io_schema.md#device-data-transport-schema) section below |
+| `data_in` | supported | Device | Used to send data from device to cloud in the format defined in [Device Data Transport Schema](channel-signal_io_schema.md#channel-data-schema) section below |
 | `config_io` | supported | Device / App | Used to share the complete configuration for a channels in the product.  This should be a 2-way synchronization meaning in the case of a self-configuring gateway, this would be written to by the gateway.  In a gateway that requires manual configuration from the application, this would be read by the gateway and cached locally. |
-| `data_out` | supported | App | Used to send control requests from cloud to device in format defined in [Device Data Transport Schema](channel-signal_io_schema.md#device-data-transport-schema) section below |
+| `data_out` | supported | App | Used to send control requests from cloud to device in format defined in [Device Data Transport Schema](channel-signal_io_schema.md#channel-data-schema) section below |
 | `config_applications` | supported | Device / App | Specifies configuration for the interfaces used by gateway protocol/fieldbus applications \(i.e. “interface = /dev/tty0”\) |
 | `config_oem` | _reserved_ | tbd | Settings for product names, and limits that constrain/override communications or collections of data per the manufacturers/OEMs requirements |
 | `config_interfaces` | _reserved_ | tbd |  |
