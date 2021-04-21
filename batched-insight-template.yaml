@@ -1,0 +1,653 @@
+swagger: "2.0"
+
+info:
+  version: "1.0"
+  title: My Nifty Batch Insight
+  description: |
+    This describes a Batch Insight Module that can be added to Murano Exchange.  A Batch Insight Module can
+    implement one or more Batch Insight Functions.
+  contact:
+    name: Your Name Here
+    email: YOU@BIZ.com
+
+host: a.real.host # Set this to the host your function is on
+basePath: / # Set this or the path according to your function
+tags:
+  - name: insight
+    description: Insight Module
+schemes:
+  - https  # Only https is supported.
+consumes:
+  - application/json # Only JSON is supported.
+produces:
+  - application/json # Only JSON is supported.
+
+################################################################################
+#                                Operations                                    #
+################################################################################
+paths:
+  /info:
+    get:
+      operationId: info
+      description: Get some info about this Batch Insight Module
+      responses:
+        "200":
+          description: Insight Functions successfully listed
+          schema:
+            $ref: "#/definitions/InsightInfoResults"
+        default:
+          description: Errors
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /insights:
+    post:
+      operationId: listInsights
+      description: Get a list of available Insight Functions and info about them
+      parameters:
+      - name: body
+        in: body
+        description: Get a list of available insight functions
+        required: true
+        schema:
+          $ref: '#/definitions/InsightsFilterParams'
+      responses:
+        "200":
+          description: Insight Functions successfully listed
+          schema:
+            $ref: "#/definitions/InsightListResults"
+        default:
+          description: Errors
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /insight/{function_id}:
+    get:
+      operationId: infoInsight
+      description: Get info about one Insight Function
+      parameters:
+        - name: function_id
+          type: string
+          in: path
+          description: Identifier of function
+      responses:
+        "200":
+          description: Insight Functions successfully listed
+          schema:
+            $ref: "#/definitions/InsightInfo"
+        default:
+          description: Errors
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+  /lifecycle:
+    post:
+      operationId: lifecycle
+      description: |
+        Notifications of when a Batch Job adds a step using a function from this module.
+      parameters:
+        - name: body
+          in: body
+          description: Lifecycle event
+          required: true
+          schema:
+            $ref: '#/definitions/LifecycleEvent'
+      responses:
+        default:
+          description: The response to this is ignored.
+
+  /queue_job_step: # The actual path can be anything.
+    post:
+      operationId: queueJobStep
+      description: |
+        Queue a request to do some work.
+
+        It is expected for everything queued that a jobStepCompleted or jobStepErrorred event will occur.
+      parameters:
+        - name: body
+          in: body
+          description: Data to process and arguments on how to process it
+          required: true
+          schema:
+            $ref: "#/definitions/JobStepRequest"
+      responses:
+        "202":
+          # 202 Accepted
+          #   The request has been accepted for processing, but the processing has
+          #   not been completed. The request might or might not be eventually
+          #   acted upon, and may be disallowed when processing occurs
+          description: Data successfully received
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+################################################################################
+#                                 Events                                       #
+################################################################################
+
+x-exosite-events:
+  # For modules that don't have their own file storage can use this to upload to the solution's content area.
+  # erm. see below in JobDataURL. this might be the only option we allow.
+  uploadRequest:
+    type: HTTP
+    description: Request for Upload URLs to the Content Area in a Solution
+    parameters:
+      - name: data
+        in: body
+        description: Request for upload URLs to the content area.
+        required: true
+        schema:
+          type: array
+          description: Request for upload URLs to the content area.
+          items:
+            $ref: '#/definitions/uploadRequest'
+    responses:
+      default:
+        description: Details to upload files to content area.
+        schema:
+          type: array
+          description: Details to upload files to content area.
+          items:
+            $ref: '#/definitions/uploadResponse'
+
+  jobStepProgress:
+    type: HTTP
+    description: |
+      For long running jobs, let us know they're working. This event is optional.
+      Be kind, don't call this more than every few seconds at the most.
+    parameters:
+      - name: data
+        in: body
+        description: Progress of a Job Step
+        required: true
+        schema:
+          type: array
+          description: The progress of multiple jobs can be reported in a single event.
+          items:
+            $ref: '#/definitions/JobStepProgress'
+
+  jobStepComplete:
+    type: HTTP
+    description: Details of a completed job step; this event is required for every Job Step Request. (well, or an error)
+    parameters:
+      - name: data
+        in: body
+        description: The data transmitted by the event
+        required: true
+        schema:
+          $ref: '#/definitions/JobStepCompleted'
+
+  jobStepErrorred:
+    type: HTTP
+    description: Details of a failed job step.
+    parameters:
+      - name: data
+        in: body
+        description: The data transmitted by the event
+        required: true
+        schema:
+          $ref: '#/definitions/JobStepErrorred'
+
+################################################################################
+#                                 Definitions                                  #
+################################################################################
+definitions:
+  InsightInfoResults:
+    type: object
+    description: Info about this Insight Module
+    properties:
+      name:
+        type: string
+        description: Presented name
+      description:
+        type: string
+        description: Additional text about this insight. Markdown can be used.
+      wants_lifecycle_events:
+        type: boolean
+        description: |
+          True if this insight wants to be notified when a job step using it is created and deleted.
+          Defaults to false.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additionalProperties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Additional text about this insight. Markdown can be used.
+    required: [name]
+
+  InsightsFilterParams:
+    type: object
+    description: Filter options for insight functions
+    properties:
+      limit:
+        type: integer
+        description: Limit how many insights to fetch
+      offset:
+        type: integer
+        description: Offset into the returned insights
+
+  TypeInputInfo:
+    type: object
+    description: Type of incoming data.
+    properties:
+      name:
+        type: string
+        description: Name of this input
+      description:
+        type: string
+        description: Optional text to help users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additionalProperties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Optional text to help users.
+      type:
+        type: string
+        description: The MIME type of what is allowed for this Inlet
+      preferred_expiration:
+        type: integer
+        description: |
+          When sending urls for the data, this function would like them to last for at least this many minutes.
+          They can certainly last longer than this.
+    # XXX: what if they would perfer for us to upload data somewhere? Maybe not supported.
+
+  TypeOutputInfo:
+    type: object
+    description: Type of resulting data.
+    properties:
+      name:
+        type: string
+        description: Name of this output
+      description:
+        type: string
+        description: Optional text to help users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additionalProperties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: Presented name
+            description:
+              type: string
+              description: Optional text to help users.
+      type:
+        type: string
+        description: The MIME type of what is allowed for this Inlet
+
+  ConstantInfo:
+    # FIXME: Review what goes here.
+    type: object
+    description: A constant that needs to be provided by the user
+    properties:
+      name:
+        type: string
+        description: The name of this constant; This is not shown to users and is the code identifier for this constant.
+      type:
+        type: string
+        enum: [string, number, boolean]
+        description: What kind of value this constant accepts
+      description:
+        type: string
+        description: Some words for the user about this constant
+      default:
+        type: [string, number, boolean]
+        description: Optional value to use if user doesn't specify one.
+      enum:
+        type: array
+        description: An array of allowed values.
+      enum_presented:
+        type: array
+        description: If present, the strings to display instead of the values in `enum`.  The length of this must match `enum`.
+        items:
+          type: string
+          description: Presentable name for one value
+      maximum:
+        type: number
+        description: For number type, the largest it can be
+      minimum:
+        type: number
+        description: For number type, the smallest it can be
+      multiple:
+        type: boolean
+        description: |
+          When this is true, this constant will be an array of values instead of a single value.
+          The UI will present the user a way to enter this constant multiple times.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additionalProperties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            description:
+              type: string
+              description: Some words for the user about this constant
+            enum_presented:
+              type: array
+              description: If present, the strings to display instead of the values in `enum`.
+              items:
+                type: string
+    required: [name, type]
+
+  InsightInfo:
+    type: object
+    description: One insight function
+    properties:
+      id:
+        type: string
+        description: The unique id for this insight function
+      name:
+        type: string
+        description: A human friendly name for this insight function
+      description:
+        type: string
+        description: A description of this insight function to display to users.
+      translations:
+        type: object
+        description: Translations of the name and description fields
+        additionalProperties:
+          type: object
+          description: Keyed by each translated language code 
+          properties:
+            name:
+              type: string
+              description: A human friendly name for this insight function
+            description:
+              type: string
+              description: A description of this insight function to display to users.
+      constants:
+        type: array
+        description: Additional user specified values to pass to this insight function
+        items:
+          $ref: '#/definitions/ConstantInfo'
+      constants_multiple_maximum:
+        type: number
+        description: |
+          If there are constants with multiple set to true, this states the maximum number of times the
+          constants can be repeated. (The maximum size of the arrays.)
+          If unspecified then the UI can apply any limit, including none.
+      inlets:
+        type: array
+        description: The kinds of data that can be connected.
+        maxItems: 5
+        minItems: 1
+        items:
+          $ref: '#/definitions/TypeInputInfo'
+      outlets:
+        type: array
+        description: What kind of data each output will produce. (empty if nothing returned)
+        maxItems: 5
+        minItems: 0
+        items:
+          $ref: '#/definitions/TypeOutputInfo'
+    required:
+      - id
+      - name
+      - description
+      - inlets
+      - outlets
+  
+  InsightListResults:
+    type: object
+    description: The found insight batch functions with count info
+    properties:
+      total:
+        type: integer
+        description: The total number of insight functions
+      count:
+        type: integer
+        description: Number of insight functions returned
+      insights:
+        type: array
+        description: The insight functions
+        items:
+          $ref: '#/definitions/InsightInfo'
+    required:
+      - insights
+      - total
+      - count
+
+  LifecycleEvent:
+    type: object
+    description: A Lifecycle event
+    properties:
+      event:
+        type: string
+        description: What action caused this event
+        pattern: "(create|delete|update)"
+      step_id:
+        type: string
+        format: uuid
+        description: |
+          The unique id for the step that was modified.
+          This id will match the `step_id` in following calls to queue jobs.
+      args:
+        type: object
+        description: The arguments for this step that will be also passed to each work request.
+
+  JobDataURL:
+    type: object
+    description: Data for a job that is hosted elsewhere, this is how to get it
+    # For inlets, this will be a download URL from the content area.
+    # we always return a GET url for this. Maybe reduce to that? what about the outlets?
+    # When this is returned in an outlet, ExoSense needs to then fetch the data into the content area.
+    # - Do we really want to suport that? I don't think we do.
+    properties:
+      url:
+        type: string
+        format: uri
+        description: Where is the data
+      expires:
+        type: integer
+        description: |
+          The URL might expire, if so this is the number of seconds it has to live.  Jobs that get queued might
+          need to pull over the data and hold onto it sooner than they can process the data.
+
+      method:
+        type: string
+        pattern: "(get|post)" # should we limit this?
+        description: How to get the data.  GET is assumed.
+      headers:
+        type: object
+        description: Any special header that should be added. Typically for Authentication
+      body:
+        type: object
+        description: Any additional body on a POST method that might be needed. Typically for Authentication
+    required:
+      - url
+
+  JobDataInlined:
+    type: object
+    description: Data for a job that if small enough (less than 10KiB), just got inlined.
+    # Picking 10KiB rather randomally.
+    properties:
+      data:
+        type: string
+        format: byte
+        description: A Base64 encoded string of the data
+        minLength: 3
+        maxLength: 14028  # 10KiB plus overhead of being Base64 encoded.
+      type:
+        type: string
+        description: MIME type for the inlined data
+      name:
+        type: string
+        description: Preferred user visible name for this data
+    required:
+      - data
+      - type
+
+  JobDataContentRef:
+    type: object
+    description: Data from a job that was uploaded to the content area.
+    properties:
+      id:
+        type: string
+        description: The content-area id of the data. Get this from an uploadResponse.
+
+  JobStepRequest:
+    type: object
+    description: |
+      A request to do some work.
+
+      The work should be completed in a timely manner.  However it is expected that the job request is put
+      onto a queue and processed as it can.
+
+      URLs in the inlets can expire!  The job runner might have to pull the data sooner than when it can process it.
+
+      "Timely Manner" is very dependent on the job being performed.  It is highly suggested to send progress
+      events for jobs that could take more than a couple of minutes. (for totaled queue wait time and processing time.)
+    properties:
+      step_id:
+        type: string
+        format: uuid
+        description:
+      work_id:
+        type: string
+        description: |
+          Unique identifier for this specific job.  Guaranteed unique for the life of the job.
+          May potentially get repeated in some future time span.
+      function_id:
+        type: string
+        description: Which Insight Function to run
+      constants:
+        type: object
+        description: Additional constant parameters for the selected function
+      inlets:
+        type: array
+        description: The pointers to the data to process
+        items:
+          oneOf:
+            - $ref: '#/definitions/JobDataURL'
+            - $ref: '#/definitions/JobDataInlined'
+
+  JobStepProgess:
+    type: object
+    description: The progress on a job.  Send 0.0 while job is waiting in queue to be processed. (if using queues)
+    properties:
+      work_id:
+        type: string
+        description: The identifier for the job being reported on
+      progress:
+        type: number
+        description: The progress of the job as a float between 0.0 and 1.0
+        minimum: 0.0
+        maximum: 1.0
+      eta:
+        type: integer
+        description: Estimated number of seconds remaining
+        minimum: 0
+    required:
+      - work_id
+      - progress
+
+  JobStepCompleted:
+    type: object
+    description: The details of a completed job
+    properties:
+      work_id:
+        type: string
+        description: The identifier for the job being reported on
+      outlets:
+        type: array
+        description: Pointers to processed data
+        items:
+          oneOf:
+            - $ref: '#/definitions/JobDataURL'
+            - $ref: '#/definitions/JobDataInlined'
+            - $ref: '#/definitions/JobDataContentRef'
+    required:
+      - work_id
+      - outlets
+
+  JobStepErrorred:
+    type: object
+    description: The details of a failed job
+    properties:
+      work_id:
+        type: string
+        description: The identifier for the job being reported on
+      error:
+        $ref: '#/definitions/ErrorResponse'
+    required:
+      - work_id
+      - error
+
+  uploadRequest:
+    type: object
+    description: |
+      Request to upload data to the Content area.  An unique id for the file will get generated and may or may not
+      be based on the name.
+    properties:
+      name:
+        type: string
+        description: Preferred user visible name of this file
+      type:
+        type: string
+        description: MIME type of the data
+      expires_in:
+        type: integer
+        description: Time duration in seconds of URL validity.  This might get clamped to an upper bound. (minutes?)
+
+  uploadResponse:
+    type: object
+    description: HTTP information for client-side content uploads
+    required:
+      - id
+      - method
+      - url
+    properties:
+      id:
+        type: string
+        description: The id of the content item
+      method:
+        type: string
+        description: The HTTP method to use with this URL
+        enum: [POST]
+      url:
+        type: string
+        description: The URL to use
+      enctype:
+        type: string
+        description: The expected form-data encoding to use
+      field:
+        type: string
+        description: The name of the part containing upload data (must be LAST)
+      inputs:
+        type: object
+        description: Additional parts expected with the upload
+
+  ErrorResponse:
+    type: object
+    description: Error response
+    properties:
+      message:
+        type: string
+        description: Longer detailed error message
+      status:
+        type: number
+        description: A numerical code for the error
+      name:
+        description: Error type
+        type: string
+
