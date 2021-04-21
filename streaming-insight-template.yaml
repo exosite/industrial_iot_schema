@@ -2,7 +2,7 @@ swagger: "2.0"
 
 info:
   version: "1.0"
-  title: My Nifty Insight
+  title: My Nifty Streaming Insight
   description: |
     This describes an Insight Module that can be added to Murano Exchange.  An Insight Module can
     implement one or more Insight Functions.  These Insight Functions can then be added to Assets
