@@ -208,6 +208,9 @@ definitions:
         description: |
           True if this insight wants to be notified when a job step using it is created and deleted.
           Defaults to false.
+      cost_class:
+        type: string
+        description: TBA
       translations:
         type: object
         description: Translations of the name and description fields
@@ -259,40 +262,7 @@ definitions:
               description: Optional text to help users.
       type:
         type: string
-        description: The MIME type of what is allowed for this Inlet
-      preferred_expiration:
-        type: integer
-        description: |
-          When sending urls for the data, this function would like them to last for at least this many minutes.
-          They can certainly last longer than this.
-    # XXX: what if they would perfer for us to upload data somewhere? Maybe not supported.
-
-  TypeOutputInfo:
-    type: object
-    description: Type of resulting data.
-    properties:
-      name:
-        type: string
-        description: Name of this output
-      description:
-        type: string
-        description: Optional text to help users.
-      translations:
-        type: object
-        description: Translations of the name and description fields
-        additionalProperties:
-          type: object
-          description: Keyed by each translated language code 
-          properties:
-            name:
-              type: string
-              description: Presented name
-            description:
-              type: string
-              description: Optional text to help users.
-      type:
-        type: string
-        description: The MIME type of what is allowed for this Inlet
+        description: The MIME type of an accepted file.
 
   ConstantInfo:
     # FIXME: Review what goes here.
@@ -362,6 +332,9 @@ definitions:
       description:
         type: string
         description: A description of this insight function to display to users.
+      cost_class:
+        type: string
+        description: TBA
       translations:
         type: object
         description: Translations of the name and description fields
@@ -386,26 +359,24 @@ definitions:
           If there are constants with multiple set to true, this states the maximum number of times the
           constants can be repeated. (The maximum size of the arrays.)
           If unspecified then the UI can apply any limit, including none.
-      inlets:
+      inputs:
         type: array
-        description: The kinds of data that can be connected.
-        maxItems: 5
-        minItems: 1
+        description: The MIME types for files that this step can processes. (Typically just one)
         items:
-          $ref: '#/definitions/TypeInputInfo'
-      outlets:
+          type: string
+          description: A MIME Type
+      outputs:
         type: array
-        description: What kind of data each output will produce. (empty if nothing returned)
-        maxItems: 5
-        minItems: 0
+        description: The MIME types for files that got produced. (Typically just one)
         items:
-          $ref: '#/definitions/TypeOutputInfo'
+          type: string
+          description: A MIME type
     required:
       - id
       - name
       - description
-      - inlets
-      - outlets
+      - inputs
+      - outputs
   
   InsightListResults:
     type: object
@@ -429,7 +400,7 @@ definitions:
 
   LifecycleEvent:
     type: object
-    description: A Lifecycle event
+    description: A Lifecycle event on an instance of a function.
     properties:
       event:
         type: string
@@ -448,10 +419,6 @@ definitions:
   JobDataURL:
     type: object
     description: Data for a job that is hosted elsewhere, this is how to get it
-    # For inlets, this will be a download URL from the content area.
-    # we always return a GET url for this. Maybe reduce to that? what about the outlets?
-    # When this is returned in an outlet, ExoSense needs to then fetch the data into the content area.
-    # - Do we really want to suport that? I don't think we do.
     properties:
       url:
         type: string
@@ -465,14 +432,14 @@ definitions:
 
       method:
         type: string
-        pattern: "(get|post)" # should we limit this?
+        pattern: "GET" # We only have GETs for now.
         description: How to get the data.  GET is assumed.
       headers:
         type: object
-        description: Any special header that should be added. Typically for Authentication
+        description: Any special headers that should be added. Typically for Authentication
       body:
         type: object
-        description: Any additional body on a POST method that might be needed. Typically for Authentication
+        description: Any additional body on a POST method that might be needed. Typically not present.
     required:
       - url
 
@@ -513,7 +480,7 @@ definitions:
       The work should be completed in a timely manner.  However it is expected that the job request is put
       onto a queue and processed as it can.
 
-      URLs in the inlets can expire!  The job runner might have to pull the data sooner than when it can process it.
+      URLs in the inputs can expire!  The job runner might have to pull the data sooner than when it can process it.
 
       "Timely Manner" is very dependent on the job being performed.  It is highly suggested to send progress
       events for jobs that could take more than a couple of minutes. (for totaled queue wait time and processing time.)
@@ -533,7 +500,7 @@ definitions:
       constants:
         type: object
         description: Additional constant parameters for the selected function
-      inlets:
+      inputs:
         type: array
         description: The pointers to the data to process
         items:
@@ -568,17 +535,21 @@ definitions:
       work_id:
         type: string
         description: The identifier for the job being reported on
-      outlets:
+      message:
+        type: string
+        description: |
+          Optional string describing the completed job. This may be logged.
+      outputs:
         type: array
         description: Pointers to processed data
         items:
           oneOf:
-            - $ref: '#/definitions/JobDataURL'
+            #- $ref: '#/definitions/JobDataURL'
             - $ref: '#/definitions/JobDataInlined'
             - $ref: '#/definitions/JobDataContentRef'
     required:
       - work_id
-      - outlets
+      - outputs
 
   JobStepErrorred:
     type: object
