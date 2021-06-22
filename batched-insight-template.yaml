@@ -127,8 +127,6 @@ paths:
 ################################################################################
 
 x-exosite-events:
-  # For modules that don't have their own file storage can use this to upload to the solution's content area.
-  # erm. see below in JobDataURL. this might be the only option we allow.
   uploadRequest:
     type: HTTP
     description: Request for Upload URLs to the Content Area in a Solution
@@ -169,25 +167,31 @@ x-exosite-events:
 
   jobStepComplete:
     type: HTTP
-    description: Details of a completed job step; this event is required for every Job Step Request. (well, or an error)
+    description: Details of a completed job steps; this event (or the error one) is required for every Job Step Request.
     parameters:
       - name: data
         in: body
         description: The data transmitted by the event
         required: true
         schema:
-          $ref: '#/definitions/JobStepCompleted'
+          type: array
+          description: The completion of multiple jobs can be reported in a single event.
+          items:
+            $ref: '#/definitions/JobStepCompleted'
 
   jobStepErrorred:
     type: HTTP
-    description: Details of a failed job step.
+    description: Details of failed job steps.
     parameters:
       - name: data
         in: body
         description: The data transmitted by the event
         required: true
         schema:
-          $ref: '#/definitions/JobStepErrorred'
+          type: array
+          description: The failure of multiple jobs can be reported in a single event.
+          items:
+            $ref: '#/definitions/JobStepErrorred'
 
 ################################################################################
 #                                 Definitions                                  #
@@ -508,7 +512,7 @@ definitions:
             - $ref: '#/definitions/JobDataURL'
             - $ref: '#/definitions/JobDataInlined'
 
-  JobStepProgess:
+  JobStepProgress:
     type: object
     description: The progress on a job.  Send 0.0 while job is waiting in queue to be processed. (if using queues)
     properties:
@@ -520,13 +524,49 @@ definitions:
         description: The progress of the job as a float between 0.0 and 1.0
         minimum: 0.0
         maximum: 1.0
+      state:
+        type: string
+        pattern: "(received|waiting|downloading|working|uploading|complete)"
+        description: |
+          The state of the progress of this job. The module does not need to report progress for 
+          every state, it only needs to report the current state.
+                              ○
+                              │
+                              ▼
+                        ┌─────────────┐
+                        │  Received   │
+                        └─────────────┘
+                              │
+                ┌─────────────┴─────────────┐
+                ▼                           ▼
+          ┌─────────────┐             ┌─────────────┐
+          │ Downloading │◀───────────▶│   Waiting   │
+          └─────────────┘             └─────────────┘
+                │                           │
+                └─────────────┬─────────────┘
+                              │
+                              ▼
+                        ┌─────────────┐
+                        │   Working   │
+                        └─────────────┘
+                              │
+                              ▼
+                        ┌─────────────┐
+                        │  Uploading  │
+                        └─────────────┘
+                              │
+                              ▼
+                        ╔═════════════╗
+                        ║  Complete   ║
+                        ╚═════════════╝
       eta:
         type: integer
-        description: Estimated number of seconds remaining
+        description: Estimated number of seconds remaining until completed.
         minimum: 0
     required:
       - work_id
       - progress
+      - state
 
   JobStepCompleted:
     type: object
