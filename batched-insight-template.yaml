@@ -125,7 +125,6 @@ paths:
 ################################################################################
 #                                 Events                                       #
 ################################################################################
-
 x-exosite-events:
   uploadRequest:
     type: HTTP
@@ -152,8 +151,8 @@ x-exosite-events:
   jobStepProgress:
     type: HTTP
     description: |
-      For long running jobs, let us know they're working. This event is optional.
-      Be kind, don't call this more than every few seconds at the most.
+      Update the state of in progress jobs.  Can be because of a job completing, having errors, 
+      or just updating progress while the job is being worked on.
     parameters:
       - name: data
         in: body
@@ -163,35 +162,10 @@ x-exosite-events:
           type: array
           description: The progress of multiple jobs can be reported in a single event.
           items:
-            $ref: '#/definitions/JobStepProgress'
-
-  jobStepComplete:
-    type: HTTP
-    description: Details of a completed job steps; this event (or the error one) is required for every Job Step Request.
-    parameters:
-      - name: data
-        in: body
-        description: The data transmitted by the event
-        required: true
-        schema:
-          type: array
-          description: The completion of multiple jobs can be reported in a single event.
-          items:
-            $ref: '#/definitions/JobStepCompleted'
-
-  jobStepErrorred:
-    type: HTTP
-    description: Details of failed job steps.
-    parameters:
-      - name: data
-        in: body
-        description: The data transmitted by the event
-        required: true
-        schema:
-          type: array
-          description: The failure of multiple jobs can be reported in a single event.
-          items:
-            $ref: '#/definitions/JobStepErrorred'
+            oneOf:
+              - $ref: '#/definitions/JobStepProgress'
+              - $ref: '#/definitions/JobStepCompleted'
+              - $ref: '#/definitions/JobStepErrorred'
 
 ################################################################################
 #                                 Definitions                                  #
